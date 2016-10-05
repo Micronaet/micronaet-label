@@ -33,6 +33,7 @@
     'init_xml': [],
     'demo': [],
     'data': [
+        'security/label_group.xml',
         'security/ir.model.access.csv',    
         'label_view.xml',
         ],
