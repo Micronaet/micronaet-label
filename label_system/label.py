@@ -45,7 +45,10 @@ class LabelLabel(orm.Model):
 
     _name = 'label.label'
     _description = 'Label'
-    
+
+    # -------------------------------------------------------------------------    
+    #                            UTILITY:
+    # -------------------------------------------------------------------------    
     # Parent management:
     def get_config_base_path(self, cr, uid, context=None):
         ''' Read parameter: 
@@ -61,7 +64,23 @@ class LabelLabel(orm.Model):
             cr, uid, config_ids, context=context)[0]
         return eval(config_proxy.value)    
     
+    # -------------------------------------------------------------------------    
+    #                             SCHEDULED EVENT:
+    # -------------------------------------------------------------------------    
+    # Import label (scheduled)
+    def scheduled_import_label_label(self, cr, uid, context=None):
+        ''' Import procedure for manage module
+        '''
+        
+        return True
+        
+    # -------------------------------------------------------------------------    
+    #                               BUTTON EVENT:
+    # -------------------------------------------------------------------------    
+    
+    
     _columns = {
+        'active': fields.boolean('Active'),
         'code': fields.char('Code', size=12), 
         'name': fields.char('Label', size=64, required=True), 
         'description': fields.text('Description'),
