@@ -8,27 +8,100 @@
                 <form string="Label" version="7.0">        
                     <sheet>
                         <group col="4" colspan="4">
-                        
-                        
+                            <field name="is_active"/>
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="filename"/>
+                            <filed name="parser"/>
+                            <field name="height"/>
+                            <field name="width"/>
+                            <field name="type"/>
+                            <field name="note"/>
+                        </group>
+                     </sheet>        
+                  </form>
+              </field>
+          </record>
+                                          
+                                    
         <record model="ir.ui.view" id="view_label_label_tree">
             <field name="name">label.label.tree</field>
             <field name="model">model.name</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <tree string="Label">        
+                <tree string="Label"> 
+                    <field name="is_active"/>
+                    <field name="code"/>       
                     <field name="name" />
+                    <field name="description"/>
+                    <field name="filename"/>
+                    <filed name="parser"/>
+                    <field name="height"/>
+                    <field name="width"/>
+                    <field name="type"/>
+                    <field name="note"/>      
                 </tree>
             </field>
         </record> 
-                                </tree>
-                            </field>
-                        </record>
-                            
-                        </group>
-                    <sheet>        
-                </form>
+        
+        <record model="ir.ui.view" id="view_label_label_search">
+            <field name="name">label.label.search</field>
+            <field name="model">label.label</field>
+            <field name="arch" type="xml">
+                <search string="Label" version="7.0">
+                    <field name="is_active"/>
+                    <field name="code"/>        
+                    <field name="name" />
+                    <field name="description"/>
+                    <field name="filename"/>
+                    <filed name="parser"/>
+                    <field name="height"/>
+                    <field name="width"/>
+                    <field name="type"/>
+                    <field name="note"/>               
+                </search>
             </field>
         </record>
+             
+        <record model="ir.actions.act_window" id="action_label_label">
+            <field name="name">Label</field>
+            <field name="res_model">label.label</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_label_label_tree"/>
+            <field name="context">{}</field>
+            <field name="domain">[('is_active', '=', True)]</field>
+        </record>
+        <record model="ir.actions.act_window" id="action_label_label_disabled">
+            <field name="name">Label disabled</field>
+            <field name="res_model">label.label</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_label_label_tree"/>
+            <field name="context">{}</field>
+            <field name="domain">[('is_active', '=', False)]</field>
+        </record>
+        
+        <menuitem 
+            parent="base.menu_base_partner" 
+            id="menu_label_label_root"
+            name="Label management"
+            sequence="40" 
+            />
+            <menuitem 
+                parent="label_label_root" 
+                id="menu_label_label_active"
+                action="action_label_label"
+                sequence="10" 
+                />
+            <menuitem 
+                parent="menu_label_label_active" 
+                id="menu_label_label_inactive"
+                action="action_label_label_disabled"
+                sequence="10" 
+                />
+
     </data>
 </openerp>
 

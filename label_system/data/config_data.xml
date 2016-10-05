@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
 <openerp>
     <data> 
-        <record model="ir.config_parameter" id="parameter_label_label_base_path">
-            <field name="key">label.label.base.path</field>
+        <record model="ir.config_parameter" id="parameter_label_label_base_import_path">
+            <field name="key">label.label.import.path</field>
+            <field name="value">~/etl/label</field>
+        </record>
+
+        <record model="ir.config_parameter" id="parameter_label_label_base_datastore_path">
+            <field name="key">label.label.datastore.path</field>
             <field name="value">~/etl/label</field>
         </record>
     </data>

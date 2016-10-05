@@ -50,10 +50,17 @@ class LabelLabel(orm.Model):
     #                            UTILITY:
     # -------------------------------------------------------------------------    
     # Parent management:
-    def get_config_base_path(self, cr, uid, context=None):
+    def get_config_base_path(self, cr, uid, mode, context=None):
         ''' Read parameter: 
+            mode = 'import' or 'datastore' path
         '''    
-        key = 'label.label.base.path'
+        if mode not in ['import', 'datastore']:
+            raise osv.except_osv(
+                _('Path error!'), 
+                _('Path are only datastore or import not %s') % mode)
+                
+        key = 'label.label.%s.path' % mode
+        
         config_pool = self.pool.get('ir.config_parameter')
         config_ids = config_pool.search(cr, uid, [
             ('key', '=', key)], context=context)
@@ -62,7 +69,10 @@ class LabelLabel(orm.Model):
             return []
         config_proxy = config_pool.browse(
             cr, uid, config_ids, context=context)[0]
-        return eval(config_proxy.value)    
+            
+        # Create folder if not present:    
+        os.system('mkdir -p %s' % config_proxy.value)     
+        return config_proxy.value
     
     # -------------------------------------------------------------------------    
     #                             SCHEDULED EVENT:
@@ -71,7 +81,7 @@ class LabelLabel(orm.Model):
     def scheduled_import_label_label(self, cr, uid, context=None):
         ''' Import procedure for manage module
         '''
-        
+        #TODO
         return True
         
     # -------------------------------------------------------------------------    
@@ -80,7 +90,7 @@ class LabelLabel(orm.Model):
     
     
     _columns = {
-        'active': fields.boolean('Active'),
+        'is_active': fields.boolean('Is Active?'),
         'code': fields.char('Code', size=12), 
         'name': fields.char('Label', size=64, required=True), 
         'description': fields.text('Description'),
