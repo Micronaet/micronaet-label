@@ -83,7 +83,10 @@ class LabelLabel(orm.Model):
         '''
         #TODO
         return True
-        
+
+    # -------------------------------------------------------------------------    
+    #                               BUTTON EVENT:
+    # -------------------------------------------------------------------------    
     def set_is_active_false(self, cr, uid, ids, context=None):
         ''' Set is active False
         '''    
@@ -95,11 +98,7 @@ class LabelLabel(orm.Model):
         '''    
         return self.write(cr, uid, ids, {
             'is_active': True}, context=context)
-    # -------------------------------------------------------------------------    
-    #                               BUTTON EVENT:
-    # -------------------------------------------------------------------------    
-    
-    
+        
     _columns = {
         'is_active': fields.boolean('Is Active?'),
         'code': fields.char('Code', size=12), 

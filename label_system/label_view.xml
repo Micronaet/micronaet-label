@@ -8,9 +8,11 @@
                 <form string="Label" version="7.0">        
                     <sheet>
                         <group col="4" colspan="4">
-                            <field name="is_active"/>
+                            <field name="is_active" invisible="1"/>
                             <button name="set_is_active_false" string="Disable" type="object" 
-                                attrs="{'invisible': [('is_active','=', False), ]}" icon="gtk_yes" /> 
+                                attrs="{'invisible': [('is_active','=', False), ]}" icon="gtk_no" />
+                            <button name="set_is_active_true" string="" type="object" 
+                                attrs="{'Visible': [('is_active','=','True'), ]}" icon="gtk_yes"/> 
                             <field name="code"/>
                             <field name="name"/>
                             <field name="filename"/>
@@ -52,7 +54,7 @@
             <field name="model">label.label</field>
             <field name="arch" type="xml">
                 <search string="Label" version="7.0">
-                    <field name="is_active"/>
+                    <field name="is_active" invisible="1"/>
                     <field name="code"/>        
                     <field name="name" />
                     <field name="description"/>
