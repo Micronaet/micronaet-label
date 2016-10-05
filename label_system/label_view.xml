@@ -9,26 +9,28 @@
                     <sheet>
                         <group col="4" colspan="4">
                             <field name="is_active"/>
+                            <button name="set_is_active_false" string="Disable" type="object" 
+                                attrs="{'invisible': [('is_active','=', False), ]}" icon="gtk_yes" /> 
                             <field name="code"/>
                             <field name="name"/>
-                            <field name="description"/>
                             <field name="filename"/>
                             <filed name="parser"/>
                             <field name="height"/>
                             <field name="width"/>
                             <field name="type"/>
+                            <separator string="Note:" colspan="4"/>
                             <field name="note"/>
+                            <separator string="Description:" colspan="4"/>
+                            <field name="description"/>
                         </group>
                      </sheet>        
                   </form>
               </field>
-          </record>
-                                          
+          </record>                                          
                                     
         <record model="ir.ui.view" id="view_label_label_tree">
             <field name="name">label.label.tree</field>
-            <field name="model">model.name</field>
-            <field name="type">form</field>
+            <field name="model">label.label</field>
             <field name="arch" type="xml">
                 <tree string="Label"> 
                     <field name="is_active"/>
@@ -36,7 +38,7 @@
                     <field name="name" />
                     <field name="description"/>
                     <field name="filename"/>
-                    <filed name="parser"/>
+                    <field name="parser"/>
                     <field name="height"/>
                     <field name="width"/>
                     <field name="type"/>
@@ -90,7 +92,7 @@
             sequence="40" 
             />
             <menuitem 
-                parent="label_label_root" 
+                parent="menu_label_label_root" 
                 id="menu_label_label_active"
                 action="action_label_label"
                 sequence="10" 
