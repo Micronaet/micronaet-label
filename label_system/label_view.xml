@@ -268,6 +268,15 @@
                 </tree>
             </field>
         </record>      
+        <record model="ir.actions.act_window" id="action_label_label_fast_form">
+            <field name="name">Fast label</field>
+            <field name="res_model">label.label.fast</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_label_label_fast_tree"/>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+        </record>
         
         <menuitem 
             parent="base.menu_base_partner" 
@@ -281,6 +290,13 @@
                 action="action_label_label"
                 sequence="10" 
                 />
+            <menuitem 
+                parent="menu_label_label_root" 
+                id="menu_label_label_fast"
+                action="action_label_label_fast_form"
+                sequence="20" 
+                />
+                
                 <menuitem 
                     parent="menu_label_label_active" 
                     id="menu_label_label_draft"

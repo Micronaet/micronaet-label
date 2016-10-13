@@ -88,7 +88,7 @@ class Parser(report_sxw.rml_parse):
             # Line:
             'line', 'period', 
             # Order:
-            'order_ref', 'order_data',
+            'order_ref', 'order_date',
             # Counter:
             'counter_pack', # 1 of 25 (reset every product)            
             # -----------------------------------------------------------------
@@ -100,7 +100,7 @@ class Parser(report_sxw.rml_parse):
             'image', 'drawing',
             ]
         
-        data = [] # for report loop:
+        records = [] # for report loop:
         if report_data == 'test':
             record = {
                 'counter': 3, # test 3 record
@@ -110,7 +110,7 @@ class Parser(report_sxw.rml_parse):
                 'frame': 'Frame element',
                 'color': 'Color product',                
                 }  
-            data.append(record)              
+            records.append(record)              
             
         elif report_data == 'fast':
             item_ids = data.get('record_ids', [])
@@ -137,14 +137,15 @@ class Parser(report_sxw.rml_parse):
                     'customer_code': '?', # TODO 
                     'codebar': 
                         fast.force_codebar or fast.product_id.ean13 or '', 
-                    'q_x_pack': fast.q_x_pack or fast.product_id.q_x_pack,
+                    'q_x_pack': 
+                        fast.force_q_x_pack or fast.product_id.q_x_pack,
                     'static_text1': fast.static_text1, 
                     'static_text2': fast.static_text2, 
                     'static_text3': fast.static_text3,
                     'line': fast.line or '', 
                     'period': fast.period or '', 
                     'order_ref': fast.order_ref or '',
-                    'order_data': fast.order_data or '',
+                    'order_date': fast.order_date or '',
                     'counter_pack': '', # 1 of 25 (reset every product) TODO
                     # TODO image:
                     'company_logo': False, 
@@ -153,7 +154,7 @@ class Parser(report_sxw.rml_parse):
                     'image': False, 
                     'drawing': False,
                     }
-                data.append(record)    
+                records.append(record)    
             
         elif report_data == 'production':
             pass
@@ -163,5 +164,5 @@ class Parser(report_sxw.rml_parse):
                 _('Error data'), 
                 _('Report data mode not found: %s' % report_data),
                 )        
-        return data
+        return records
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

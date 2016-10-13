@@ -274,7 +274,7 @@ class LabelLabel(orm.Model):
         '''
         fast_proxy = self.browse(cr, uid, ids, context=context)[0]
         
-        report_name = fast_proxy.report_id.label_id.report_name
+        report_name = fast_proxy.label_id.report_id.report_name
         return {
             'type': 'ir.actions.report.xml',
             'report_name': report_name,
