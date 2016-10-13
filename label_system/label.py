@@ -330,12 +330,12 @@ class LabelLabel(orm.Model):
         # -----------------------------------------------------------------
         # Line:
         'line': fields.char('Line', size=20, help='Production line'), 
-        'period': fields.char('Force code', size=20, 
+        'period': fields.char('Period', size=20, 
             help='Production period YYMM  format es.: 1601'), 
         
         # Order:
         'order_ref': fields.char('Order ref', size=30), 
-        'order_date': fields.date('Order data'), 
+        'order_date': fields.date('Order date'), 
 
         # Counter:
         'counter_pack_total': fields.integer('Counter pack total',

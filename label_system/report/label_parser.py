@@ -129,8 +129,8 @@ class Parser(report_sxw.rml_parse):
                     #'lang',
                     'name': fast.force_name or fast.product_id.name or '?', 
                     'customer_name': '?', # TODO
-                    'frame': fast.force_frame, 
-                    'color': fast.force_color, 
+                    'frame': fast.force_frame or fast.product_id.colour, # TODO
+                    'color': fast.force_color or fast.product_id.fabric, # TODO 
                     'canvas': fast.force_canvas, 
                     'code': 
                         fast.force_code or fast.product_id.default_code or '', 
