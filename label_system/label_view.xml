@@ -20,10 +20,9 @@
                             <field name="type" />
                             <field name="filename" readonly="1"/>
                             
-                            <field name="height"/>
-                            <field name="width"/>
-                            
+                            <filed name="layout_id" />
                             <filed name="report_id" readonly="1"/>
+
                             <filed name="parser" invisible="1"/>
 
                             <separator string="Description:" colspan="4"/>
@@ -46,11 +45,8 @@
                     <field name="name" />
                     <field name="description"/>
                     <field name="filename"/>
-                    <field name="parser"/>
-                    <field name="height"/>
-                    <field name="width"/>
+                    <filed name="layout_id" />                    
                     <field name="type"/>
-                    <field name="note"/>      
                     <field name="state" />
                     <button string="Confirmed" name="trigger_draft_confirmed" type="workflow" states="draft" icon="STOCK_APPLY"/>
                     <button string="Disable" name="trigger_confirmed_disabled" type="workflow" states="confirmed" icon="gtk-no"/>
@@ -67,8 +63,7 @@
                     <field name="name" />
                     <field name="description"/>
                     <field name="filename"/>
-                    <field name="height"/>
-                    <field name="width"/>
+                    <filed name="layout_id" />                    
                     <field name="type"/>
                     <field name="note"/>               
 
@@ -78,6 +73,7 @@
 
                     <group expand="0" string="Group By...">
                         <filter name="group_type" string="Type" context="{'group_by': 'type'}"/>
+                        <filter name="group_layout" string="Layout" context="{'group_by': 'layout_id'}"/>
                         <filter string="Status" context="{'group_by': 'state'}" />
                     </group>                
                 </search>
