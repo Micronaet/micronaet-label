@@ -268,6 +268,22 @@ class LabelLabel(orm.Model):
     _name = 'label.label.fast'
     _description = 'Label fast'
 
+    # Button event:
+    def print_fast_label(self, cr, uid, ids, context=None):
+        ''' Print this label
+        '''
+        fast_proxy = self.browse(cr, uid, ids, context=context)[0]
+        
+        report_name = fast_proxy.report_id.label_id.report_name
+        return {
+            'type': 'ir.actions.report.xml',
+            'report_name': report_name,
+            'datas': {
+                'report_data': 'fast',
+                'record_ids': ids,
+                },
+            }
+        
     _columns = {
         'name': fields.char('Label name', size=64, required=True), 
         'label_id': fields.many2one('label.label', 'Label'),

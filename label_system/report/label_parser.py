@@ -51,10 +51,15 @@ class Parser(report_sxw.rml_parse):
     def get_report_label(self, data=None):
         ''' Master function for generate label elements
             data:
-                report_data: test, direct, production are the current value                
+                report_data: test, fast, production are the current value                
         '''
         if data is None:
             data = {}
+        
+        # Standar:
+        cr = self.cr
+        uid = self.uid
+        context = {]
         
         report_data = data.get('report_data', 'test')
 
@@ -64,8 +69,7 @@ class Parser(report_sxw.rml_parse):
             # -----------------------------------------------------------------
             'counter', # number of label
             'multi', # number of label per page
-            'lang',
-                    
+            'lang',                    
             # -----------------------------------------------------------------
             # Product data:
             # -----------------------------------------------------------------
@@ -77,8 +81,7 @@ class Parser(report_sxw.rml_parse):
             # Extra:            
             'q_x_pack',             
             # Static:
-            'static_text1', 'static_text2', 'static_text3',
-            
+            'static_text1', 'static_text2', 'static_text3',            
             # -----------------------------------------------------------------
             # Production:
             # -----------------------------------------------------------------
@@ -87,8 +90,7 @@ class Parser(report_sxw.rml_parse):
             # Order:
             'order_ref', 'order_data',
             # Counter:
-            'counter_pack', # 1 of 25 (reset every product)
-            
+            'counter_pack', # 1 of 25 (reset every product)            
             # -----------------------------------------------------------------
             # Logo:
             # -----------------------------------------------------------------
@@ -110,8 +112,48 @@ class Parser(report_sxw.rml_parse):
                 }  
             data.append(record)              
             
-        elif report_data == 'direct':
-            pass
+        elif report_data == 'fast':
+            item_ids = data.get('record_ids', [])
+            if not item_ids:
+                raise osv.except_osv(
+                    _('Fast print'), 
+                    _('No data for fast print'),
+                    )
+            # Generate list of label:
+            fast_pool = self.pool.get('label.label.fast')
+            for fast in fast_pool.browse(cr, uid, item_ids, context=context):
+                # TODO manage counter progr.
+                record = {
+                    'counter': fast.counter or 1, # test 3 record
+                    #'multi',
+                    #'lang',
+                    'name': fast.force_name or fast.product_id.name or '?', 
+                    'customer_name': '?', # TODO
+                    'frame': fast.force_frame, 
+                    'color': fast.force_color, 
+                    'canvas': fast.force_canvas, 
+                    'code': 
+                        fast.force_code or fast.product_id.default_code or '', 
+                    'customer_code': '?', # TODO 
+                    'codebar': 
+                        fast.force_codebar or fast.product_id.ean13 or '', 
+                    'q_x_pack': fast.q_x_pack or fast.product_id.q_x_pack,
+                    'static_text1': fast.static_text1, 
+                    'static_text2': fast.static_text2, 
+                    'static_text3': fast.static_text3,
+                    'line': fast.line or '', 
+                    'period': fast.period or '', 
+                    'order_ref': fast.order_ref or '',
+                    'order_data': fast.order_data or '',
+                    'counter_pack': '', # 1 of 25 (reset every product) TODO
+                    # TODO image:
+                    'company_logo': False, 
+                    'customer_logo': False, 
+                    'recycle': False,
+                    'image': False, 
+                    'drawing': False,
+                    }
+                data.append(record)    
             
         elif report_data == 'production':
             pass
