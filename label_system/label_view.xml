@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <form string="Label" version="7.0">        
                     <header>
-                        <button string="Confirmed" name="trigger_draft_confirmed" type="workflow" states="draft" icon="gtk-apply"/>
+                        <button string="Confirmed" name="trigger_draft_confirmed" type="workflow" states="draft" icon="STOCK_APPLY"/>
                         <button string="Disable" name="trigger_confirmed_disabled" type="workflow" states="confirmed" icon="gtk-no"/>
                         <button string="Enable" name="trigger_disabled_confirmed" type="workflow" states="disabled" icon="gtk-yes"/>                        
                         <field name="state" widget="statusbar" />
@@ -16,15 +16,20 @@
                         <group col="4" colspan="4">
                             <field name="code"/>
                             <field name="name"/>
+                            
+                            <field name="type"/>
                             <field name="filename"/>
-                            <filed name="parser"/>
+                            
                             <field name="height"/>
                             <field name="width"/>
-                            <field name="type"/>
+                            
+                            <filed name="parser" invisible="1"/>
+
                             <separator string="Note:" colspan="4"/>
-                            <field name="note"/>
+                            <field name="note" nolabel="1" colspan="4"/>
+
                             <separator string="Description:" colspan="4"/>
-                            <field name="description"/>
+                            <field name="description" nolabel="1" colspan="4"/>
                         </group>
                      </sheet>        
                   </form>
@@ -46,7 +51,7 @@
                     <field name="type"/>
                     <field name="note"/>      
                     <field name="state" />
-                    <button string="Confirmed" name="trigger_draft_confirmed" type="workflow" states="draft" icon="gtk-apply"/>
+                    <button string="Confirmed" name="trigger_draft_confirmed" type="workflow" states="draft" icon="STOCK_APPLY"/>
                     <button string="Disable" name="trigger_confirmed_disabled" type="workflow" states="confirmed" icon="gtk-no"/>
                     <button string="Enable" name="trigger_disabled_confirmed" type="workflow" states="disabled" icon="gtk-yes"/>                        
                 </tree>
@@ -110,7 +115,7 @@
             parent="base.menu_base_partner" 
             id="menu_label_label_root"
             name="Label management"
-            sequence="40" 
+            sequence="30" 
             />
             <menuitem 
                 parent="menu_label_label_root" 
