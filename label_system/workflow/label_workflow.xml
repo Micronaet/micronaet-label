@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Workflow label: -->
+        <record model="workflow" id="wkf_label_label">
+            <field name="name">label.label.wkf</field>
+            <field name="osv">label.label</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <!-- Activity: -->
+        <record model="workflow.activity" id="act_label_draft">
+            <field name="wkf_id" ref="wkf_label_label" />
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">label_draft()</field>
+        </record>
+        <record model="workflow.activity" id="act_label_confirmed">
+            <field name="wkf_id" ref="wkf_label_label" />
+            <field name="name">confirmed</field>
+            <field name="kind">function</field>
+            <field name="action">label_confirmed()</field>
+        </record>
+        <record model="workflow.activity" id="act_label_disabled">
+            <field name="wkf_id" ref="wkf_label_label" />
+            <field name="name">disabled</field>
+            <field name="kind">function</field>
+            <field name="action">label_disabled()</field>
+        </record>
+        
+        <!-- Trigger: -->
+        <record model="workflow.transition" id="trans_trigger_draft_confirmed">
+            <field name="act_from" ref="act_label_draft" />
+            <field name="act_to" ref="act_label_confirmed" />
+            <field name="signal">trigger_draft_confirmed</field>
+        </record>
+        <record model="workflow.transition" id="trans_trigger_confirmed_disabled">
+            <field name="act_from" ref="act_label_confirmed" />
+            <field name="act_to" ref="act_label_disabled" />
+            <field name="signal">trigger_confirmed_disabled</field>
+        </record>
+        <record model="workflow.transition" id="trans_trigger_disabled_confirmed">
+            <field name="act_from" ref="act_label_disabled" />
+            <field name="act_to" ref="act_label_confirmed" />
+            <field name="signal">trigger_disabled_confirmed</field>
+        </record>
+        
+    </data>
+</openerp>

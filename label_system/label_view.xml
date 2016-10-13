@@ -6,11 +6,14 @@
             <field name="model">label.label</field>
             <field name="arch" type="xml">
                 <form string="Label" version="7.0">        
+                    <header>
+                        <button string="Confirmed" name="trigger_draft_confirmed" type="workflow" states="draft" icon="gtk-apply"/>
+                        <button string="Disable" name="trigger_confirmed_disabled" type="workflow" states="confirmed" icon="gtk-no"/>
+                        <button string="Enable" name="trigger_disabled_confirmed" type="workflow" states="disabled" icon="gtk-yes"/>                        
+                        <field name="state" widget="statusbar" />
+                    </header>
                     <sheet>
                         <group col="4" colspan="4">
-                            <field name="is_active" invisible="1"/>
-                            <button name="set_is_active_false" string="Disable" type="object" attrs="{'invisible': [('is_active','=', False)]}" icon="gtk-no" />
-                            <button name="set_is_active_true" string="Enable" type="object" attrs="{'invisible': [('is_active','=', True)]}" icon="gtk-yes"/> 
                             <field name="code"/>
                             <field name="name"/>
                             <field name="filename"/>
@@ -32,10 +35,7 @@
             <field name="name">label.label.tree</field>
             <field name="model">label.label</field>
             <field name="arch" type="xml">
-                <tree string="Label"> 
-                    <field name="is_active" invisible="1"/>
-                    <button name="set_is_active_false" string="Disable" type="object" attrs="{'invisible': [('is_active','=', False)]}" icon="gtk-no" />
-                    <button name="set_is_active_true" string="Enable" type="object" attrs="{'invisible': [('is_active','=', True)]}" icon="gtk-yes"/> 
+                <tree string="Label" colors="red:state=='disabled';grey:state=='draft';black:state=='confirmed'"> 
                     <field name="code"/>       
                     <field name="name" />
                     <field name="description"/>
@@ -45,25 +45,35 @@
                     <field name="width"/>
                     <field name="type"/>
                     <field name="note"/>      
+                    <field name="state" />
+                    <button string="Confirmed" name="trigger_draft_confirmed" type="workflow" states="draft" icon="gtk-apply"/>
+                    <button string="Disable" name="trigger_confirmed_disabled" type="workflow" states="confirmed" icon="gtk-no"/>
+                    <button string="Enable" name="trigger_disabled_confirmed" type="workflow" states="disabled" icon="gtk-yes"/>                        
                 </tree>
             </field>
         </record> 
-        
         <record model="ir.ui.view" id="view_label_label_search">
             <field name="name">label.label.search</field>
             <field name="model">label.label</field>
             <field name="arch" type="xml">
                 <search string="Label" version="7.0">
-                    <field name="is_active" invisible="1"/>
                     <field name="code"/>        
                     <field name="name" />
                     <field name="description"/>
                     <field name="filename"/>
-                    <filed name="parser"/>
                     <field name="height"/>
                     <field name="width"/>
                     <field name="type"/>
                     <field name="note"/>               
+
+                    <filter name="state_draft" string="Draft state" domain="[('state','=','draft')]"/>
+                    <filter name="state_confirmed" string="Confirmed state" domain="[('state','=','confirmed')]"/>
+                    <filter name="state_disabled" string="Disabled state" domain="[('state','=','disabled')]"/>
+
+                    <group expand="0" string="Group By...">
+                        <filter name="group_type" string="Type" context="{'group_by': 'type'}"/>
+                        <filter string="Status" context="{'group_by': 'state'}" />
+                    </group>                
                 </search>
             </field>
         </record>
@@ -75,7 +85,16 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_label_label_tree"/>
             <field name="context">{}</field>
-            <field name="domain">[('is_active', '=', True)]</field>
+            <field name="domain">[('state', 'in', ('confirmed', 'draft'))]</field>
+        </record>
+        <record model="ir.actions.act_window" id="action_label_label_draftd">
+            <field name="name">Label to confirm</field>
+            <field name="res_model">label.label</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_label_label_tree"/>
+            <field name="context">{}</field>
+            <field name="domain">[('state', '=', 'draft')]</field>
         </record>
         <record model="ir.actions.act_window" id="action_label_label_disabled">
             <field name="name">Label disabled</field>
@@ -84,7 +103,7 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_label_label_tree"/>
             <field name="context">{}</field>
-            <field name="domain">[('is_active', '=', False)]</field>
+            <field name="domain">[('state', '=', 'disabled')]</field>
         </record>
         
         <menuitem 
@@ -99,12 +118,18 @@
                 action="action_label_label"
                 sequence="10" 
                 />
-            <menuitem 
-                parent="menu_label_label_active" 
-                id="menu_label_label_inactive"
-                action="action_label_label_disabled"
-                sequence="10" 
-                />
+                <menuitem 
+                    parent="menu_label_label_active" 
+                    id="menu_label_label_draft"
+                    action="action_label_label_draft"
+                    sequence="10" 
+                    />
+                <menuitem 
+                    parent="menu_label_label_active" 
+                    id="menu_label_label_inactive"
+                    action="action_label_label_disabled"
+                    sequence="20" 
+                    />
 
     </data>
 </openerp>

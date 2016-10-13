@@ -75,32 +75,52 @@ class LabelLabel(orm.Model):
         return config_proxy.value
     
     # -------------------------------------------------------------------------    
-    #                             SCHEDULED EVENT:
+    #                              SCHEDULE EVENT:
     # -------------------------------------------------------------------------    
     # Import label (scheduled)
     def scheduled_import_label_label(self, cr, uid, context=None):
         ''' Import procedure for manage module
         '''
-        #TODO
+        extension = 'ODT'
+        folder_in = self.get_config_base_path(c
+            cr, uid, 'import', context=context)
+        folder_out = self.get_config_base_path(
+            cr, uid, 'datastore', context=context)
+        for f in os.listdir(folder_in):
+            if f[-3:].upper() != extension: 
+               continue # jump
+               
+            # Import label:
+            self.create(cr, uid, {
+                
+                }, context=context)   
         return True
 
     # -------------------------------------------------------------------------    
-    #                               BUTTON EVENT:
+    #                               WORKFLOW EVENT:
+    # -------------------------------------------------------------------------        
+    def label_draft(self, cr, uid, ids, context=None):
+        ''' Draft WF
+        ''' 
+        return self.write(cr, uid, ids, {
+            'state': 'draft'}, context=context)
+    
+    def label_confirmed(self, cr, uid, ids, context=None):
+        ''' Confirmed WF
+        ''' 
+        return self.write(cr, uid, ids, {
+            'state': 'confirmed'}, context=context)
+
+    def label_disabled(self, cr, uid, ids, context=None):
+        ''' Disabled WF
+        ''' 
+        return self.write(cr, uid, ids, {
+            'state': 'disabled'}, context=context)
+        
     # -------------------------------------------------------------------------    
-    def set_is_active_false(self, cr, uid, ids, context=None):
-        ''' Set is active False
-        '''    
-        return self.write(cr, uid, ids, {
-            'is_active': False}, context=context)
-        
-    def set_is_active_true(self, cr, uid, ids, context=None):
-        ''' Set is active False
-        '''    
-        return self.write(cr, uid, ids, {
-            'is_active': True}, context=context)
-        
+    #                                 ORM:
+    # -------------------------------------------------------------------------        
     _columns = {
-        'is_active': fields.boolean('Is Active?'),
         'code': fields.char('Code', size=12), 
         'name': fields.char('Label', size=64, required=True), 
         'description': fields.text('Description'),
@@ -119,9 +139,17 @@ class LabelLabel(orm.Model):
             ], 'Type of label', required=True),
         
         'note': fields.text('Note'),
+        
+        # WF status:
+        'state': fields.selection([
+            ('draft', 'Draft'),
+            ('confirmed', 'Confirmed'),
+            ('disabled', 'Disabled'),
+            ], 'State'),
         }
     
     _defaults = {
        'type': lambda *a: 'article',
+       'state': lambda *x: 'draft',
        }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

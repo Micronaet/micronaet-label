@@ -36,6 +36,7 @@
         'security/label_group.xml',
         'security/ir.model.access.csv',    
         'label_view.xml',
+        'workflow/label_workflow.xml',
         'scheduler.xml',
         ],
     'active': False,
