@@ -15,21 +15,22 @@
                     <sheet>
                         <group col="4" colspan="4">
                             <field name="code"/>
-                            <field name="name"/>
+                            <field name="name" />
                             
-                            <field name="type"/>
-                            <field name="filename"/>
+                            <field name="type" />
+                            <field name="filename" readonly="1"/>
                             
                             <field name="height"/>
                             <field name="width"/>
                             
+                            <filed name="report_id" readonly="1"/>
                             <filed name="parser" invisible="1"/>
-
-                            <separator string="Note:" colspan="4"/>
-                            <field name="note" nolabel="1" colspan="4"/>
 
                             <separator string="Description:" colspan="4"/>
                             <field name="description" nolabel="1" colspan="4"/>
+
+                            <separator string="Note:" colspan="4"/>
+                            <field name="note" nolabel="1" colspan="4"/>
                         </group>
                      </sheet>        
                   </form>

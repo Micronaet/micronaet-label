@@ -43,9 +43,38 @@ class LabelLabel(orm.Model):
     """ Model name: LabelLabel
     """
 
+    _name = 'label.layout'
+    _description = 'Label layout'
+
+    _columns = {    
+        'code': fields.char('Code', size=12), 
+        'name': fields.char('Label format', size=64, required=True), 
+        'note': fields.text('Note'),
+        'continue': fields.boolean('Continue format'),
+        
+        # Dimension:
+        'height': fields.float('Height', help='Height of label in mm.'),
+        'width': fields.float('Width', help='Width of label in mm.'),
+        
+        # Interspace:
+        'top': fields.float('Left', help='Top interspace in mm.'),
+        'right': fields.float('Left', help='Right interspace in mm.'),
+        'left': fields.float('Height', help='Left interspace in mm.'),        
+
+        # Numer of label:
+        'total': fields.integer('Total', help='Total label per row'),        
+        }    
+
+class LabelLabel(orm.Model):
+    """ Model name: LabelLabel
+    """
+
     _name = 'label.label'
     _description = 'Label'
 
+    _columns = {
+    
+        }
     # -------------------------------------------------------------------------    
     #                            UTILITY:
     # -------------------------------------------------------------------------    
@@ -81,19 +110,70 @@ class LabelLabel(orm.Model):
     def scheduled_import_label_label(self, cr, uid, context=None):
         ''' Import procedure for manage module
         '''
-        extension = 'ODT'
-        folder_in = self.get_config_base_path(
-            cr, uid, 'import', context=context)
-        folder_out = self.get_config_base_path(
-            cr, uid, 'datastore', context=context)
+        extension = 'odt'
+        
+        report_pool = self.pool.get('ir.actions.report.xml')
+        
+        folder_in = os.path.expanduser(self.get_config_base_path(
+            cr, uid, 'import', context=context))
+        folder_out = os.path.expanduser(self.get_config_base_path(
+            cr, uid, 'datastore', context=context))
         for f in os.listdir(folder_in):
-            if f[-3:].upper() != extension: 
+            if f[-3:].lower() != extension: 
                continue # jump
                
-            # Import label:
-            self.create(cr, uid, {
-                
-                }, context=context)   
+            # -------------   
+            # Create label:
+            # -------------   
+            label_id = self.create(cr, uid, {
+                'name': f[:-4], # file name no ext.
+                'description': f[:-4],
+                'filename': f,
+                # TODO report_id 
+                }, context=context)
+            f_in = os.path.join(folder_id, f)   
+            f_out = os.path.join(folder_out, '%s.%s' % (label_id, extension))
+            try:
+                os.rename(f_in, f_out)
+            except:
+                _logger.error('Error import label: %s/%s' % (folder_in, f))
+                self.unlink(cr, uid, label_id, context=context)
+                continue
+
+            # --------------------
+            # Create report aeroo:
+            # --------------------
+            report_id = report_pool.create(cr, uid, {
+                'name': f,
+                'type': 'ir.actions.report.xml',
+                'model': 'label.label',
+                'report_name': 'label_label_report_%s' % label_id,
+                'report_type': 'aeroo',
+                'in_format': 'oo-odt',
+                #'out_format': 'oo-pdf',
+                'parse_loc': 'label_system/report/label_parser.py',
+                'report_rml': f_out,
+                'parse_stat': 'loc',
+                'tml_source': 'file',
+                }, context=context) 
+            '''
+            TODO   
+            <ir_set>
+                <field eval="'action'" name="key"/>
+                <field eval="'client_print_multi'" name="key2"/>
+                <field eval="['mrp.bom']" name="models"/>
+                <field name="name">action_fiam_bom_report_no_cost</field>
+                <field eval="'ir.actions.report.xml,'+str(aeroo_fiam_bom_custom_no_cost)" name="value"/>
+                <field eval="True" name="isobject"/>
+                <field eval="True" name="replace"/>
+            </ir_set>
+            '''
+            # ----------------------------
+            # Update information on label:
+            # ----------------------------
+            self.write(cr, uid, label_id, {
+                'report_id': report_id,
+                }, context=context)                   
         return True
 
     # -------------------------------------------------------------------------    
@@ -121,15 +201,18 @@ class LabelLabel(orm.Model):
     #                                 ORM:
     # -------------------------------------------------------------------------        
     _columns = {
+        'create_date': fields.date('Create date'),
         'code': fields.char('Code', size=12), 
         'name': fields.char('Label', size=64, required=True), 
         'description': fields.text('Description'),
 
-        'filename': fields.char('Filename', size=64, required=True),
+        'filename': fields.char('Filename', size=64, 
+            help='original file name'),
+        'layout_id': fields.many2one(
+            'label.layout', 'Layout format'),
+        'report_id': fields.many2one(
+            'ir.actions.report.xml', 'Report action'),
         'parser': fields.char('Parser', size=64),
-
-        'height': fields.float('Height', help='Height of label in mm.'),
-        'width': fields.float('Width', help='Width of label in mm.'),
 
         'type': fields.selection([
             ('article', 'Article'),
