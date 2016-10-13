@@ -72,9 +72,6 @@ class LabelLabel(orm.Model):
     _name = 'label.label'
     _description = 'Label'
 
-    _columns = {
-    
-        }
     # -------------------------------------------------------------------------    
     #                            UTILITY:
     # -------------------------------------------------------------------------    
@@ -260,6 +257,100 @@ class LabelLabel(orm.Model):
     
     _defaults = {
        'type': lambda *a: 'article',
-       'state': lambda *x: 'draft',
+       'state': lambda *x: 'draft',       
        }
+
+
+class LabelLabel(orm.Model):
+    """ Model name: Label saved for fast print
+    """
+
+    _name = 'label.label.fast'
+    _description = 'Label fast'
+
+    _columns = {
+        'name': fields.char('Label name', size=64, required=True), 
+        'label_id': fields.many2one('label.label', 'Label', required=True),
+        
+        # -----------------------------------------------------------------
+        # Label:
+        # -----------------------------------------------------------------
+        'counter': fields.integer('Counter', required=True, 
+            help='Number of label printed'),
+        'multi': fields.integer('Multilabel', help='Number of label per page'),
+        #'lang',
+                
+        # -----------------------------------------------------------------
+        # Product data:
+        # -----------------------------------------------------------------
+        'product_id': fields.many2one('product.product', 'Product'),
+        'partner_id': fields.many2one('res.partner', 'Partner'),
+        'order_id': fields.many2one('sale.order', 'Order'),
+        'line_id': fields.many2one('sale.order.line', 'Order line'),
+        'mrp_id': fields.many2one('mrp.production', 'Production'),
+        
+        # Description (force product if present):
+        'line_name': fields.char('Force name', size=64), 
+        'force_customer_name': fields.char('Force name', size=64),
+        'force_frame': fields.text('Force frame'), 
+        'force_color': fields.text('Force color'), 
+        'force_canvas': fields.text('Force canvas'), 
+
+        # Code:
+        'force_code': fields.char('Force code', size=20), 
+        'force_customer_code': fields.char('Force customer code', size=20), 
+        'force_codebar': fields.char('Force codebar', size=13), 
+        
+        # Extra:            
+        'force_q_x_pack': fields.integer('Force q. x pack'),
+        
+        # Static:
+        'static_text1': fields.text('Static text 1'), 
+        'static_text2': fields.text('Static text 2'), 
+        'static_text3': fields.text('Static text 3'), 
+        
+        # -----------------------------------------------------------------
+        # Production:
+        # -----------------------------------------------------------------
+        # Line:
+        'line': fields.char('Line', size=20, help='Production line'), 
+        'period': fields.char('Force code', size=20, 
+            help='Production period YYMM  format es.: 1601'), 
+        
+        # Order:
+        'order_ref': fields.char('Order ref', size=30), 
+        'order_date': fields.date('Order data', ), 
+
+        # Counter:
+        'counter_pack_total': fields.integer('Counter pack total',
+            help='Total pack for format: 1 / 25 (reset every product)')
+        
+        # -----------------------------------------------------------------
+        # Logo:
+        # -----------------------------------------------------------------
+        # TODO
+        # Logo Image:
+        'with_company_logo': fields.boolean('With company logo'),
+        'with_customer_logo': fields.boolean('With customer logo'),
+        'with_recycle_logo': fields.boolean('With recycle logo'),
+        # Picture image:
+        'with_image_logo': fields.boolean('With image logo'),
+        'with_drawing_logo': fields.boolean('With drawing logo'),
+        }
+        
+    _defaults = {
+        'counter': lambda *x: 1,
+        }
+        
+class LabelLabel(orm.Model):
+    """ Model name: Label relations
+    """
+
+    _inherit = 'label.label'
+    
+    _columns = {
+        'fast_ids': fields.one2many(
+            'label.label.fast', 'label_id', 'Fast label'),
+        }
+       
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -58,13 +58,13 @@ class Parser(report_sxw.rml_parse):
         
         report_data = data.get('report_data', 'test')
 
-        field_list = [
+        field_list = [ # XXX schemd for check, not used for now
             # -----------------------------------------------------------------
             #                      Label report:
             # -----------------------------------------------------------------
             'counter', # number of label
             'multi', # number of label per page
-            'lang'
+            'lang',
                     
             # -----------------------------------------------------------------
             # Product data:
@@ -85,7 +85,7 @@ class Parser(report_sxw.rml_parse):
             # Line:
             'line', 'period', 
             # Order:
-            'order_ref', 'order_data'
+            'order_ref', 'order_data',
             # Counter:
             'counter_pack', # 1 of 25 (reset every product)
             
