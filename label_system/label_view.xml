@@ -61,7 +61,7 @@
             <field name="arch" type="xml">
                 <form string="Label" version="7.0">        
                     <header>
-                        <button name="test_report_label" string="Test label" type="object" attrs="{'invisible': [('report_id','=',False)]}"/>
+                        <button name="test_report_label" string="Test label" type="object" attrs="{'invisible': [('report_id','=',False)]}" icon="gtk-print"/>
                         
                         <button string="Confirmed" name="trigger_draft_confirmed" type="workflow" states="draft" icon="STOCK_APPLY"/>
                         <button string="Disable" name="trigger_confirmed_disabled" type="workflow" states="confirmed" icon="gtk-no"/>
@@ -118,6 +118,8 @@
                     <button string="Confirmed" name="trigger_draft_confirmed" type="workflow" states="draft" icon="STOCK_APPLY"/>
                     <button string="Disable" name="trigger_confirmed_disabled" type="workflow" states="confirmed" icon="gtk-no"/>
                     <button string="Enable" name="trigger_disabled_confirmed" type="workflow" states="disabled" icon="gtk-yes"/>                        
+
+                    <button name="test_report_label" string="Test label" type="object" attrs="{'invisible': [('report_id','=',False)]}" icon="gtk-print"/>
                 </tree>
             </field>
         </record> 
@@ -184,7 +186,7 @@
             <field name="arch" type="xml">
                 <form string="Label fast" version="7.0">        
                     <header>
-                        <button name="print_fast_label" string="Print" type="object" />
+                        <button name="print_fast_label" string="Print" type="object" icon="gtk-print" />
                     </header>                    
                     <sheet>
                         <group col="4" colspan="4">
@@ -204,10 +206,6 @@
                                     </group>
                                 </page>
                                 <page string="Force">
-                                    <group col="4" colspan="4">
-                                    </group>
-                                </page>
-                                <page string="Link data">
                                     <group col="4" colspan="4">
                                         <field name="force_name" />
                                         <field name="force_customer_name" />
@@ -266,6 +264,7 @@
                     <field name="order_id" />
                     <field name="line_id" />
                     <field name="mrp_id" />                    
+                    <button name="print_fast_label" string="Print" type="object" icon="gtk-print"/>
                 </tree>
             </field>
         </record>      

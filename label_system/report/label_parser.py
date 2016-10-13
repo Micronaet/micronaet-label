@@ -59,7 +59,7 @@ class Parser(report_sxw.rml_parse):
         # Standar:
         cr = self.cr
         uid = self.uid
-        context = {]
+        context = {}
         
         report_data = data.get('report_data', 'test')
 
