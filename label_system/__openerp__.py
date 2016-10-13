@@ -35,8 +35,10 @@
     'data': [
         'security/label_group.xml',
         'security/ir.model.access.csv',    
-        'label_view.xml',
+
         'workflow/label_workflow.xml',
+
+        'label_view.xml',
         'scheduler.xml',
         ],
     'active': False,

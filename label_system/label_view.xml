@@ -87,7 +87,7 @@
             <field name="context">{}</field>
             <field name="domain">[('state', 'in', ('confirmed', 'draft'))]</field>
         </record>
-        <record model="ir.actions.act_window" id="action_label_label_draftd">
+        <record model="ir.actions.act_window" id="action_label_label_draft">
             <field name="name">Label to confirm</field>
             <field name="res_model">label.label</field>
             <field name="view_type">form</field>

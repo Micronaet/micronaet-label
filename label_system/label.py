@@ -82,7 +82,7 @@ class LabelLabel(orm.Model):
         ''' Import procedure for manage module
         '''
         extension = 'ODT'
-        folder_in = self.get_config_base_path(c
+        folder_in = self.get_config_base_path(
             cr, uid, 'import', context=context)
         folder_out = self.get_config_base_path(
             cr, uid, 'datastore', context=context)
