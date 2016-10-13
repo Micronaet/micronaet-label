@@ -114,6 +114,7 @@ class LabelLabel(orm.Model):
         extension = 'odt'
         
         report_pool = self.pool.get('ir.actions.report.xml')
+        partner_pool = self.pool.get('res.partner')
         
         folder_in = os.path.expanduser(self.get_config_base_path(
             cr, uid, 'import', context=context))
@@ -136,8 +137,10 @@ class LabelLabel(orm.Model):
             
             if len(name_blocks) == 4:
                 # 0. type:
-                if name_blocks[0] in self._columns['type']:
-                    type_block = ''
+                available_selection = [
+                    item[0] for item in self._columns['type'].selection]
+                if name_blocks[0] in available_selection:
+                    type_block = name_blocks[0]
                     
                 # 1. name:
                 name_block = name_blocks[1] or name
@@ -147,10 +150,12 @@ class LabelLabel(orm.Model):
                 
                 # 3. partner
                 partner_block = name_blocks[3] or False                
-                patner_ids = partner_pool.search(cr, uid, [
+                partner_ids = partner_pool.search(cr, uid, [
                     ('label_code', '=', partner_block)], context=context)
                 if partner_ids:
                     partner_id = partner_ids[0]
+                else:
+                    partner_ids = False    
             else:        
                 # Defaulf value for 4 block:
                 type_block = 'article'
@@ -182,7 +187,7 @@ class LabelLabel(orm.Model):
             # Create report aeroo:
             # --------------------
             report_id = report_pool.create(cr, uid, {
-                'name': 'Label %s: %s' % (label_id, name),
+                'name': 'ID%s: %s' % (label_id, name_block),
                 'type': 'ir.actions.report.xml',
                 'model': 'label.label',
                 'report_name': 'label_label_report_%s' % label_id,
