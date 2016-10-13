@@ -23,31 +23,64 @@
 ##############################################################################
 import os
 import sys
-import logging
-import openerp
-import openerp.netsvc as netsvc
-import openerp.addons.decimal_precision as dp
-from openerp.osv import fields, osv, expression, orm
-from datetime import datetime, timedelta
-from openerp import SUPERUSER_ID#, api
-from openerp import tools
+#import logging
+#import openerp
+#import openerp.netsvc as netsvc
+#import openerp.addons.decimal_precision as dp
+#from openerp.osv import fields, osv, expression, orm
+#from datetime import datetime, timedelta
+#from openerp import SUPERUSER_ID#, api
+#from openerp import tools
 from openerp.report import report_sxw
 from openerp.report.report_sxw import rml_parse
-from datetime import datetime, timedelta
-from openerp.tools.translate import _
-from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT, 
-    DEFAULT_SERVER_DATETIME_FORMAT, 
-    DATETIME_FORMATS_MAP, 
-    float_compare)
+#from datetime import datetime, timedelta
+#from openerp.tools.translate import _
 
-_logger = logging.getLogger(__name__)
-
+#_logger = logging.getLogger(__name__)
 
 class Parser(report_sxw.rml_parse):
+    
+    # Constructor
     def __init__(self, cr, uid, name, context):        
         super(Parser, self).__init__(cr, uid, name, context)
         self.localcontext.update({
+            'get_report_label': self.get_report_label,
         })
-
-   
+    
+    # Method for local context    
+    def get_report_label(self, data=None):
+        ''' Master function for generate label elements
+            data:
+                report_data: test, direct, production are the current value
+                
+        '''
+        
+        if data is None:
+            data = {}
+        
+        report_data = data.get('report_data', 'test')
+        data = []
+        if report_data == 'test':
+            record = {
+                'counter': 3, # test 3 record
+                'name': 'Product name',
+                'code': 'Code',
+                'codebar': '8032615811506', # if not hide
+                'frame': 'Frame element',
+                'color': 'Color product',                
+                }  
+            data.append(record)              
+            
+        elif report_data == 'direct':
+            pass
+            
+        elif report_data == 'production':
+            pass
+            
+        else:
+            raise osv.except_osv(
+                _('Error data'), 
+                _('Report data mode not found: %s' % report_data),
+                )        
+        return data
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

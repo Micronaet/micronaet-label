@@ -122,7 +122,7 @@ class LabelLabel(orm.Model):
             cr, uid, 'import', context=context))
         folder_out = os.path.expanduser(self.get_config_base_path(
             cr, uid, 'datastore', context=context))
-        import pdb; pdb.set_trace()
+
         for f in os.listdir(folder_in):
             if f[-3:].lower() != extension: 
                continue # jump
@@ -130,13 +130,14 @@ class LabelLabel(orm.Model):
             # -------------   
             # Create label:
             # -------------   
+            name = f[:-4]
             label_id = self.create(cr, uid, {
-                'name': f[:-4], # file name no ext.
-                'description': f[:-4],
+                'name': name, # file name no ext.
+                'description': name,
                 'filename': f,
                 # TODO report_id 
                 }, context=context)
-            f_in = os.path.join(folder_id, f)   
+            f_in = os.path.join(folder_in, f)   
             f_out = os.path.join(folder_out, '%s.%s' % (label_id, extension))
             try:
                 os.rename(f_in, f_out)
@@ -149,16 +150,16 @@ class LabelLabel(orm.Model):
             # Create report aeroo:
             # --------------------
             report_id = report_pool.create(cr, uid, {
-                'name': f,
+                'name': 'Label %s: %s' % (label_id, name),
                 'type': 'ir.actions.report.xml',
                 'model': 'label.label',
                 'report_name': 'label_label_report_%s' % label_id,
                 'report_type': 'aeroo',
                 'in_format': 'oo-odt',
                 #'out_format': 'oo-pdf',
-                'parse_loc': 'label_system/report/label_parser.py',
+                'parser_loc': 'label_system/report/label_parser.py',
                 'report_rml': f_out,
-                'parse_stat': 'loc',
+                'parser_state': 'loc',
                 'tml_source': 'file',
                 }, context=context) 
             '''
@@ -181,6 +182,25 @@ class LabelLabel(orm.Model):
                 }, context=context)                   
         return True
 
+    # -------------------------------------------------------------------------    
+    #                               BUTTON EVENT:
+    # -------------------------------------------------------------------------        
+    def test_report_label(self, cr, uid, ids, context=None):
+        ''' Generate a test label
+        '''
+        assert len(ids) == 1, 'Works only with one record a time'
+        
+        label_proxy = self.browse(cr, uid, ids, context=context)[0]
+        
+        report_name = label_proxy.report_id.report_name
+        return {
+            'type': 'ir.actions.report.xml',
+            'report_name': report_name,
+            'datas': {
+                'report_data': 'test',
+                },
+            }
+        
     # -------------------------------------------------------------------------    
     #                               WORKFLOW EVENT:
     # -------------------------------------------------------------------------        
@@ -213,6 +233,8 @@ class LabelLabel(orm.Model):
 
         'filename': fields.char('Filename', size=64, 
             help='original file name'),
+        'partner_id': fields.many2one(
+            'res.partner', 'Partner'),
         'layout_id': fields.many2one(
             'label.layout', 'Layout format'),
         'report_id': fields.many2one(

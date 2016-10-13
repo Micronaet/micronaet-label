@@ -61,9 +61,11 @@
             <field name="arch" type="xml">
                 <form string="Label" version="7.0">        
                     <header>
+                        <button name="test_report_label" string="Test label" type="object" attrs="{'invisible': [('report_id','=',False)]}"/>
+                        
                         <button string="Confirmed" name="trigger_draft_confirmed" type="workflow" states="draft" icon="STOCK_APPLY"/>
                         <button string="Disable" name="trigger_confirmed_disabled" type="workflow" states="confirmed" icon="gtk-no"/>
-                        <button string="Enable" name="trigger_disabled_confirmed" type="workflow" states="disabled" icon="gtk-yes"/>                        
+                        <button string="Enable" name="trigger_disabled_confirmed" type="workflow" states="disabled" icon="gtk-yes"/>
                         <field name="state" widget="statusbar" />
                     </header>
                     <sheet>
@@ -77,6 +79,7 @@
                             <field name="layout_id" />
                             <field name="report_id" readonly="1"/>
 
+                            <field name="partner_id" />
                             <field name="parser" invisible="1"/>
 
                             <separator string="Description:" colspan="4"/>
@@ -94,12 +97,14 @@
             <field name="name">label.label.tree</field>
             <field name="model">label.label</field>
             <field name="arch" type="xml">
-                <tree string="Label" colors="red:state=='disabled';grey:state=='draft';black:state=='confirmed'"> 
+                <tree string="Label" colors="red:report_id==False;grey:state=='disabled';blue:state=='draft';black:state=='confirmed'"> 
                     <field name="code"/>       
                     <field name="name" />
                     <field name="description"/>
                     <field name="filename"/>
                     <field name="layout_id" />                    
+                    <field name="partner_id" />
+                    <field name="report_id" />
                     <field name="type"/>
                     <field name="state" />
                     <button string="Confirmed" name="trigger_draft_confirmed" type="workflow" states="draft" icon="STOCK_APPLY"/>
@@ -117,6 +122,7 @@
                     <field name="name" />
                     <field name="description"/>
                     <field name="filename"/>
+                    <field name="partner_id" />
                     <field name="layout_id" />                    
                     <field name="type"/>
                     <field name="note"/>               
@@ -127,6 +133,7 @@
 
                     <group expand="0" string="Group By...">
                         <filter name="group_type" string="Type" context="{'group_by': 'type'}"/>
+                        <filter name="group_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
                         <filter name="group_layout" string="Layout" context="{'group_by': 'layout_id'}"/>
                         <filter string="Status" context="{'group_by': 'state'}" />
                     </group>                
@@ -190,6 +197,7 @@
                 parent="menu_label_label_root" 
                 id="menu_label_label_configuration"
                 sequence="99" 
+                name="Configuration"
                 />
                 <menuitem 
                     parent="menu_label_label_configuration" 
