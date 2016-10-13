@@ -190,40 +190,59 @@
                             <field name="counter" />
                             <field name="multi" />
                             
-                            <field name="product_id" />
-                            <field name="partner_id" />
-                            <field name="order_id" />
-                            <field name="line_id" />
-                            <field name="mrp_id" />
-                            
-                            <field name="force_name" />
-                            <field name="force_customer_name" />
-                            <field name="force_frame" />
-                            <field name="force_color" />
-                            <field name="force_canvas" />
-
-                            <field name="force_code" />
-                            <field name="force_customer_code" />
-                            <field name="force_codebar" />
-                            
-                            <field name="force_q_x_pack" />
-
-                            <field name="static_text1" />
-                            <field name="static_text2" />
-                            <field name="static_text3" />
-
-                            <field name="line" />
-                            <field name="period" />
-                            <field name="order_ref" />
-                            <field name="order_date" />
-
-                            <field name="counter_pack_total" />
-
-                            <field name="with_company_logo" />
-                            <field name="with_customer_logo" />
-                            <field name="with_recycle_logo" />
-                            <field name="with_image_logo" />
-                            <field name="with_drawing_logo" />
+                            <notebook colspan="4">
+                                <page string="Link data">
+                                    <group col="4" colspan="4">
+                                        <field name="product_id" />
+                                        <field name="partner_id" />
+                                        <field name="order_id" />
+                                        <field name="line_id" />
+                                        <field name="mrp_id" />
+                                    </group>
+                                </page>
+                                <page string="Force">
+                                    <group col="4" colspan="4">
+                                    </group>
+                                </page>
+                                <page string="Link data">
+                                    <group col="4" colspan="4">
+                                        <field name="force_name" />
+                                        <field name="force_customer_name" />
+                                        <field name="force_frame" />
+                                        <field name="force_color" />
+                                        <field name="force_canvas" />
+                                        <field name="force_code" />
+                                        <field name="force_customer_code" />
+                                        <field name="force_codebar" />
+                                        <field name="force_q_x_pack" />
+                                    </group>
+                                </page>
+                                <page string="Static text">
+                                    <group col="4" colspan="4">
+                                        <field name="static_text1" />
+                                        <field name="static_text2" />
+                                        <field name="static_text3" />
+                                    </group>
+                                </page>
+                                <page string="Production">
+                                    <group col="4" colspan="4">
+                                        <field name="line" />
+                                        <field name="period" />
+                                        <field name="order_ref" />
+                                        <field name="order_date" />
+                                        <field name="counter_pack_total" />
+                                    </group>
+                                </page>
+                                <page string="Logo">
+                                    <group col="4" colspan="4">
+                                        <field name="with_company_logo" />
+                                        <field name="with_customer_logo" />
+                                        <field name="with_recycle_logo" />
+                                        <field name="with_image_logo" />
+                                        <field name="with_drawing_logo" />
+                                    </group>
+                                </page>
+                            </notebook>
                         </group>
                      </sheet>        
                   </form>
@@ -235,7 +254,7 @@
             <field name="arch" type="xml">
                 <tree string="Label fast">
                     <field name="name" />
-                    <field name="label_id" />
+                    <field name="label_id" invisible="context.get('form_embedded', False)"/>
                     <field name="counter" />
                     <field name="multi" />
                     

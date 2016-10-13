@@ -270,7 +270,7 @@ class LabelLabel(orm.Model):
 
     _columns = {
         'name': fields.char('Label name', size=64, required=True), 
-        'label_id': fields.many2one('label.label', 'Label', required=True),
+        'label_id': fields.many2one('label.label', 'Label'),
         
         # -----------------------------------------------------------------
         # Label:
@@ -290,7 +290,7 @@ class LabelLabel(orm.Model):
         'mrp_id': fields.many2one('mrp.production', 'Production'),
         
         # Description (force product if present):
-        'line_name': fields.char('Force name', size=64), 
+        'force_name': fields.char('Force name', size=64), 
         'force_customer_name': fields.char('Force name', size=64),
         'force_frame': fields.text('Force frame'), 
         'force_color': fields.text('Force color'), 
@@ -319,11 +319,11 @@ class LabelLabel(orm.Model):
         
         # Order:
         'order_ref': fields.char('Order ref', size=30), 
-        'order_date': fields.date('Order data', ), 
+        'order_date': fields.date('Order data'), 
 
         # Counter:
         'counter_pack_total': fields.integer('Counter pack total',
-            help='Total pack for format: 1 / 25 (reset every product)')
+            help='Total pack for format: 1 / 25 (reset every product)'),
         
         # -----------------------------------------------------------------
         # Logo:
