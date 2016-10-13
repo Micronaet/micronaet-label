@@ -51,15 +51,54 @@ class Parser(report_sxw.rml_parse):
     def get_report_label(self, data=None):
         ''' Master function for generate label elements
             data:
-                report_data: test, direct, production are the current value
-                
+                report_data: test, direct, production are the current value                
         '''
-        
         if data is None:
             data = {}
         
         report_data = data.get('report_data', 'test')
-        data = []
+
+        field_list = [
+            # -----------------------------------------------------------------
+            #                      Label report:
+            # -----------------------------------------------------------------
+            'counter', # number of label
+            'multi', # number of label per page
+            'lang'
+                    
+            # -----------------------------------------------------------------
+            # Product data:
+            # -----------------------------------------------------------------
+            # Description:
+            'name', 'customer_name',
+            'frame', 'color', 'canvas', 
+            # Code:
+            'code', 'customer_code', 'codebar', 
+            # Extra:            
+            'q_x_pack',             
+            # Static:
+            'static_text1', 'static_text2', 'static_text3',
+            
+            # -----------------------------------------------------------------
+            # Production:
+            # -----------------------------------------------------------------
+            # Line:
+            'line', 'period', 
+            # Order:
+            'order_ref', 'order_data'
+            # Counter:
+            'counter_pack', # 1 of 25 (reset every product)
+            
+            # -----------------------------------------------------------------
+            # Logo:
+            # -----------------------------------------------------------------
+            # Logo Image:
+            'company_logo', 'customer_logo', 'recycle',
+            # Picture image:
+            'image', 'drawing',
+            ]
+        
+        data = [] # for report loop:
         if report_data == 'test':
             record = {
                 'counter': 3, # test 3 record
