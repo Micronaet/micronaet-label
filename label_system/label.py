@@ -128,12 +128,47 @@ class LabelLabel(orm.Model):
             # Create label:
             # -------------   
             name = f[:-4]
+            
+            # -----------------------------------------------------------------
+            # Parse name for auto fill elements:
+            # -----------------------------------------------------------------
+            name_blocks = name.split('.')
+            
+            if len(name_blocks) == 4:
+                # 0. type:
+                if name_blocks[0] in self._columns['type']:
+                    type_block = ''
+                    
+                # 1. name:
+                name_block = name_blocks[1] or name
+                
+                # 2. description:
+                description_block = name_blocks[2] or name
+                
+                # 3. partner
+                partner_block = name_blocks[3] or False                
+                patner_ids = partner_pool.search(cr, uid, [
+                    ('label_code', '=', partner_block)], context=context)
+                if partner_ids:
+                    partner_id = partner_ids[0]
+            else:        
+                # Defaulf value for 4 block:
+                type_block = 'article'
+                name_block = name
+                description_block = name
+                partner_id = False 
+
             label_id = self.create(cr, uid, {
-                'name': name, # file name no ext.
-                'description': name,
+                'type': type_block,
+                'name': name_block,
+                'description': description_block,
                 'filename': f,
-                # TODO report_id 
+                'partner_id': partner_id,                
                 }, context=context)
+            
+            # ----------------
+            # File management:    
+            # ----------------
             f_in = os.path.join(folder_in, f)   
             f_out = os.path.join(folder_out, '%s.%s' % (label_id, extension))
             try:
@@ -159,18 +194,7 @@ class LabelLabel(orm.Model):
                 'parser_state': 'loc',
                 'tml_source': 'file',
                 }, context=context) 
-            '''
-            TODO   
-            <ir_set>
-                <field eval="'action'" name="key"/>
-                <field eval="'client_print_multi'" name="key2"/>
-                <field eval="['mrp.bom']" name="models"/>
-                <field name="name">action_fiam_bom_report_no_cost</field>
-                <field eval="'ir.actions.report.xml,'+str(aeroo_fiam_bom_custom_no_cost)" name="value"/>
-                <field eval="True" name="isobject"/>
-                <field eval="True" name="replace"/>
-            </ir_set>
-            '''
+                
             # ----------------------------
             # Update information on label:
             # ----------------------------
@@ -236,8 +260,7 @@ class LabelLabel(orm.Model):
             'label.layout', 'Layout format'),
         'report_id': fields.many2one(
             'ir.actions.report.xml', 'Report action'),
-        'parser': fields.char('Parser', size=64),
-
+        
         'type': fields.selection([
             ('article', 'Article'),
             ('package', 'Package'),
@@ -268,7 +291,9 @@ class LabelLabel(orm.Model):
     _name = 'label.label.fast'
     _description = 'Label fast'
 
+    # -------------------------------------------------------------------------
     # Button event:
+    # -------------------------------------------------------------------------
     def print_fast_label(self, cr, uid, ids, context=None):
         ''' Print this label
         '''
@@ -367,6 +392,17 @@ class LabelLabel(orm.Model):
     _columns = {
         'fast_ids': fields.one2many(
             'label.label.fast', 'label_id', 'Fast label'),
+        }
+
+class ResPartnerLabel(orm.Model):
+    """ Model name: Partner extra fields
+    """
+
+    _inherit = 'res.partner'
+    
+    _columns = {
+        'label_code': fields.char('Label code', size=30, 
+            help='Partner label code, used for auto import partner'),
         }
        
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

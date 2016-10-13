@@ -80,7 +80,6 @@
                             <field name="report_id" readonly="1"/>
 
                             <field name="partner_id" />
-                            <field name="parser" invisible="1"/>
 
                             <notebook colspan="4">
                                 <page string="Extra info">
