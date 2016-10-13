@@ -35,6 +35,8 @@
     'data': [
         'security/label_group.xml',
         'security/ir.model.access.csv',    
+        
+        'data/config_data.xml',
 
         'workflow/label_workflow.xml',
 

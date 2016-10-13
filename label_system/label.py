@@ -95,7 +95,11 @@ class LabelLabel(orm.Model):
             ('key', '=', key)], context=context)
         if not config_ids:
             _logger.warning('Parameter not found: %s' % key)
-            return []
+            raise osv.except_osv(
+                _('Parameter error'), 
+                _('Setup init parameter: %s' % key),
+                )
+
         config_proxy = config_pool.browse(
             cr, uid, config_ids, context=context)[0]
             
@@ -118,6 +122,7 @@ class LabelLabel(orm.Model):
             cr, uid, 'import', context=context))
         folder_out = os.path.expanduser(self.get_config_base_path(
             cr, uid, 'datastore', context=context))
+        import pdb; pdb.set_trace()
         for f in os.listdir(folder_in):
             if f[-3:].lower() != extension: 
                continue # jump
