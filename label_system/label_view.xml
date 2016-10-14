@@ -12,8 +12,8 @@
                             <field name="code"/>
                             <field name="name" />
 
-                            <field name="height" />
                             <field name="width" />
+                            <field name="height" />
                             
                             <field name="right" />
                             <field name="left" />
@@ -36,8 +36,8 @@
                     <field name="continue" />
                     <field name="code"/>
                     <field name="name" />
-                    <field name="height" />
                     <field name="width" />                    
+                    <field name="height" />
                     <field name="right" />
                     <field name="left" />                    
                     <field name="top" />
