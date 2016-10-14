@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1"> 
+        <record model="label.layout" id="data_label_layout_1">
+            <field name="code">110X100</field>
+            <field name="name">Label article 110 x 100</field>
+            <field name="note"></field>
+            <field name="continue">1</field>
+            <field name="height" eval="100" />
+            <field name="width" eval="110" />
+            <field name="top" eval="0" />
+            <field name="right" eval="0" />
+            <field name="left" eval="0" />
+            <field name="total" eval="1" />
+        </record>
+    </data>
+</openerp>
+

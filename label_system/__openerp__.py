@@ -29,18 +29,30 @@
     'license': 'AGPL-3',
     'depends': [
         'base',
+        
+        # For fast label:
+        'product',
+        'sale',
+        'mrp',        
         ],
     'init_xml': [],
     'demo': [],
     'data': [
+        # Group and security access:
         'security/label_group.xml',
         'security/ir.model.access.csv',    
         
+        # Startup data:
         'data/config_data.xml',
+        'data/label_format_data.xml',
 
+        # Workflow:
         'workflow/label_workflow.xml',
 
+        # Views:
         'label_view.xml',
+        
+        # Scheduler:
         'scheduler.xml',
         ],
     'active': False,

@@ -63,7 +63,7 @@ class Parser(report_sxw.rml_parse):
                 _logger.warning('Empty field %s' % field)                
                 return empty
         else:
-            if mandatory
+            if mandatory:
                 _logger.error(
                     'Field %s not present in record structure' % field)
                 return error

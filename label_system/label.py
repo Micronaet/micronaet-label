@@ -161,6 +161,8 @@ class LabelLabel(orm.Model):
                 
                 # 5. language # TODO
                 
+                # 6. code # TODO
+                
             else:        
                 # Defaulf value for 4 block:
                 type_block = 'article'
@@ -211,6 +213,7 @@ class LabelLabel(orm.Model):
             self.write(cr, uid, label_id, {
                 'report_id': report_id,
                 }, context=context)                   
+            _logger.info('Label imported: %s' % f)    
         return True
 
     # -------------------------------------------------------------------------    
