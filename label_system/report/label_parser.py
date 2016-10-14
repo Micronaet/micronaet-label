@@ -23,7 +23,7 @@
 ##############################################################################
 import os
 import sys
-#import logging
+import logging
 #import openerp
 #import openerp.netsvc as netsvc
 #import openerp.addons.decimal_precision as dp
@@ -36,18 +36,31 @@ from openerp.report.report_sxw import rml_parse
 #from datetime import datetime, timedelta
 #from openerp.tools.translate import _
 
-#_logger = logging.getLogger(__name__)
+
+_logger = logging.getLogger(__name__)
 
 class Parser(report_sxw.rml_parse):
-    
     # Constructor
     def __init__(self, cr, uid, name, context):        
         super(Parser, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'get_report_label': self.get_report_label,
+            'load': self.load,
         })
-    
-    # Method for local context    
+
+    # Method for local context
+    def load(self, record, field, mandatory=False, empty='', error='ERR'):
+        ''' Abstract function for load data in report
+        '''
+        if field in record:
+            res = record[field]
+            if mandatory and not res:
+                _logger.error('Empty mandatory field %s' % field)
+                return error
+        else:
+            _logger.error('Field %s not present in record structure' % field)
+        return empty
+        
     def get_report_label(self, data=None):
         ''' Master function for generate label elements
             data:
@@ -103,7 +116,7 @@ class Parser(report_sxw.rml_parse):
         records = [] # for report loop:
         if report_data == 'test':
             record = {
-                'counter': 3, # test 3 record
+                'counter': 1,
                 'name': 'Product name',
                 'code': 'Code',
                 'codebar': '8032615811506', # if not hide
