@@ -38,4 +38,14 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+class NoteNote(orm.Model):
+    """ Model name: NoteNote
+    """    
+    _inherit = 'note.note'
+    
+    _columns = {
+        'print_label': fields.boolean('Print label'),
+        'label_id': fields.many2one('label.label', 'Label'),
+        }
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

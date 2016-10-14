@@ -30,6 +30,7 @@
     'depends': [
         'base',
         'label_system',
+        'note_system_management',
         ],
     'init_xml': [],
     'demo': [],

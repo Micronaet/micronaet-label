@@ -1,7 +1,43 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-
+        <record model="ir.ui.view" id="view_note_note_label_form">
+            <field name="name">note.note.label.form</field>
+            <field name="model">note.note</field>
+            <field name="inherit_id" ref="note_system_management.view_note_note_form"/>
+            <field name="arch" type="xml">
+                <field name="create_uid" position="before">
+                    <field name="print_label" />
+                    <field name="label_id" attrs="{'invisible': [('print_label','=',False)]}" />
+                </field>
+            </field>
+        </record>    
+        <record model="ir.ui.view" id="view_note_note_label_tree">
+            <field name="name">note.note.label.tree</field>
+            <field name="model">note.note</field>
+            <field name="inherit_id" ref="note_system_management.view_note_note_tree"/>
+            <field name="arch" type="xml">
+                <field name="type_id" position="after">
+                    <field name="print_label" />
+                    <field name="label_id" />
+                </field>
+            </field>
+        </record>    
+        <record model="ir.ui.view" id="view_note_note_search">
+            <field name="name">note.note.search</field>
+            <field name="model">note.note</field>
+            <field name="arch" type="xml">
+                <field name="type_id" position="after">
+                    <field name="label_id" />
+                </field>
+                <filter name="overridable_yes" position="before"/>
+                    <filter name="label_yes" string="Label note" domain="[('print_label','=',True)]"/>
+                </filter>                
+                <filter name="group_type" position="after"/>
+                    <filter name="group_label" string="Label" context="{'group_by': 'label_id'}"/>
+                </filter>
+            </field>
+        </record>    
     </data>
 </openerp>
 
