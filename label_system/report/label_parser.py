@@ -57,9 +57,20 @@ class Parser(report_sxw.rml_parse):
             if mandatory and not res:
                 _logger.error('Empty mandatory field %s' % field)
                 return error
+            elif res:
+                return res
+            else:                   
+                _logger.warning('Empty field %s' % field)                
+                return empty
         else:
-            _logger.error('Field %s not present in record structure' % field)
-        return empty
+            if mandatory
+                _logger.error(
+                    'Field %s not present in record structure' % field)
+                return error
+            else:
+                _logger.warning(
+                    'Field %s not present in record structure' % field)            
+                return empty    
         
     def get_report_label(self, data=None):
         ''' Master function for generate label elements
@@ -120,8 +131,12 @@ class Parser(report_sxw.rml_parse):
                 'name': 'Product name',
                 'code': 'Code',
                 'codebar': '8032615811506', # if not hide
-                'frame': 'Frame element',
+                'frame': 'Frame demo',
+                'fabric': 'Fabric demo',
                 'color': 'Color product',                
+                'q_x_pack': 4,
+                'line': '5',
+                'period': '1610',
                 }  
             records.append(record)              
             
