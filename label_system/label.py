@@ -136,26 +136,31 @@ class LabelLabel(orm.Model):
             name_blocks = name.split('.')
             
             if len(name_blocks) == 4:
-                # 0. type:
-                available_selection = [
-                    item[0] for item in self._columns['type'].selection]
-                if name_blocks[0] in available_selection:
-                    type_block = name_blocks[0]
-                    
-                # 1. name:
-                name_block = name_blocks[1] or name
-                
-                # 2. description:
-                description_block = name_blocks[2] or name
-                
-                # 3. partner
-                partner_block = name_blocks[3] or False                
+                # 0. partner
+                partner_block = name_blocks[0] or False                
                 partner_ids = partner_pool.search(cr, uid, [
                     ('label_code', '=', partner_block)], context=context)
                 if partner_ids:
                     partner_id = partner_ids[0]
                 else:
                     partner_ids = False    
+            
+                # 1. type:
+                available_selection = [
+                    item[0] for item in self._columns['type'].selection]
+                if name_blocks[1] in available_selection:
+                    type_block = name_blocks[1]
+                    
+                # 2. name:
+                name_block = name_blocks[2] or name
+                
+                # 3. description:
+                description_block = name_blocks[3] or name
+                
+                # 4. label format: # TODO
+                
+                # 5. language # TODO
+                
             else:        
                 # Defaulf value for 4 block:
                 type_block = 'article'
