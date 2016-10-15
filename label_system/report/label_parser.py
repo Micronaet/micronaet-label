@@ -87,7 +87,7 @@ class Parser(report_sxw.rml_parse):
         
         # Pool used:
         label_pool = self.pool.get('label.label')        
-        fast_pool = self.pool.get('label.label.job')
+        job_pool = self.pool.get('label.label.job')
         
         item_ids = data.get('record_ids', [])
         if not item_ids:
@@ -97,10 +97,10 @@ class Parser(report_sxw.rml_parse):
                 )
 
         records = [] # for report loop:                
-        for job in fast_pool.browse(cr, uid, item_ids, context=context):
+        for job in job_pool.browse(cr, uid, item_ids, context=context):
             # TODO manage counter progr.
             record = {}
-            for field in label_pool._columns.keys():
+            for field in job_pool._columns.keys():
                 if not field.startswith('record_'):
                     continue # jump field
                 record[field[7:]] = job.__getattribute__(field) or ''
