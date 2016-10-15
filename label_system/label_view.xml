@@ -205,7 +205,7 @@
                             <notebook colspan="4">
                                 <page string="Link data">
                                     <group col="4" colspan="4">
-                                        <button name="generate_text_data_from_linked" string="Generate" type="object" icon="gtk-execute"/>
+                                        <button name="generate_text_data_from_linked" string="Generate" type="object" icon="gtk-execute" attrs="{'invisible': [('fast','=',False)]}"/>
                                         <newline/>
                                         <field name="product_id" />
                                         <field name="mrp_id" />
