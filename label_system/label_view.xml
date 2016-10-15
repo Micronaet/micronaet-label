@@ -190,17 +190,20 @@
             <field name="arch" type="xml">
                 <form string="Label job" version="7.0">        
                     <header>
+                        <field name="fast" invisible="1"/>                        
+                        <button name="set_fast_label_on" string="Fast label" type="object" icon="star-on" attrs="{'invisible': [('fast','=',False)]}"/>
+                        <button name="set_fast_label_off" string="MRP label" type="object" icon="star-off" attrs="{'invisible': [('fast','=',True)]}"/>
+
                         <button name="print_fast_label" string="Print" type="object" icon="gtk-print" />
                     </header>                    
                     <sheet>
-                        <group col="4" colspan="4">
+                        <group col="4" colspan="4" attrs="{'readonly': [('fast','=',False)]}">
                             <field name="label_id" invisible="context.get('form_embedded', False)"/>
                             <field name="record_counter" />
                             <field name="type" />
                             <field name="report_id" readonly="1"/>
                             <field name="lang_id" widget="selection"/>
                             <field name="layout_id" widget="selection"/>
-                            <field name="fast" />
                             
                             <notebook colspan="4">
                                 <page string="Link data">

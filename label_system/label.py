@@ -363,6 +363,20 @@ class LabelLabelJob(orm.Model):
     # -------------------------------------------------------------------------
     # Button event:
     # -------------------------------------------------------------------------
+    def set_fast_label_on(self, cr, uid, ids, context=None):
+        ''' Set fast label on
+        '''
+        return self.write(cr, uid, ids, {
+            'fast': True,
+            }, context=context)
+            
+    def set_fast_label_off(self, cr, uid, ids, context=None):
+        ''' Set fast label off
+        '''
+        return self.write(cr, uid, ids, {
+            'fast': False,
+            }, context=context)
+            
     def generate_text_data_from_linked(self, cr, uid, ids, context=None):
         ''' Generate text data from linked object present
         '''
