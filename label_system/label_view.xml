@@ -340,10 +340,10 @@
                         <group col="4" colspan="4">
                             <field name="name" />
                             <newline/>  
-                            <field name="crate_uid" />
+                            <field name="create_uid" />
                             <field name="create_date" />
                         </group>
-                    </sheet>        
+                    </sheet> 
                 </form>
             </field>
         </record>
@@ -351,9 +351,9 @@
             <field name="name">label.label.report.tree</field>
             <field name="model">label.label.report</field>
             <field name="arch" type="xml">
-                <tree string="Report" version="7.0">        
+                <tree string="Report">
                     <field name="name" />
-                    <field name="crate_uid" />
+                    <field name="create_uid" />
                     <field name="create_date" />
                 </tree>
             </field>

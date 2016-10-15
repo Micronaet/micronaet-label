@@ -443,6 +443,15 @@ class LabelLabelJob(orm.Model):
         'counter': lambda *x: 1,
         }
         
+class LabelLabelReportJob(orm.Model):
+    """ Model name: Inherit for relation fields
+    """
+    _inherit = 'label.label.report'
+        
+    _columns = {
+        'job_ids': fields.one2many(
+            'label.label.job', 'report_id', 'Job'),
+        }    
 class LabelLabel(orm.Model):
     """ Model name: Label relations
     """
