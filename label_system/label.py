@@ -38,6 +38,13 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+label_type = [
+    ('article', 'Article'),
+    ('package', 'Package'),
+    ('pallet', 'Pallet'),
+    ('placeholder', 'Placeholder'),
+    ]
+    
 # TODO manage printer for direct report with CUPS?
 class LabelLabel(orm.Model):
     """ Model name: LabelLabel
@@ -274,12 +281,7 @@ class LabelLabel(orm.Model):
         'report_id': fields.many2one(
             'ir.actions.report.xml', 'Report action'),
         
-        'type': fields.selection([
-            ('article', 'Article'),
-            ('package', 'Package'),
-            ('pallet', 'Pallet'),
-            ('placeholder', 'Placeholder'),
-            ], 'Type of label', required=True),
+        'type': fields.selection(label_type, 'Type of label', required=True),
         
         'note': fields.text('Note'),
         
@@ -312,11 +314,15 @@ class LabelLabelReportJob(orm.Model):
         }
 
 class LabelLabelJob(orm.Model):
-    """ Model name: Label saved for fast print
+    """ Model name: Label saved for job print
     """
 
     _name = 'label.label.job'
     _description = 'Label job'
+    
+    _field_record = [ # Field used for preload of record
+        
+        ]
 
     # -------------------------------------------------------------------------
     # Button event:
@@ -324,9 +330,9 @@ class LabelLabelJob(orm.Model):
     def print_fast_label(self, cr, uid, ids, context=None):
         ''' Print this label
         '''
-        fast_proxy = self.browse(cr, uid, ids, context=context)[0]
+        job_proxy = self.browse(cr, uid, ids, context=context)[0]
         
-        report_name = fast_proxy.label_id.report_id.report_name
+        report_name = job_proxy.label_id.report_id.report_name
         return {
             'type': 'ir.actions.report.xml',
             'report_name': report_name,
@@ -341,12 +347,19 @@ class LabelLabelJob(orm.Model):
         'label_id': fields.many2one('label.label', 'Label'),
         'report_id': fields.many2one('label.label.report', 'Report job'),
         'lang_id': fields.many2one('res.lang', 'Lang'),
+        'fast': fields.boolean('Fast label', 
+            help='Job that is never cleaned, used sometimes for print direct'),
+
+        # TODO add clean procedure!
         
         # Layout reference:
         'layout_id': fields.related(
             'label_id', 'layout_id', 
             type='many2one', relation='label.layout', 
             string='Layout', readonly=True),
+        'type': fields.related(
+            'label_id', 'type', selection=label_type,
+            type='selection', string='Type', readonly=True),
 
         # -----------------------------------------------------------------
         #                               Label:
@@ -379,6 +392,8 @@ class LabelLabelJob(orm.Model):
         # Code:
         'code': fields.char('Product code', size=20), 
         'customer_code': fields.char('Customer code', size=20), 
+        'ean13': fields.char('EAN 13', size=13), 
+        'ean8': fields.char('EAN 8', size=8), 
         
         # Extra:            
         'q_x_pack': fields.integer('Force q. x pack'),
@@ -427,8 +442,9 @@ class LabelLabel(orm.Model):
     _inherit = 'label.label'
     
     _columns = {
+        # TODO change in function
         'fast_ids': fields.one2many(
-            'label.label.fast', 'label_id', 'Fast label'),
+            'label.label.job', 'label_id', 'Job label'),
         }
 
 class ResPartnerLabel(orm.Model):
