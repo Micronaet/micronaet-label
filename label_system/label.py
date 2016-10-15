@@ -282,6 +282,8 @@ class LabelLabel(orm.Model):
             'ir.actions.report.xml', 'Report action'),
         
         'type': fields.selection(label_type, 'Type of label', required=True),
+        'lang_id': fields.many2one('res.lang', 'Lang', 
+            help='For fixed text, data element will be loaded as setup'),
         
         'note': fields.text('Note'),
         

@@ -80,6 +80,7 @@
                             <field name="report_id" readonly="1"/>
 
                             <field name="partner_id" />
+                            <field name="lang_id" />
 
                             <notebook colspan="4">
                                 <page string="Extra info">
@@ -111,6 +112,7 @@
                     <field name="filename"/>
                     <field name="layout_id" />                    
                     <field name="partner_id" />
+                    <field name="lang_id" />
                     <field name="report_id" />
                     <field name="type"/>
                     <field name="state" />
@@ -132,6 +134,7 @@
                     <field name="description"/>
                     <field name="filename"/>
                     <field name="partner_id" />
+                    <field name="lang_id" />
                     <field name="layout_id" />                    
                     <field name="type"/>
                     <field name="note"/>               
@@ -143,6 +146,7 @@
                     <group expand="0" string="Group By...">
                         <filter name="group_type" string="Type" context="{'group_by': 'type'}"/>
                         <filter name="group_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
+                        <filter name="group_lang" string="Lang" context="{'group_by': 'lang_id'}"/>
                         <filter name="group_layout" string="Layout" context="{'group_by': 'layout_id'}"/>
                         <filter string="Status" context="{'group_by': 'state'}" />
                     </group>                
@@ -202,6 +206,7 @@
                                 <page string="Link data">
                                     <group col="4" colspan="4">
                                         <button name="generate_text_data_from_linked" string="Generate" type="object" icon="gtk-execute"/>
+                                        <newline/>
                                         <field name="product_id" />
                                         <field name="mrp_id" />
                                         <field name="partner_id" />
