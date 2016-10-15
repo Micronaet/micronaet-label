@@ -18,45 +18,25 @@
 ###############################################################################
 
 {
-    'name': 'Label System Management',
+    'name': 'Partner product partic extra fields',
     'version': '0.1',
-    'category': 'Label',
-    'description': '''
-        Label system management, integrated in note management        
+    'category': 'Product',
+    'description': '''  
+        Partner product particularity extra field use in other module
+        (ex. label_system)      
         ''',
     'author': 'Micronaet S.r.l. - Nicola Riolini',
     'website': 'http://www.micronaet.it',
     'license': 'AGPL-3',
     'depends': [
         'base',
-        
-        # Partic:  
-        'partner_product_partic', # Add partic there
-        
-        # For fast label:
-        'product',
-        'sale',
-        'mrp',    
+        'partner_product_partic_base',
         ],
     'init_xml': [],
     'demo': [],
     'data': [
-        # Group and security access:
-        'security/label_group.xml',
-        'security/ir.model.access.csv',    
-        
-        # Startup data:
-        'data/config_data.xml',
-        'data/label_format_data.xml',
-
-        # Workflow:
-        'workflow/label_workflow.xml',
-
-        # Views:
+        'security/ir.model.access.csv',
         'label_view.xml',
-        
-        # Scheduler:
-        'scheduler.xml',
         ],
     'active': False,
     'installable': True,
