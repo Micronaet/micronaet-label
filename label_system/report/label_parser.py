@@ -80,120 +80,30 @@ class Parser(report_sxw.rml_parse):
         if data is None:
             data = {}
 
-        # Standar:
+        # Standard:
         cr = self.cr
         uid = self.uid
         context = {}
-
-        report_data = data.get('report_data', 'test')
-
-        field_list = [ # XXX schemd for check, not used for now
-            # -----------------------------------------------------------------
-            #                      Label report:
-            # -----------------------------------------------------------------
-            'counter', # number of label
-            'multi', # number of label per page
-            'lang',
-            
-            # -----------------------------------------------------------------
-            # Product data:
-            # -----------------------------------------------------------------
-            # Description:
-            'name', 'customer_name',
-            'frame', 'color', 'canvas',
-            # Code:
-            'code', 'customer_code', 'ean8', 'ean13',
-            # Extra:
-            'q_x_pack',
-            # Static:
-            'static_text1', 'static_text2', 'static_text3',
-            
-            # -----------------------------------------------------------------
-            # Production:
-            # -----------------------------------------------------------------
-            # Line:
-            'line', 'period',
-            # Order:
-            'order_ref', 'order_date',
-            # Counter:
-            'counter_pack', # 1 of 25 (reset every product)
-            
-            # -----------------------------------------------------------------
-            # Logo:
-            # -----------------------------------------------------------------
-            # Logo Image:
-            'company_logo', 'customer_logo', #'recycle',
-            # Picture image:
-            'image', 'drawing',
-            ]
-
-        records = [] # for report loop:
-        if report_data == 'test':
-            record = {
-                'counter': 1,
-                'name': 'Product name',
-                'code': 'Code',
-                'codebar': '8032615811506', # if not hide
-                'frame': 'Frame demo',
-                'fabric': 'Fabric demo',
-                'color': 'Color product',
-                'q_x_pack': 4,
-                'line': '5',
-                'period': '1610',
-                }
-            records.append(record)
-
-        elif report_data == 'fast':
-            item_ids = data.get('record_ids', [])
-            if not item_ids:
-                raise osv.except_osv(
-                    _('Fast print'),
-                    _('No data for fast print'),
-                    )
-            # Generate list of label:
-            fast_pool = self.pool.get('label.label.fast')
-            for fast in fast_pool.browse(cr, uid, item_ids, context=context):
-                # TODO manage counter progr.
-                record = {
-                    'counter': fast.counter or 1, # test 3 record
-                    #'multi',
-                    #'lang',
-                    'name': fast.force_name or fast.product_id.name or '?',
-                    'customer_name': '?', # TODO
-                    'frame': fast.force_frame or fast.product_id.colour, # TODO
-                    'color': fast.force_color or fast.product_id.fabric, # TODO
-                    'canvas': fast.force_canvas,
-                    'code':
-                        fast.force_code or fast.product_id.default_code or '',
-                    'customer_code': '?', # TODO
-                    'codebar':
-                        fast.force_codebar or fast.product_id.ean13 or '',
-                    'q_x_pack':
-                        fast.force_q_x_pack or fast.product_id.q_x_pack,
-                    'static_text1': fast.static_text1,
-                    'static_text2': fast.static_text2,
-                    'static_text3': fast.static_text3,
-                    'line': fast.line or '',
-                    'period': fast.period or '',
-                    'order_ref': fast.order_ref or '',
-                    'order_date': fast.order_date or '',
-                    'counter_pack': '', # 1 of 25 (reset every product) TODO
-                    # TODO image:
-                    'company_logo': False,
-                    'customer_logo': False,
-                    'recycle': False,
-                    'image': False,
-                    'drawing': False,
-                    }
-                records.append(record)
-
-        elif report_data == 'production':
-            pass
-
-        else:
+        
+        # Pool used:
+        label_pool = self.pool.get('label.label')        
+        fast_pool = self.pool.get('label.label.job')
+        
+        item_ids = data.get('record_ids', [])
+        if not item_ids:
             raise osv.except_osv(
-                _('Error data'),
-                _('Report data mode not found: %s' % report_data),
+                _('Fast print'),
+                _('No data for fast print'),
                 )
+
+        records = [] # for report loop:                
+        for job in fast_pool.browse(cr, uid, item_ids, context=context):
+            # TODO manage counter progr.
+            record = {}
+            for field in label_pool._columns.keys():
+                if not field.startswith('record_'):
+                    continue # jump field
+                record[field[7:]] = job.__getattribute__(field) or ''
+            records.append(record)
         return records
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -231,6 +231,17 @@ class LabelLabel(orm.Model):
         '''
         assert len(ids) == 1, 'Works only with one record a time'
         
+        job_pool = self.pool.get('label.label.job')
+        job_ids = job_pool.seach(cr, uid, [
+            ('code', '=', 'DEMO')], context=context)
+        if not job_ids:
+            raise osv.except_osv(
+                _('Error print'), 
+                _('No DEMO label on label jobs'),
+                )
+        if len(job_ids) > 1:
+            _logger.error('More DEMO label!!')        
+            
         label_proxy = self.browse(cr, uid, ids, context=context)[0]
         
         report_name = label_proxy.report_id.report_name
@@ -238,7 +249,7 @@ class LabelLabel(orm.Model):
             'type': 'ir.actions.report.xml',
             'report_name': report_name,
             'datas': {
-                'report_data': 'test',
+                'record_ids': job_ids,
                 },
             }
         
@@ -322,15 +333,12 @@ class LabelLabelReportJob(orm.Model):
 
 class LabelLabelJob(orm.Model):
     """ Model name: Label saved for job print
+        NOTE: all field load in record element start with "record_"
     """
 
     _name = 'label.label.job'
     _description = 'Label job'
     
-    _field_record = [ # Field used for preload of record
-        # TODO list for load field in record
-        ]
-
     # -------------------------------------------------------------------------
     # Button event:
     # -------------------------------------------------------------------------
@@ -349,7 +357,6 @@ class LabelLabelJob(orm.Model):
             'type': 'ir.actions.report.xml',
             'report_name': report_name,
             'datas': {
-                'report_data': 'fast',
                 'record_ids': ids,
                 },
             }
@@ -371,11 +378,6 @@ class LabelLabelJob(orm.Model):
             'label_id', 'type', selection=label_type,
             type='selection', string='Type', readonly=True),
 
-        # -----------------------------------------------------------------
-        #                               Label:
-        # -----------------------------------------------------------------        
-        'counter': fields.integer('Counter', required=True, 
-            help='Number of label printed'),
                 
         # -----------------------------------------------------------------
         #                          Linked object:
@@ -388,45 +390,51 @@ class LabelLabelJob(orm.Model):
         'order_id': fields.many2one('sale.order', 'Order'),
         'line_id': fields.many2one('sale.order.line', 'Order line'),
         'mrp_id': fields.many2one('mrp.production', 'Production'),
+
+        # -----------------------------------------------------------------
+        #                               RECORD:
+        # -----------------------------------------------------------------        
+        'record_counter': fields.integer('Counter', required=True, 
+            help='Number of label printed'),
         
         # -----------------------------------------------------------------
         #                          Product data:
         # -----------------------------------------------------------------
         # Description (force product if present):
-        'name': fields.char('Product name', size=64), 
-        'customer_name': fields.char('Customer product name', size=64),
-        'frame': fields.text('Product frame'), 
-        'color': fields.text('Product color'), 
-        'canvas': fields.text('Product canvas'), 
+        'record_name': fields.char('Product name', size=64), 
+        'record_customer_name': fields.char('Customer product name', size=64),
+        'record_frame': fields.text('Product frame'), 
+        'record_color': fields.text('Product color'), 
+        'record_fabric': fields.text('Product fabric'), 
 
         # Code:
-        'code': fields.char('Product code', size=20), 
-        'customer_code': fields.char('Customer code', size=20), 
-        'ean13': fields.char('EAN 13', size=13), 
-        'ean8': fields.char('EAN 8', size=8), 
+        'record_code': fields.char('Product code', size=20), 
+        'record_customer_code': fields.char('Customer code', size=20), 
+        'record_ean13': fields.char('EAN 13', size=13), 
+        'record_ean8': fields.char('EAN 8', size=8), 
         
         # Extra:            
-        'q_x_pack': fields.integer('Force q. x pack'),
+        'record_q_x_pack': fields.integer('Force q. x pack'),
         
         # Static:
-        'static_text1': fields.text('Static text 1'), 
-        'static_text2': fields.text('Static text 2'), 
-        'static_text3': fields.text('Static text 3'), 
+        'record_static_text1': fields.text('Static text 1'), 
+        'record_static_text2': fields.text('Static text 2'), 
+        'record_static_text3': fields.text('Static text 3'), 
         
         # -----------------------------------------------------------------
         #                         Production data:
         # -----------------------------------------------------------------
         # Line:
-        'line': fields.char('Line', size=20, help='Production line'), 
-        'period': fields.char('Period', size=20, 
+        'record_line': fields.char('Line', size=20, help='Production line'), 
+        'record_period': fields.char('Period', size=20, 
             help='Production period YYMM  format es.: 1601'), 
         
         # Order:
-        'order_ref': fields.char('Order ref', size=30), 
-        'order_date': fields.date('Order date'), 
+        'record_order_ref': fields.char('Order ref', size=30), 
+        'record_order_date': fields.date('Order date'), 
 
         # Counter:
-        'counter_pack_total': fields.integer('Counter pack total',
+        'record_counter_pack_total': fields.integer('Counter pack total',
             help='25 means: format: 1/25, 2/25... (reset every product)'),
         
         # -----------------------------------------------------------------
@@ -442,7 +450,7 @@ class LabelLabelJob(orm.Model):
         }
         
     _defaults = {
-        'counter': lambda *x: 1,
+        'record_counter': lambda *x: 1,
         }
         
 class LabelLabelReportJob(orm.Model):

@@ -195,7 +195,7 @@
                     <sheet>
                         <group col="4" colspan="4">
                             <field name="label_id" invisible="context.get('form_embedded', False)"/>
-                            <field name="counter" />
+                            <field name="record_counter" />
                             <field name="type" />
                             <field name="report_id" readonly="1"/>
                             <field name="lang_id" widget="selection"/>
@@ -218,32 +218,32 @@
                                 <page string="Product">
                                     <group col="4" colspan="4">
                                         <separator string="Description:" colspan="4"/>
-                                        <field name="customer_name" />
-                                        <field name="frame" />
-                                        <field name="color" />
-                                        <field name="canvas" />
+                                        <field name="record_customer_name" />
+                                        <field name="record_frame" />
+                                        <field name="record_color" />
+                                        <field name="record_fabric" />
                                         <separator string="Code:" colspan="4"/>
-                                        <field name="code" />
-                                        <field name="customer_code" />
-                                        <field name="ean13" />
-                                        <field name="ean8" />
-                                        <field name="q_x_pack" />
+                                        <field name="record_code" />
+                                        <field name="record_customer_code" />
+                                        <field name="record_ean13" />
+                                        <field name="record_ean8" />
+                                        <field name="record_q_x_pack" />
                                     </group>
                                 </page>
                                 <page string="Static text">
                                     <group col="4" colspan="4">
-                                        <field name="static_text1" />
-                                        <field name="static_text2" />
-                                        <field name="static_text3" />
+                                        <field name="record_static_text1" />
+                                        <field name="record_static_text2" />
+                                        <field name="record_static_text3" />
                                     </group>
                                 </page>
                                 <page string="Production">
                                     <group col="4" colspan="4">
-                                        <field name="line" />
-                                        <field name="period" />
-                                        <field name="order_ref" />
-                                        <field name="order_date" />
-                                        <field name="counter_pack_total" />
+                                        <field name="record_line" />
+                                        <field name="record_period" />
+                                        <field name="record_order_ref" />
+                                        <field name="record_order_date" />
+                                        <field name="record_counter_pack_total" />
                                     </group>
                                 </page>
                                 <page string="Logo">
@@ -263,12 +263,13 @@
             <field name="arch" type="xml">
                 <tree string="Label job" colors="blue:fast==True">
                     <field name="fast" />
-                    <field name="name" />
                     <field name="label_id" invisible="context.get('form_embedded', False)"/>
                     <field name="report_id" />
                     <field name="layout_id" />
                     <field name="type" />
-                    <field name="counter" />
+                    <field name="record_code" />
+                    <field name="record_name" />
+                    <field name="record_counter" />
                     
                     <field name="product_id" />
                     <field name="mrp_id" />                    
@@ -286,7 +287,8 @@
             <field name="model">label.label.job</field>
             <field name="arch" type="xml">
                 <search string="Label job" version="7.0">        
-                    <field name="name" />
+                    <field name="record_code" />
+                    <field name="record_name" />
                     <field name="label_id" />
                     <field name="report_id" />
                     <!--<field name="layout_id" />

@@ -48,6 +48,7 @@
         # Startup data:
         'data/config_data.xml',
         'data/label_format_data.xml',
+        'data/label_label_job_data.xml',
 
         # Workflow:
         'workflow/label_workflow.xml',
