@@ -191,8 +191,8 @@
                 <form string="Label job" version="7.0">        
                     <header>
                         <field name="fast" invisible="1"/>                        
-                        <button name="set_fast_label_on" string="Fast label" type="object" icon="star-on" attrs="{'invisible': [('fast','=',False)]}"/>
-                        <button name="set_fast_label_off" string="MRP label" type="object" icon="star-off" attrs="{'invisible': [('fast','=',True)]}"/>
+                        <button name="set_fast_label_on" string="Fast label" type="object" icon="star-on" attrs="{'invisible': [('fast','=',True)]}"/>
+                        <button name="set_fast_label_off" string="MRP label" type="object" icon="star-off" attrs="{'invisible': [('fast','=',False)]}"/>
 
                         <button name="print_fast_label" string="Print" type="object" icon="gtk-print" />
                     </header>                    
@@ -265,7 +265,7 @@
             <field name="model">label.label.job</field>
             <field name="arch" type="xml">
                 <tree string="Label job" colors="blue:fast==True">
-                    <field name="fast" />
+                    <field name="fast" invisible="1"/>
                     <field name="label_id" invisible="context.get('form_embedded', False)"/>
                     <field name="report_id" />
                     <field name="layout_id" />
@@ -280,6 +280,9 @@
                     <field name="address_id" />
                     <field name="order_id" />
                     <field name="line_id" />
+
+                    <button name="set_fast_label_on" string="Fast label" type="object" icon="star-on" attrs="{'invisible': [('fast','=',True)]}"/>
+                    <button name="set_fast_label_off" string="MRP label" type="object" icon="star-off" attrs="{'invisible': [('fast','=',False)]}"/>
 
                     <button name="print_fast_label" string="Print" type="object" icon="gtk-print"/>
                 </tree>
