@@ -330,6 +330,44 @@
             <field name="domain">[('fast', '=', True)]</field>
         </record>
         
+        <!--label.label.report-->
+        <record model="ir.ui.view" id="view_label_label_report_form">
+            <field name="name">label.label.report.form</field>
+            <field name="model">label.label.report</field>
+            <field name="arch" type="xml">
+                <form string="Report" version="7.0">        
+                    <sheet>
+                        <group col="4" colspan="4">
+                            <field name="name" />
+                            <newline/>  
+                            <field name="crate_uid" />
+                            <field name="create_date" />
+                        </group>
+                    </sheet>        
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_label_label_report_tree">
+            <field name="name">label.label.report.tree</field>
+            <field name="model">label.label.report</field>
+            <field name="arch" type="xml">
+                <tree string="Report" version="7.0">        
+                    <field name="name" />
+                    <field name="crate_uid" />
+                    <field name="create_date" />
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_label_label_report">
+            <field name="name">Label report</field>
+            <field name="res_model">label.label.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_label_label_report_tree"/>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+        </record>
+        
         <menuitem 
             parent="base.menu_base_partner" 
             id="menu_label_label_root"
@@ -358,17 +396,30 @@
 
             <menuitem 
                 parent="menu_label_label_root" 
-                id="menu_label_label_job"
-                action="action_label_label_job_form"
+                id="menu_label_label_report_root"
                 sequence="20" 
+                name="Print"
                 />
                 <menuitem 
-                    parent="menu_label_label_job" 
-                    id="menu_label_label_job_fast"
-                    action="action_label_label_job_fast_form"
+                    parent="menu_label_label_root" 
+                    id="menu_label_label_report_job"
+                    action="action_label_label_report"
                     sequence="10" 
                     />
-                
+
+                <menuitem 
+                    parent="menu_label_label_root" 
+                    id="menu_label_label_job"
+                    action="action_label_label_job_form"
+                    sequence="20" 
+                    />
+                <menuitem 
+                    parent="menu_label_label_root" 
+                    id="menu_label_label_job_fast"
+                    action="action_label_label_job_fast_form"
+                    sequence="30" 
+                    />
+                    
             <menuitem 
                 parent="menu_label_label_root" 
                 id="menu_label_label_configuration"
