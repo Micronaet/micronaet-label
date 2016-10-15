@@ -3,8 +3,9 @@
     <data> 
         <record model="label.label.job" id="data_label_label_job_demo">
             <field name="counter" eval="1"/>
+            <field name="demo" eval="1"/>
             <field name="name">Demo product</field>
-            <field name="code">DEMO</field>
+            <field name="code">12345</field>
             <field name="ean13">8032615811506</field>
             <field name="frame">Demo frame</field>
             <field name="fabric">Demo fabric</field>

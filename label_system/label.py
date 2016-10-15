@@ -47,7 +47,7 @@ label_type = [
     
 # TODO manage printer for direct report with CUPS?
 class LabelLabel(orm.Model):
-    """ Model name: LabelLabel
+    """ Model name: Label master object
     """
 
     _name = 'label.layout'
@@ -233,7 +233,7 @@ class LabelLabel(orm.Model):
         
         job_pool = self.pool.get('label.label.job')
         job_ids = job_pool.seach(cr, uid, [
-            ('code', '=', 'DEMO')], context=context)
+            ('demo', '=', True)], context=context)
         if not job_ids:
             raise osv.except_osv(
                 _('Error print'), 
@@ -323,6 +323,26 @@ class LabelLabelReportJob(orm.Model):
         ''' Clean report more older than 10 days (but only line not fast)
         ''' 
         return True
+    
+    # Button event:
+    def print_report_job(self, cr, uid, ids, context=None):
+        ''' Print all label in order        
+        '''
+        assert len(ids) == 1, 'Works only with one record a time'
+        
+        report_proxy = self.browse(cr, uid, ids, context=context)[0]
+        
+        res = [] # TODO generate PDF and aggregate!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        for job in report_proxy.job_ids:
+            report_name = job_proxy.label_id.report_id.report_name
+            res = {
+                'type': 'ir.actions.report.xml',
+                'report_name': report_name,
+                'datas': {
+                    'record_ids': [job.id],
+                    },
+                }
+        return True
         
     _columns = {
         'name': fields.char('Name', size=64, required=True),
@@ -338,6 +358,7 @@ class LabelLabelJob(orm.Model):
 
     _name = 'label.label.job'
     _description = 'Label job'
+    _order = 'report_id,sequence'
     
     # -------------------------------------------------------------------------
     # Button event:
@@ -363,9 +384,11 @@ class LabelLabelJob(orm.Model):
         
     _columns = {
         # Label definition:
+        'sequence': fields.integer('Sequence'),
         'label_id': fields.many2one('label.label', 'Label'),
         'report_id': fields.many2one('label.label.report', 'Report job'),
         'lang_id': fields.many2one('res.lang', 'Lang'),
+        'demo': fields.boolean('Demo'), 
         'fast': fields.boolean('Fast label', 
             help='Job that is never cleaned, used sometimes for print direct'),
 

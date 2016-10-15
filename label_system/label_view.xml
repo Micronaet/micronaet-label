@@ -324,7 +324,7 @@
             <field name="view_id" ref="view_label_label_job_tree" />
             <field name="view_id" ref="view_label_label_job_search" />
             <field name="context">{}</field>
-            <field name="domain">[]</field>
+            <field name="domain">[('demo', '!=', True)]</field>
         </record>
         <record model="ir.actions.act_window" id="action_label_label_job_fast_form">
             <field name="name">Job fast label</field>
@@ -346,6 +346,7 @@
                     <sheet>
                         <group col="4" colspan="4">
                             <field name="name" />
+                            <button name="print_report_job" string="Print" type="object" icon="gtk-print" />
                             <newline/>  
                             <field name="create_uid" />
                             <field name="create_date" />
@@ -364,6 +365,7 @@
                     <field name="name" />
                     <field name="create_uid" />
                     <field name="create_date" />
+                    <button name="print_report_job" string="Print" type="object" icon="gtk-print" />
                 </tree>
             </field>
         </record>
