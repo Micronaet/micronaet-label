@@ -302,10 +302,15 @@ class LabelLabel(orm.Model):
 class LabelLabelReportJob(orm.Model):
     """ Model name: Label report job
     """
-
     _name = 'label.label.report'
     _description = 'Label Report Job'
     
+    # Schedule action:
+    def clean_report_function(self, cr, uid, days=10, contextc=context):
+        ''' Clean report more older than 10 days (but only line not fast)
+        ''' 
+        return True
+        
     _columns = {
         'name': fields.char('Name', size=64, required=True),
         'create_date': fields.date('Create date'),
@@ -321,7 +326,7 @@ class LabelLabelJob(orm.Model):
     _description = 'Label job'
     
     _field_record = [ # Field used for preload of record
-        
+        # TODO list for load field in record
         ]
 
     # -------------------------------------------------------------------------
@@ -350,8 +355,6 @@ class LabelLabelJob(orm.Model):
         'fast': fields.boolean('Fast label', 
             help='Job that is never cleaned, used sometimes for print direct'),
 
-        # TODO add clean procedure!
-        
         # Layout reference:
         'layout_id': fields.related(
             'label_id', 'layout_id', 

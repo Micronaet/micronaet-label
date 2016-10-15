@@ -211,10 +211,12 @@
                                 </page>
                                 <page string="Product">
                                     <group col="4" colspan="4">
+                                        <separator string="Description:" colspan="4"/>
                                         <field name="customer_name" />
                                         <field name="frame" />
                                         <field name="color" />
                                         <field name="canvas" />
+                                        <separator string="Code:" colspan="4"/>
                                         <field name="code" />
                                         <field name="customer_code" />
                                         <field name="ean13" />
@@ -253,7 +255,7 @@
             <field name="name">label.label.job.tree</field>
             <field name="model">label.label.job</field>
             <field name="arch" type="xml">
-                <tree string="Label job">
+                <tree string="Label job" colors="blue:fast==True">
                     <field name="name" />
                     <field name="label_id" invisible="context.get('form_embedded', False)"/>
                     <field name="report_id" />
