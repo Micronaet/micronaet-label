@@ -487,6 +487,7 @@ class LabelLabelJob(orm.Model):
         }
         
     _defaults = {
+        'fast': lambda *x: True, #for manual creation
         'record_counter': lambda *x: 1,
         }
         

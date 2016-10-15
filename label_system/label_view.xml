@@ -190,63 +190,63 @@
             <field name="arch" type="xml">
                 <form string="Label job" version="7.0">        
                     <header>
-                        <field name="fast" invisible="1"/>                        
-                        <button name="set_fast_label_on" string="Fast label" type="object" icon="star-on" attrs="{'invisible': [('fast','=',True)]}"/>
-                        <button name="set_fast_label_off" string="MRP label" type="object" icon="star-off" attrs="{'invisible': [('fast','=',False)]}"/>
+                        <button name="set_fast_label_on" string="Set Fast" type="object" icon="star-on" attrs="{'invisible': [('fast','=',True)]}" help="Fast label is changeable, MRP readonly because generated from procedure"/>
+                        <button name="set_fast_label_off" string="Set MRP" type="object" icon="star-off" attrs="{'invisible': [('fast','=',False)]}" help="Fast label is changeable, MRP readonly because generated from procedure"/>
 
                         <button name="print_fast_label" string="Print" type="object" icon="gtk-print" />
                     </header>                    
                     <sheet>
-                        <group col="4" colspan="4" attrs="{'readonly': [('fast','=',False)]}">
-                            <field name="label_id" invisible="context.get('form_embedded', False)"/>
-                            <field name="record_counter" />
-                            <field name="type" />
-                            <field name="report_id" readonly="1"/>
-                            <field name="lang_id" widget="selection"/>
-                            <field name="layout_id" widget="selection"/>
+                        <group col="4" colspan="4">
+                            <field name="fast" invisible="1"/>                        
+                            <field name="label_id" invisible="context.get('form_embedded', False)" attrs="{'readonly': [('fast','=',False)]}"/>
+                            <field name="record_counter" attrs="{'readonly': [('fast','=',False)]}" />
+                            <field name="type" attrs="{'readonly': [('fast','=',False)]}" />
+                            <field name="report_id" readonly="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                            <field name="lang_id" widget="selection" attrs="{'readonly': [('fast','=',False)]}"/>
+                            <field name="layout_id" widget="selection" attrs="{'readonly': [('fast','=',False)]}"/>
                             
                             <notebook colspan="4">
                                 <page string="Link data">
                                     <group col="4" colspan="4">
                                         <button name="generate_text_data_from_linked" string="Generate" type="object" icon="gtk-execute" attrs="{'invisible': [('fast','=',False)]}"/>
                                         <newline/>
-                                        <field name="product_id" />
-                                        <field name="mrp_id" />
-                                        <field name="partner_id" />
-                                        <field name="address_id" />
-                                        <field name="order_id" />
-                                        <field name="line_id" />
+                                        <field name="product_id" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="mrp_id" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="partner_id" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="address_id" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="order_id" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="line_id" attrs="{'readonly': [('fast','=',False)]}" />
                                     </group>
                                 </page>
                                 <page string="Product">
                                     <group col="4" colspan="4">
                                         <separator string="Description:" colspan="4"/>
-                                        <field name="record_customer_name" />
-                                        <field name="record_frame" />
-                                        <field name="record_color" />
-                                        <field name="record_fabric" />
+                                        <field name="record_customer_name" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="record_frame" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="record_color" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="record_fabric" attrs="{'readonly': [('fast','=',False)]}" />
                                         <separator string="Code:" colspan="4"/>
-                                        <field name="record_code" />
-                                        <field name="record_customer_code" />
-                                        <field name="record_ean13" />
-                                        <field name="record_ean8" />
-                                        <field name="record_q_x_pack" />
+                                        <field name="record_code" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="record_customer_code" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="record_ean13" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="record_ean8" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="record_q_x_pack" attrs="{'readonly': [('fast','=',False)]}" />
                                     </group>
                                 </page>
                                 <page string="Static text">
                                     <group col="4" colspan="4">
-                                        <field name="record_static_text1" />
-                                        <field name="record_static_text2" />
-                                        <field name="record_static_text3" />
+                                        <field name="record_static_text1" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="record_static_text2" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="record_static_text3" attrs="{'readonly': [('fast','=',False)]}" />
                                     </group>
                                 </page>
                                 <page string="Production">
                                     <group col="4" colspan="4">
-                                        <field name="record_line" />
-                                        <field name="record_period" />
-                                        <field name="record_order_ref" />
-                                        <field name="record_order_date" />
-                                        <field name="record_counter_pack_total" />
+                                        <field name="record_line" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="record_period" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="record_order_ref" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="record_order_date" attrs="{'readonly': [('fast','=',False)]}" />
+                                        <field name="record_counter_pack_total" attrs="{'readonly': [('fast','=',False)]}" />
                                     </group>
                                 </page>
                                 <page string="Logo">
@@ -281,8 +281,8 @@
                     <field name="order_id" />
                     <field name="line_id" />
 
-                    <button name="set_fast_label_on" string="Fast label" type="object" icon="star-on" attrs="{'invisible': [('fast','=',True)]}"/>
-                    <button name="set_fast_label_off" string="MRP label" type="object" icon="star-off" attrs="{'invisible': [('fast','=',False)]}"/>
+                    <button name="set_fast_label_on" string="Set Fast" type="object" icon="star-on" attrs="{'invisible': [('fast','=',True)]}" help="Fast label is changeable, MRP readonly because generated from procedure"/>
+                    <button name="set_fast_label_off" string="Set MRP" type="object" icon="star-off" attrs="{'invisible': [('fast','=',False)]}" help="Fast label is changeable, MRP readonly because generated from procedure"/>
 
                     <button name="print_fast_label" string="Print" type="object" icon="gtk-print"/>
                 </tree>
