@@ -306,7 +306,7 @@ class LabelLabelReportJob(orm.Model):
     _description = 'Label Report Job'
     
     # Schedule action:
-    def clean_report_function(self, cr, uid, days=10, contextc=context):
+    def clean_report_function(self, cr, uid, days=10, contextc=None):
         ''' Clean report more older than 10 days (but only line not fast)
         ''' 
         return True
@@ -332,6 +332,11 @@ class LabelLabelJob(orm.Model):
     # -------------------------------------------------------------------------
     # Button event:
     # -------------------------------------------------------------------------
+    def generate_text_data_from_linked(self, cr, uid, ids, context=None):
+        ''' Generate text data from linked object present
+        '''
+        return True
+        
     def print_fast_label(self, cr, uid, ids, context=None):
         ''' Print this label
         '''
