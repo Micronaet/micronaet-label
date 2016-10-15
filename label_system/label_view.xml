@@ -401,20 +401,20 @@
                 name="Print"
                 />
                 <menuitem 
-                    parent="menu_label_label_root" 
+                    parent="menu_label_label_report_root" 
                     id="menu_label_label_report_job"
                     action="action_label_label_report"
                     sequence="10" 
                     />
 
                 <menuitem 
-                    parent="menu_label_label_root" 
+                    parent="menu_label_label_report_root" 
                     id="menu_label_label_job"
                     action="action_label_label_job_form"
                     sequence="20" 
                     />
                 <menuitem 
-                    parent="menu_label_label_root" 
+                    parent="menu_label_label_report_root" 
                     id="menu_label_label_job_fast"
                     action="action_label_label_job_fast_form"
                     sequence="30" 
