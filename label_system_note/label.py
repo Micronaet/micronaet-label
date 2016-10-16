@@ -44,7 +44,8 @@ class NoteNote(orm.Model):
     _inherit = 'note.note'
     
     _columns = {
-        'print_label': fields.boolean('Print label'),
+        'print_label': fields.boolean('Label note'),
+        'print_not_required': fields.boolean('Label not required'),
         'label_id': fields.many2one('label.label', 'Label'),
         }
 

@@ -8,7 +8,11 @@
             <field name="arch" type="xml">
                 <field name="create_uid" position="before">
                     <field name="print_label" />
-                    <field name="label_id" attrs="{'required': [('print_label','=',True)], 'invisible': [('print_label','=',False)]}" />
+                    <field name="print_not_required" />
+                    <field name="label_id" 
+                        attrs="{
+                            'required': [('print_label','=',True),('print_not_required','=',False)], 
+                            'invisible': ['|',('print_label','=',False),('print_not_required','=',True)]}" />
                 </field>
             </field>
         </record>    
