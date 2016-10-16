@@ -471,8 +471,8 @@ class LabelLabelJob(orm.Model):
         'record_order_date': fields.date('Order date'), 
 
         # Counter:
-        'record_counter_pack_total': fields.integer('Counter pack total',
-            help='25 means: format: 1/25, 2/25... (reset every product)'),
+        'record_counter_pack_total': fields.boolean('Counter pack total',
+            help='For print in label: 1/25, 2/25... (reset every product)'),
         
         # -----------------------------------------------------------------
         # Logo:

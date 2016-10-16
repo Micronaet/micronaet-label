@@ -46,19 +46,33 @@ class Parser(report_sxw.rml_parse):
         self.localcontext.update({
             'get_report_label': self.get_report_label,
             'load': self.load,
+        
         })
 
     # Method for local context
-    def load(self, record, field, mandatory=False, empty='', error='ERR'):
+    def load(self, record, field, mandatory=False, empty='', error='ERR', 
+            counter=1):
         ''' Abstract function for load data in report
+            record: dict with all fields for the label
+            field: name of the key field to get
+            mandatory: means that field generate error if not present
+            empty: value for empty data (instead of False)
+            error: text value for error data (for show in label)
+            counter: used for counter_pack_total data if present
         '''
+        
         if field in record:
             res = record[field]
             if mandatory and not res:
                 _logger.error('Empty mandatory field %s' % field)
                 return error
             elif res:
-                return res
+                # Manage counter here:
+                if field == 'counter_pack_total':
+                    return '%s / %s' % (
+                        counter + 1, record.get('counter', error))
+                else:
+                    return res
             else:
                 _logger.warning('Empty field %s' % field)
                 return empty
@@ -98,7 +112,6 @@ class Parser(report_sxw.rml_parse):
 
         records = [] # for report loop:                
         for job in job_pool.browse(cr, uid, item_ids, context=context):
-            # TODO manage counter progr.
             record = {}
             for field in job_pool._columns.keys():
                 if not field.startswith('record_'):
