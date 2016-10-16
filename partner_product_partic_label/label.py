@@ -46,18 +46,18 @@ class ResPartnerProductParticLabel(orm.Model):
     _description = 'Label partic'
     
     _columns = {
-        'force': fields.boolean(
-            'Force', help='Force in label the use of own element'),
+        #'force': fields.boolean(
+        #    'Force', help='Force in label the use of own element'),
         'name': fields.selection([        
             ('ean13', 'EAN 13'),
             ('ean8', 'EAN 8'),            
             ('frame', 'Frame'),
-            ('canvas', 'Canvas'),
+            ('fabric', 'Fabric'),
             ('color', 'Color'),
             ('static_text1', 'Text 1'),
             ('static_text2', 'Text 2'),
             ('static_text3', 'Text 3'),
-            ], 'name', required=True),
+            ], 'Field', required=True),
         'value': fields.text(
             'Value', required=True) , 
         'partic_id': fields.many2one('res.partner.product.partic', 'Partic'),    
