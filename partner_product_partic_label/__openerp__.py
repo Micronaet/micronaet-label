@@ -30,7 +30,7 @@
     'license': 'AGPL-3',
     'depends': [
         'base',
-        'partner_product_partic_base',
+        'partner_product_partic',
         ],
     'init_xml': [],
     'demo': [],

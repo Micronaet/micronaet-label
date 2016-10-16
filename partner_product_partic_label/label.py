@@ -85,7 +85,7 @@ class ProductProduct(orm.Model):
         # ---------------------------------------------------------------------
         #                              FORCE DATA:
         # ---------------------------------------------------------------------
-        'label_use_ean': fields.boolean('Use customer EAN setted'),
+        #'label_use_ean': fields.boolean('Use customer EAN setted'),
         }
 
 class ResPartner(orm.Model):

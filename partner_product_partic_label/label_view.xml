@@ -9,7 +9,6 @@
                 <form string="Partner label" version="7.0">        
                     <sheet>
                         <group col="4" colspan="4"> 
-                            <field name="image" widget="image" class="oe_left oe_avatar" options="{'preview_image': 'image_medium', 'size': [90, 90]}" />
                             <div class="oe_title oe_left">
 	                            <div class="oe_edit_only">
 		                            <label for="name"/>
@@ -26,43 +25,52 @@
 	                            <field name="parent_id" placeholder="Company..." domain="[('is_company', '=', True)]" context="{'default_is_company': True}" attrs="{'invisible': ['&amp;',('is_company','=', True),('is_address','=',False)], 'required': [('is_address','=',True)]}" on_change="onchange_address(use_parent_address, parent_id)" />
 	                            <field name="category_id" widget="many2many_tags" placeholder="Tags..." />
                             </div>
+                            <field name="image" widget="image" class="oe_left oe_avatar" options="{'preview_image': 'image_medium', 'size': [90, 90]}" nolabel="1"/>
                             <notebook colspan="4">
                                 <page string="Product partic">
-                                    <field name="partic_ids" colpan="4">
-                                        <tree string="Product partic.">
-                                            <field name="partner_id" invisible="1"/>
-                                            <field name="product_id" />
-                                            <field name="partner_price" />
-                                            <field name="partner_code" />
-                                            <field name="partner_description" />     
-                                        </tree>
-                                        <form string="Product partic.">
-                                            <sheet>
+                                    <group col="4" colspan="4"> 
+                                        <separator string="Product partic.:" colspan="4"/>
+                                        <field name="partic_ids" colpan="4" nolabel="1">
+                                            <tree string="Product partic.">
                                                 <field name="partner_id" invisible="1"/>
                                                 <field name="product_id" />
                                                 <field name="partner_price" />
                                                 <field name="partner_code" />
                                                 <field name="partner_description" />     
-                                                <field name="label_field_ids" colspan="4">
-                                                    <tree string="Label partic.">
-                                                        <field name="force" />
-                                                        <field name="name" />
-                                                        <field name="partic_id" invisible="1"/>
-                                                    </tree>
-                                                </field>
-                                            </sheet>
-                                        </form>
-                                    </field>
+                                            </tree>
+                                            <form string="Product partic.">
+                                                <sheet>
+                                                    <field name="partner_id" invisible="1"/>
+                                                    <field name="product_id" />
+                                                    <field name="partner_price" />
+                                                    <field name="partner_code" />
+                                                    <field name="partner_description" />     
+                                                    <field name="label_field_ids" colspan="4">
+                                                        <tree string="Label partic.">
+                                                            <field name="force" />
+                                                            <field name="name" />
+                                                            <field name="partic_id" invisible="1"/>
+                                                        </tree>
+                                                    </field>
+                                                </sheet>
+                                            </form>
+                                        </field>
+                                    </group>    
                                 </page>
                                 <page string="Label setup">
-                                    <field name="label_ean" />
-                                    <field name="force_label_lang_id" />
-                                    <field name="label_force_logo" />
-                                    <field name="label_print_line" />
-                                    <field name="label_print_period" />
-                                    <field name="label_print_order_ref" />
-                                    <field name="label_print_order_date" />
-                                    <field name="label_print_counter_pack" />
+                                    <group col="4" colspan="4"> 
+                                        <separator string="Label setup" colspan="4"/>
+                                        <field name="label_ean" />
+                                        <field name="force_label_lang_id" />
+                                        <field name="label_force_logo" />
+
+                                        <separator string="Print element" colspan="4"/>
+                                        <field name="label_print_line" />
+                                        <field name="label_print_period" />
+                                        <field name="label_print_order_ref" />
+                                        <field name="label_print_order_date" />
+                                        <field name="label_print_counter_pack" />
+                                    </group>
                                 </page>
                             </notebook>
                         </group>
