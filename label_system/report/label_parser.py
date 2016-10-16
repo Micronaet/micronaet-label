@@ -51,7 +51,7 @@ class Parser(report_sxw.rml_parse):
 
     # Method for local context
     def load(self, record, field, mandatory=False, empty='', error='ERR', 
-            counter=1):
+            counter=-1):
         ''' Abstract function for load data in report
             record: dict with all fields for the label
             field: name of the key field to get
@@ -69,8 +69,15 @@ class Parser(report_sxw.rml_parse):
             elif res:
                 # Manage counter here:
                 if field == 'counter_pack_total':
+                    if counter < 0:
+                        _logger.error(
+                            'Report error, pass counter pack')
+                        current = error
+                    else:
+                        current = counter + 1
+                        
                     return '%s / %s' % (
-                        counter + 1, record.get('counter', error))
+                        current, record.get('counter', error))
                 else:
                     return res
             else:
