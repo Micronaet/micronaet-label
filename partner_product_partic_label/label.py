@@ -57,8 +57,8 @@ class ResPartnerProductParticLabel(orm.Model):
             ('static_text1', 'Text 1'),
             ('static_text2', 'Text 2'),
             ('static_text3', 'Text 3'),
-            ], 'name')
-        'partic_id': fields.many2one('res.partner.product', 'Partic'),    
+            ], 'name'),
+        'partic_id': fields.many2one('res.partner.product.partic', 'Partic'),    
         }
     
 class ResPartnerProductPartic(orm.Model):
@@ -94,15 +94,22 @@ class ResPartner(orm.Model):
     _inherit = 'res.partner'
 
     _columns = { 
+        'label_ean': fields.selection([
+            ('none', 'No barcode'),
+            ('ean13', 'EAN 13'),
+            ('ean8', 'EAN 8'),
+            ], 'Use EAN', required=True),
+
         # ---------------------------------------------------------------------
         #                              FORCE DATA:
         # ---------------------------------------------------------------------
         'force_label_lang_id': fields.many2one(
-            'res.lang', 'Label force lang'),
+            'res.lang', 'Label force lang', 
+            help='Instead use partner lang (or label forced lang)'),
 
         # XXX now not used, maybe if general code parameter is adopted:
-        'label_force_customer_code': fields.boolean('Force customer code'),
-        'label_force_customer_name': fields.boolean('Force customer name'),
+        #'label_force_customer_code': fields.boolean('Force customer code'),
+        #'label_force_customer_name': fields.boolean('Force customer name'),
         
         # TODO logo management:
         'label_force_logo': fields.boolean('Force customer logo'),
@@ -110,22 +117,15 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         #                         USE DATA ELEMENT IN REPORT:
         # ---------------------------------------------------------------------
-        'label_use_line': fields.boolean('Use line'),
-        'label_use_period': fields.boolean('Use line'),        
-        'label_use_ean': fields.selection([
-            ('none', 'No barcode'),
-            ('ean13', 'EAN 13'),
-            ('ean8', 'EAN 8'),
-            ], 'Use EAN', required=True)
-        'label_use_order_ref': fields.boolean('Use order ref'),
-        'label_use_order_date': fields.boolean('Use order data'),
-        'label_use_counter_pack': fields.boolean('Use counter pack'),
-        
-        
+        'label_print_line': fields.boolean('Print production line'),
+        'label_print_period': fields.boolean('Print line'),        
+        'label_print_order_ref': fields.boolean('Print order ref'),
+        'label_print_order_date': fields.boolean('Print order data'),
+        'label_print_counter_pack': fields.boolean('Print counter pack'),        
         }
         
     _defaults = {
-        lambda *x: 'label_use_ean': 'ean13',
+        lambda *x: 'label_ean': 'ean13',
         }    
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
