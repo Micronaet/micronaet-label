@@ -47,7 +47,7 @@
                                                         <field name="partner_code" />
                                                         <field name="partner_description" />     
                                                         <field name="label_field_ids" colspan="4">
-                                                            <tree string="Label partic.">
+                                                            <tree string="Label partic." editable="bottom">
                                                                 <field name="force" />
                                                                 <field name="name" />
                                                                 <field name="partic_id" invisible="1"/>

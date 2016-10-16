@@ -57,7 +57,9 @@ class ResPartnerProductParticLabel(orm.Model):
             ('static_text1', 'Text 1'),
             ('static_text2', 'Text 2'),
             ('static_text3', 'Text 3'),
-            ], 'name'),
+            ], 'name', required=True),
+        'value': fields.text(
+            'Value', required=True) , 
         'partic_id': fields.many2one('res.partner.product.partic', 'Partic'),    
         }
     
