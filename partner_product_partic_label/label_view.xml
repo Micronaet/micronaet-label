@@ -65,7 +65,7 @@
                                     <group col="4" colspan="4"> 
                                         <separator string="Label setup" colspan="4"/>
                                         <field name="label_ean" />
-                                        <field name="force_label_lang_id" />
+                                        <field name="force_label_lang_id" widget="selection"/>
                                         <field name="label_force_logo" />
 
                                         <separator string="Print element" colspan="4"/>
