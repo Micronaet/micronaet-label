@@ -48,10 +48,15 @@
                                                     <group col="4" colspan="4"> 
                                                         <field name="partner_id" invisible="1"/>
                                                         <field name="product_id" />
+                                                        
                                                         <field name="partner_price" />
                                                         <field name="partner_code" />
-                                                        <field name="ean8" />
-                                                        <field name="ean13" />
+                                                        
+                                                        <field name="label_ean" />
+                                                        <newline/>
+                                                        <field name="ean8" attrs="{'required': [('label_ean','=','ean8')]}"/>
+                                                        <field name="ean13" attrs="{'required': [('label_ean','=','ean13')]}"/>
+                                                        
                                                         <field name="partner_description" />     
                                                         <separator string="Label force:" colspan="4"/>
                                                         <field name="label_field_ids" colspan="4" nolabel="1">

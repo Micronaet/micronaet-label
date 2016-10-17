@@ -69,6 +69,11 @@ class ResPartnerProductPartic(orm.Model):
     _inherit = 'res.partner.product.partic'
     
     _columns = {
+        'label_ean': fields.selection([
+            ('ean13', 'EAN 13'),
+            ('ean8', 'EAN 8'),
+            ], 'Force use customer EAN'),
+
         # Customer code:
         'ean13': fields.char('EAN 13', size=13),
         'ean8': fields.char('EAN 8', size=8),
