@@ -49,8 +49,8 @@ class ResPartnerProductParticLabel(orm.Model):
         #'force': fields.boolean(
         #    'Force', help='Force in label the use of own element'),
         'name': fields.selection([        
-            ('ean13', 'EAN 13'),
-            ('ean8', 'EAN 8'),            
+            #('ean13', 'EAN 13'),
+            #('ean8', 'EAN 8'),            
             ('frame', 'Frame'),
             ('fabric', 'Fabric'),
             ('color', 'Color'),
@@ -61,7 +61,7 @@ class ResPartnerProductParticLabel(orm.Model):
         'value': fields.text(
             'Value', required=True) , 
         'partic_id': fields.many2one('res.partner.product.partic', 'Partic'),    
-        }
+        }        
     
 class ResPartnerProductPartic(orm.Model):
     ''' Add product partic obj
@@ -69,6 +69,10 @@ class ResPartnerProductPartic(orm.Model):
     _inherit = 'res.partner.product.partic'
     
     _columns = {
+        # Customer code:
+        'ean13': fields.char('EAN 13', size=13),
+        'ean8': fields.char('EAN 8', size=8),
+    
         # Image fields:
         'label_field_ids': fields.one2many(
             'res.partner.product.partic.label', 'partic_id', 
@@ -127,7 +131,7 @@ class ResPartner(orm.Model):
         }
         
     _defaults = {
-        lambda *x: 'label_ean': 'ean13',
+        'label_ean': lambda *x: 'ean13',
         }    
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
