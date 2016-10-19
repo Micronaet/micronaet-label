@@ -68,16 +68,23 @@ class Parser(report_sxw.rml_parse):
                 return error
             elif res:
                 # Manage counter here:
-                if field == 'counter_pack_total':
+                if field == 'counter_pack_total':                    
                     if counter < 0:
                         _logger.error(
                             'Report error, pass counter pack')
                         current = error
                     else:
                         current = counter + 1
-                        
-                    return '%s / %s' % (
-                        current, record.get('counter', error))
+                    if res:
+                        return '%s / %s' % (
+                            current, record.get('counter', error))
+                    else:
+                        if mandatory:
+                            _logger.error(
+                                'Mandatory field %s but empty' % field)
+                            return error
+                        else:
+                            return empty            
                 else:
                     return res
             else:
