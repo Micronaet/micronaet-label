@@ -69,11 +69,6 @@ class ResPartnerProductPartic(orm.Model):
     _inherit = 'res.partner.product.partic'
     
     _columns = {
-        'label_ean': fields.selection([
-            ('ean13', 'EAN 13'),
-            ('ean8', 'EAN 8'),
-            ], 'Force use customer EAN'),
-
         # Customer code:
         'ean13': fields.char('EAN 13', size=13),
         'ean8': fields.char('EAN 8', size=8),
@@ -105,38 +100,168 @@ class ResPartner(orm.Model):
     _inherit = 'res.partner'
 
     _columns = { 
-        'label_ean': fields.selection([
-            ('none', 'No barcode'),
-            ('ean13', 'EAN 13'),
-            ('ean8', 'EAN 8'),
-            ], 'Use EAN', required=True),
-
         # ---------------------------------------------------------------------
         #                              FORCE DATA:
         # ---------------------------------------------------------------------
-        'force_label_lang_id': fields.many2one(
-            'res.lang', 'Label force lang', 
-            help='Instead use partner lang (or label forced lang)'),
+        
+        # TODO remove vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+        # 'force_label_lang_id': fields.many2one(
+        #     'res.lang', 'Label force lang', 
+        #    help='Instead use partner lang (or label forced lang)'),
 
-        # XXX now not used, maybe if general code parameter is adopted:
-        #'label_force_customer_code': fields.boolean('Force customer code'),
-        #'label_force_customer_name': fields.boolean('Force customer name'),
+        #'label_force_logo': fields.boolean('Force customer logo'),
+        # TODO remove ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         
-        # TODO logo management:
-        'label_force_logo': fields.boolean('Force customer logo'),
         
         # ---------------------------------------------------------------------
-        #                         USE DATA ELEMENT IN REPORT:
+        #                      EXTRA LANGUAGE ELEMENTS:
         # ---------------------------------------------------------------------
+        'label_lang_code': fields.char(
+            'Print company code', 
+            size=40, help='Extra lang code, use format: EN|DE|FR|IT'),
+        'label_lang_description': fields.char(
+            'Print company description', 
+            size=40, help='Extra lang code, use format: EN|DE|FR|IT'),
+        'label_lang_frame': fields.char('Print frame',
+            size=40, help='Extra lang code, use format: EN|DE|FR|IT'),
+        'label_lang_fabric': fields.char('Print fabric', 
+            size=40, help='Extra lang code, use format: EN|DE|FR|IT'), 
+
+        # ---------------------------------------------------------------------
+        #                      LABEL STRING FOR ALL ELEMENTS:
+        # ---------------------------------------------------------------------
+        'label_string_code': fields.char(
+            'Print company code', 
+            size=40, translate=True),
+        'label_string_code_partner': fields.char('Print partner code', 
+            size=40, translate=True),
+        'label_string_description': fields.char(
+            'Print company description', 
+            size=40, translate=True),
+        'label_string_description_partner': fields.char(
+            'Print partner description', 
+            size=40, translate=True),
+        'label_string_frame': fields.char('Print frame',
+            size=40, translate=True), # TODO add
+        'label_string_fabric': fields.char('Print fabric', 
+            size=40, translate=True), # TODO add
+
+        # Anagrafic numeric:        
+        'label_string_q_x_pack': fields.char('Print Q. x pack', 
+            size=40, translate=True), # TODO add
+        'label_string_q_x_pallet': fields.char('Print Q. x pallet', 
+            size=40, translate=True),
+        'label_string_dimension': fields.char('Print dimension', 
+            size=40, translate=True),
+        'label_string_volume': fields.char('Print volume', 
+            size=40, translate=True),
+        'label_string_weight_net': fields.char('Print weight net', 
+            size=40, translate=True),
+        'label_string_weight_lord': fields.char('Print weight lord', 
+            size=40, translate=True),
+        'label_string_parcel': fields.char('Print parcel', 
+            size=40, translate=True),
+        'label_string_price': fields.char('Print price', 
+            size=40, translate=True),
+        #'label_string_price_uom':
+
+        # EAN data:
+        #'label_string_ean13': 'label_string_ean8'
+        
+        # Production:
+        'label_string_line': fields.char('Print production line', 
+            size=40, translate=True),
+        'label_string_period': fields.char('Print period', 
+            size=40, translate=True),
+        'label_string_lot': fields.char('Print lot', 
+            size=40, translate=True),
+        
+        # Order:
+        'label_string_order_ref': fields.char('Print order ref', 
+            size=40, translate=True), # customer
+        'label_string_order_date': fields.char('Print order date', 
+            size=40, translate=True),
+        'label_string_destination_code': fields.char(
+            'Print destination code', 
+            size=40, translate=True),
+            
+        # Image:
+        #'label_string_company_logo' 'label_string_partner_logo'
+        #'label_string_linedrawing' 'label_string_product_image'
+               
+        # Counter:            
+        'label_string_counter_pack': fields.char('Print counter pack', 
+            size=40, translate=True),   
+
+        # ---------------------------------------------------------------------
+        #               SHOW HIDE ELEMENT IN REPORT DEPEND ON PARTNER:
+        # ---------------------------------------------------------------------
+        # Anagrafic text:
+        'label_print_code': fields.boolean('Print company code'),
+        'label_print_code_partner': fields.boolean('Print partner code'),
+        'label_print_description': fields.boolean(
+            'Print company description'),
+        'label_print_description_partner': fields.boolean(
+            'Print partner description'),
+        'label_print_frame': fields.boolean('Print frame'), # TODO add
+        'label_print_fabric': fields.boolean('Print fabric'), # TODO add
+
+        # Anagrafic numeric:        
+        'label_print_q_x_pack': fields.boolean('Print Q. x pack'), # TODO add
+        'label_print_q_x_pallet': fields.boolean('Print Q. x pallet'),
+        'label_print_dimension': fields.boolean('Print dimension'),
+        'label_print_volume': fields.boolean('Print volume'),
+        'label_print_weight_net': fields.boolean('Print weight net'),
+        'label_print_weight_lord': fields.boolean('Print weight lord'),
+        'label_print_parcel': fields.boolean('Print parcel'),
+        'label_print_price': fields.boolean('Print price'),
+        'label_print_price_uom': fields.boolean('Print price uom'), # TODO add
+
+        # EAN data:
+        'label_print_ean13': fields.boolean('Print EAN13'),
+        'label_print_ean8': fields.boolean('Print EAN8'),
+        
+        # Production:
         'label_print_line': fields.boolean('Print production line'),
-        'label_print_period': fields.boolean('Print line'),        
-        'label_print_order_ref': fields.boolean('Print order ref'),
-        'label_print_order_date': fields.boolean('Print order data'),
-        'label_print_counter_pack': fields.boolean('Print counter pack'),        
+        'label_print_period': fields.boolean('Print period'),
+        'label_print_lot': fields.boolean('Print lot'),
+        
+        # Order:
+        'label_print_order_ref': fields.boolean('Print order ref'), # customer
+        'label_print_order_date': fields.boolean('Print order date'),
+        'label_print_destination_code': fields.boolean(
+            'Print destination code'),
+            
+        # Image:
+        'label_print_company_logo': fields.boolean('Print company logo'),
+        'label_print_partner_logo': fields.boolean('Print partner logo'), # TODO add
+        'label_print_linedrawing': fields.boolean('Print line drawing'), # TODO add
+        #'label_print_product_image': fields.boolean('Print product mage'), # TODO add what album
+        # TODO extra images
+               
+        # Counter:            
+        'label_print_counter_pack': fields.boolean('Print counter pack'),   
         }
         
     _defaults = {
-        'label_ean': lambda *x: 'ean13',
+        # Show hide defaults:
+        'label_print_code': lambda *x: True,
+        'label_print_code_partner': lambda *x: True,
+        'label_print_description': lambda *x: True,
+        'label_print_description_partner': lambda *x: True,
+        'label_print_frame': lambda *x: True,
+        'label_print_fabric': lambda *x: True,
+        'label_print_q_x_pack': lambda *x: True,
+        
+        'label_print_ean13': lambda *x: True,
+        
+        'label_print_line': lambda *x: True,
+        'label_print_period': lambda *x: True,
+        'label_print_lot': lambda *x: True,
+        
+        'label_print_company_logo': lambda *x: True,
+        
+        
         }    
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

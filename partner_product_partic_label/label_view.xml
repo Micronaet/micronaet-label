@@ -52,10 +52,8 @@
                                                         <field name="partner_price" />
                                                         <field name="partner_code" />
                                                         
-                                                        <field name="label_ean" />
-                                                        <newline/>
-                                                        <field name="ean8" attrs="{'required': [('label_ean','=','ean8')]}"/>
-                                                        <field name="ean13" attrs="{'required': [('label_ean','=','ean13')]}"/>
+                                                        <field name="ean8" />
+                                                        <field name="ean13" />
                                                         
                                                         <field name="partner_description" />     
                                                         <separator string="Label force:" colspan="4"/>
@@ -76,7 +74,6 @@
                                 <page string="Label setup">
                                     <group col="4" colspan="4"> 
                                         <separator string="Label setup" colspan="4"/>
-                                        <field name="label_ean" />
                                         <field name="force_label_lang_id" widget="selection"/>
                                         <field name="label_force_logo" />
 

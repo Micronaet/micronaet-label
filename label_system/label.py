@@ -401,7 +401,7 @@ class LabelLabelJob(orm.Model):
         'sequence': fields.integer('Sequence'),
         'label_id': fields.many2one('label.label', 'Label'),
         'report_id': fields.many2one('label.label.report', 'Report job'),
-        'lang_id': fields.many2one('res.lang', 'Lang'),
+        'lang_id': fields.many2one('res.lang', 'Lang'),# TODO remove?
         'demo': fields.boolean('Demo'), 
         'fast': fields.boolean('Fast label', 
             help='Job that is never cleaned, used sometimes for print direct'),
@@ -414,7 +414,6 @@ class LabelLabelJob(orm.Model):
         'type': fields.related(
             'label_id', 'type', selection=label_type,
             type='selection', string='Type', readonly=True),
-
                 
         # -----------------------------------------------------------------
         #                          Linked object:
@@ -437,6 +436,7 @@ class LabelLabelJob(orm.Model):
         # -----------------------------------------------------------------
         #                          Product data:
         # -----------------------------------------------------------------
+        # TODO all check for choose if print!!
         # Description (force product if present):
         'record_name': fields.char('Product name', size=64), 
         'record_customer_name': fields.char('Customer product name', size=64),
