@@ -124,21 +124,31 @@
                                                 </group>
                                             </page>
                                             <page string="Numeric">
-                                                <group col="4" colspan="4"> 
+                                                <group col="6" colspan="4"> 
                                                     <field name="label_print_q_x_pack" />
+                                                    <field name="label_string_q_x_pack" nolabel="1" placeholder="String..."/>
                                                     <field name="label_print_q_x_pallet" />
+                                                    <field name="label_string_q_x_pallet" nolabel="1" placeholder="String..."/>
                                                     
                                                     <field name="label_print_dimension" />
+                                                    <field name="label_string_dimension" nolabel="1" placeholder="String..."/>
                                                     <field name="label_print_volume" />
+                                                    <field name="label_string_volume" nolabel="1" placeholder="String..."/>
                                                     
                                                     <field name="label_print_weight_net" />
+                                                    <field name="label_string_weight_net" nolabel="1" placeholder="String..."/>
                                                     <field name="label_print_weight_lord" />
+                                                    <field name="label_string_weight_lord" nolabel="1" placeholder="String..."/>
                                                     
                                                     <field name="label_print_price" />
+                                                    <field name="label_string_price" nolabel="1" placeholder="String..."/>
                                                     <field name="label_print_price_uom" />
+                                                    <newline/>
                                                     
                                                     <field name="label_print_parcel" />                                                    
+                                                    <field name="label_string_parcel" nolabel="1" placeholder="String..."/>
                                                     <field name="label_print_counter_pack" />
+                                                    <field name="label_string_counter_pack" nolabel="1" placeholder="String..."/>
                                                 </group>
                                             </page>
                                             <page string="EAN">
@@ -148,11 +158,13 @@
                                                 </group>
                                             </page>
                                             <page string="Production">                                            
-                                                <group col="4" colspan="4"> 
+                                                <group col="6" colspan="4"> 
                                                     <field name="label_print_line" />
+                                                    <field name="label_string_line" nolabel="1" placeholder="String..."/>
                                                     <field name="label_print_period" />
-                                                    
+                                                    <field name="label_string_period" nolabel="1" placeholder="String..."/>                                                    
                                                     <field name="label_print_lot" />
+                                                    <field name="label_string_lot" nolabel="1" placeholder="String..."/>
                                                 </group>
                                             </page>
                                             <page string="Order">
