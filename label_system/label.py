@@ -521,6 +521,8 @@ class ResPartnerLabel(orm.Model):
     _columns = {
         'label_code': fields.char('Label code', size=30, 
             help='Partner label code, used for auto import partner'),
+        'label_image': fields.binary('Label image', 
+            help='Image logo used for label print'),
         }
        
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,6 +1,29 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+        <!--note.image-->
+        <record model="ir.ui.view" id="view_note_system_label_image_form">
+            <field name="name">note.image.form</field>
+            <field name="model">note.image</field>
+            <field name="inherit_id" ref="note_system_management.view_note_image_form"/>
+            <field name="arch" type="xml">
+                <field name="type_id" position="after">
+                    <field name="label_image" />
+                    <field name="label_code" attrs="{'invisible': [('label_image','=',False)]}" />
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_note_system_label_image_tree">
+            <field name="name">note.image.form</field>
+            <field name="model">note.image</field>
+            <field name="inherit_id" ref="note_system_management.view_note_image_tree"/>
+            <field name="arch" type="xml">
+                <field name="type_id" position="after">
+                    <field name="label_image" />
+                    <field name="label_code" />
+                </field>
+            </field>
+        </record>
         <record model="ir.ui.view" id="view_res_partner_label_form">
             <field name="name">res.partner.label.form</field>
             <field name="model">res.partner</field>
@@ -73,10 +96,7 @@
                                 </page>
                                 <page string="Label setup">
                                     <group col="4" colspan="4"> 
-                                        <separator string="Label setup" colspan="4"/>
-                                        <field name="force_label_lang_id" widget="selection"/>
-                                        <field name="label_force_logo" />
-
+                                        <separator string="Label setup" colspan="4"/>                                        
                                         <separator string="Print element" colspan="4"/>
                                         <field name="label_print_line" />
                                         <field name="label_print_period" />

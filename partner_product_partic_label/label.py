@@ -87,12 +87,22 @@ class ProductProduct(orm.Model):
 
     _columns = { 
         'ean8': fields.char('EAN 8', size=8),
-
-        # ---------------------------------------------------------------------
-        #                              FORCE DATA:
-        # ---------------------------------------------------------------------
-        #'label_use_ean': fields.boolean('Use customer EAN setted'),
         }
+
+class NoteImage(orm.Model):
+    ''' Add product partic obj
+    '''    
+    _inherit = 'note.image'
+    
+    _columns = {
+        'label_image': fields.boolean('Image for label'),
+        'label_code': fields.char('Label code', size=15,
+            help='Code used for refer image in ODT files'),
+        }
+        
+    _sql_constraints = [(
+        'label_code_uniq', 'unique(label_code)', 
+        'The label code must be unique!'), ]
 
 class ResPartner(orm.Model):
     ''' Add product partic obj
@@ -100,19 +110,6 @@ class ResPartner(orm.Model):
     _inherit = 'res.partner'
 
     _columns = { 
-        # ---------------------------------------------------------------------
-        #                              FORCE DATA:
-        # ---------------------------------------------------------------------
-        
-        # TODO remove vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-        # 'force_label_lang_id': fields.many2one(
-        #     'res.lang', 'Label force lang', 
-        #    help='Instead use partner lang (or label forced lang)'),
-
-        #'label_force_logo': fields.boolean('Force customer logo'),
-        # TODO remove ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        
-        
         # ---------------------------------------------------------------------
         #                      EXTRA LANGUAGE ELEMENTS:
         # ---------------------------------------------------------------------
@@ -130,6 +127,7 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         #                      LABEL STRING FOR ALL ELEMENTS:
         # ---------------------------------------------------------------------
+        # Anagrafic text:
         'label_string_code': fields.char(
             'Print company code', 
             size=40, translate=True),
@@ -142,13 +140,13 @@ class ResPartner(orm.Model):
             'Print partner description', 
             size=40, translate=True),
         'label_string_frame': fields.char('Print frame',
-            size=40, translate=True), # TODO add
+            size=40, translate=True),
         'label_string_fabric': fields.char('Print fabric', 
-            size=40, translate=True), # TODO add
+            size=40, translate=True),
 
         # Anagrafic numeric:        
         'label_string_q_x_pack': fields.char('Print Q. x pack', 
-            size=40, translate=True), # TODO add
+            size=40, translate=True),
         'label_string_q_x_pallet': fields.char('Print Q. x pallet', 
             size=40, translate=True),
         'label_string_dimension': fields.char('Print dimension', 
@@ -166,7 +164,7 @@ class ResPartner(orm.Model):
         #'label_string_price_uom':
 
         # EAN data:
-        #'label_string_ean13': 'label_string_ean8'
+        #'label_string_ean13' 'label_string_ean8'
         
         # Production:
         'label_string_line': fields.char('Print production line', 
@@ -207,8 +205,8 @@ class ResPartner(orm.Model):
         'label_print_fabric': fields.boolean('Print fabric'), # TODO add
 
         # Anagrafic numeric:        
-        'label_print_q_x_pack': fields.boolean('Print Q. x pack'), # TODO add
-        'label_print_q_x_pallet': fields.boolean('Print Q. x pallet'),
+        'label_print_q_x_pack': fields.boolean('Print Q. x pack'),
+        'label_print_q_x_pallet': fields.boolean('Print Q. x pallet'),#TODO add
         'label_print_dimension': fields.boolean('Print dimension'),
         'label_print_volume': fields.boolean('Print volume'),
         'label_print_weight_net': fields.boolean('Print weight net'),
@@ -260,8 +258,6 @@ class ResPartner(orm.Model):
         'label_print_lot': lambda *x: True,
         
         'label_print_company_logo': lambda *x: True,
-        
-        
         }    
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

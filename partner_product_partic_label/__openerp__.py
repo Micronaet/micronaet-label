@@ -31,6 +31,7 @@
     'depends': [
         'base',
         'partner_product_partic',
+        'label_system_note',
         ],
     'init_xml': [],
     'demo': [],
