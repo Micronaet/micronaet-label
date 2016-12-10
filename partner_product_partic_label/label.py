@@ -46,14 +46,10 @@ class ResPartnerProductParticLabel(orm.Model):
     _description = 'Label partic'
     
     _columns = {
-        #'force': fields.boolean(
-        #    'Force', help='Force in label the use of own element'),
         'name': fields.selection([        
-            #('ean13', 'EAN 13'),
-            #('ean8', 'EAN 8'),            
             ('frame', 'Frame'),
             ('fabric', 'Fabric'),
-            ('color', 'Color'),
+            #('color', 'Color'), # TODO ???
             ('static_text1', 'Text 1'),
             ('static_text2', 'Text 2'),
             ('static_text3', 'Text 3'),
@@ -72,6 +68,7 @@ class ResPartnerProductPartic(orm.Model):
         # Customer code:
         'ean13': fields.char('EAN 13', size=13),
         'ean8': fields.char('EAN 8', size=8),
+        'partner_pricelist': fields.float('Partner pricelist', digits=(16, 3)), 
     
         # Image fields:
         'label_field_ids': fields.one2many(
@@ -235,7 +232,12 @@ class ResPartner(orm.Model):
         'label_print_partner_logo': fields.boolean('Print partner logo'), # TODO add
         'label_print_linedrawing': fields.boolean('Print line drawing'), # TODO add
         #'label_print_product_image': fields.boolean('Print product mage'), # TODO add what album
-        # TODO extra images
+        
+        # Extra images:
+        'label_print_extra_image_ids': fields.many2many(
+            'note.image', 'note_image_label_rel', 
+            'label_id', 'image_id', 
+            'Extra image'),
                
         # Counter:            
         'label_print_counter_pack': fields.boolean('Print counter pack'),   

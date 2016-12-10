@@ -48,7 +48,7 @@
 	                            <field name="parent_id" placeholder="Company..." domain="[('is_company', '=', True)]" context="{'default_is_company': True}" attrs="{'invisible': ['&amp;',('is_company','=', True),('is_address','=',False)], 'required': [('is_address','=',True)]}" on_change="onchange_address(use_parent_address, parent_id)" />
 	                            <field name="category_id" widget="many2many_tags" placeholder="Tags..." />
                             </div>
-                            <field name="image" widget="image" class="oe_left oe_avatar" options="{'preview_image': 'image_medium', 'size': [90, 90]}" nolabel="1"/>
+                            <field name="label_image" widget="image" nolabel="1"/>
                             <notebook colspan="4">
                                 <page string="Product partic">
                                     <group col="4" colspan="4"> 
@@ -58,7 +58,7 @@
                                                 <field name="partner_id" invisible="1"/>
                                                 <field name="product_id" />
                                                 
-                                                <field name="partner_price" />
+                                                <field name="partner_pricelist" />
                                                 <field name="partner_code" />
                                                 
                                                 <field name="ean8" />
@@ -72,7 +72,7 @@
                                                         <field name="partner_id" invisible="1"/>
                                                         <field name="product_id" />
                                                         
-                                                        <field name="partner_price" />
+                                                        <field name="partner_pricelist" />
                                                         <field name="partner_code" />
                                                         
                                                         <field name="ean8" />
