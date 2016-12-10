@@ -168,7 +168,7 @@
                                                 </group>
                                             </page>
                                             <page string="Order">
-                                                <group col="4" colspan="4"> 
+                                                <group col="6" colspan="4"> 
                                                     <field name="label_print_order_ref" />
                                                     <field name="label_string_order_ref" nolabel="1" placeholder="String..."/>
                                                     <field name="label_print_order_date" />                                                    
