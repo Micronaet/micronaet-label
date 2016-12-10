@@ -96,13 +96,85 @@
                                 </page>
                                 <page string="Label setup">
                                     <group col="4" colspan="4"> 
-                                        <separator string="Label setup" colspan="4"/>                                        
-                                        <separator string="Print element" colspan="4"/>
-                                        <field name="label_print_line" />
-                                        <field name="label_print_period" />
-                                        <field name="label_print_order_ref" />
-                                        <field name="label_print_order_date" />
-                                        <field name="label_print_counter_pack" />
+                                        <separator string="Show hide element" colspan="4"/>
+                                        <notebook colspan="4">
+                                            <page string="Text">
+                                                <group col="8" colspan="4"> 
+                                                    <field name="label_print_code" />
+                                                    <field name="label_string_code" nolabel="1" placeholder="String..."/>
+                                                    <field name="label_lang_code" nolabel="1" placeholder="Lang: EN|FR..." />
+                                                    
+                                                    <field name="label_print_description" />
+                                                    <field name="label_string_description" nolabel="1" placeholder="String..."/>
+                                                    <field name="label_lang_code" nolabel="1" placeholder="Lang: EN|FR..." />
+
+                                                    <field name="label_print_code_partner" />
+                                                    <field name="label_string_code_partner" nolabel="1" placeholder="String..." colspan="2"/>
+                                                    
+                                                    <field name="label_print_description_partner" />
+                                                    <field name="label_string_description_partner" nolabel="1" placeholder="String..." colspan="2"/>
+
+                                                    <field name="label_print_frame" />
+                                                    <field name="label_string_frame" nolabel="1" placeholder="String..."/>
+                                                    <field name="label_lang_frame" nolabel="1" placeholder="Lang: EN|FR..." />
+                                                    
+                                                    <field name="label_print_fabric" />
+                                                    <field name="label_string_fabric"  nolabel="1" placeholder="String..." />
+                                                    <field name="label_lang_fabric" nolabel="1" placeholder="Lang: EN|FR..." />
+                                                </group>
+                                            </page>
+                                            <page string="Numeric">
+                                                <group col="4" colspan="4"> 
+                                                    <field name="label_print_q_x_pack" />
+                                                    <field name="label_print_q_x_pallet" />
+                                                    
+                                                    <field name="label_print_dimension" />
+                                                    <field name="label_print_volume" />
+                                                    
+                                                    <field name="label_print_weight_net" />
+                                                    <field name="label_print_weight_lord" />
+                                                    
+                                                    <field name="label_print_price" />
+                                                    <field name="label_print_price_uom" />
+                                                    
+                                                    <field name="label_print_parcel" />                                                    
+                                                    <field name="label_print_counter_pack" />
+                                                </group>
+                                            </page>
+                                            <page string="EAN">
+                                                <group col="4" colspan="4"> 
+                                                    <field name="label_print_ean13" />
+                                                    <field name="label_print_ean8" />
+                                                </group>
+                                            </page>
+                                            <page string="Production">                                            
+                                                <group col="4" colspan="4"> 
+                                                    <field name="label_print_line" />
+                                                    <field name="label_print_period" />
+                                                    
+                                                    <field name="label_print_lot" />
+                                                </group>
+                                            </page>
+                                            <page string="Order">
+                                                <group col="4" colspan="4"> 
+                                                    <field name="label_print_order_ref" />
+                                                    <field name="label_print_order_date" />
+                                                    
+                                                    <field name="label_print_destination_code" />
+                                                </group>
+                                            </page>
+                                            <page string="Image">
+                                                <group col="4" colspan="4"> 
+                                                    <field name="label_print_company_logo" />
+                                                    <field name="label_print_partner_logo" />
+                                                    
+                                                    <field name="label_print_linedrawing" />
+                                                    <newline/>
+                                                    
+                                                    <field name="label_print_extra_image_ids" widget="many2many_tags" domain="[('label_image','=',True)]" />                                                
+                                                </group>
+                                            </page>
+                                        </notebook>
                                     </group>
                                 </page>
                             </notebook>
