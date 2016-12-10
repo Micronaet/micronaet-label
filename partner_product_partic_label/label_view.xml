@@ -185,7 +185,8 @@
                                                     <field name="label_print_linedrawing" />
                                                     <newline/>
                                                     
-                                                    <field name="label_print_extra_image_ids" widget="many2many_tags" domain="[('label_image','=',True)]" />                                                
+                                                    <separator string="Extra image:" colspan="4"/>
+                                                    <field name="label_print_extra_image_ids" widget="many2many_tags" domain="[('label_image','=',True)]" colspan="4" nolabel="1"/> 
                                                 </group>
                                             </page>
                                         </notebook>
