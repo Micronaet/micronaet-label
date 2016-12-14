@@ -63,7 +63,7 @@ class MrpProduction(orm.Model):
         labels = [
             'article',
             'pack',
-            #('pallet', ),
+            #'pallet',
             ]
         for line in mrp_proxy.order_line_ids:
             for label in labels:
