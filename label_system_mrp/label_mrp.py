@@ -70,13 +70,16 @@ class MrpProduction(orm.Model):
                 sequence += 1
                 q_x_pack = line.product_id.q_x_pack
                 
-                # -----------------------------------------------------------------
+                # -------------------------------------------------------------
                 # Search 3 label depend on note system management:
-                # -----------------------------------------------------------------
+                # -------------------------------------------------------------
                 # TODO loop for 3 label schema
                 report_id = False # TODO
                 label_id = 1 # TODO
                 
+                # -------------------------------------------------------------
+                # Generate extra data from order, product, partner, address
+                # -------------------------------------------------------------
                 if label == 'article':
                     record_counter = line.product_uom_qty
                 else:
@@ -84,11 +87,35 @@ class MrpProduction(orm.Model):
                         # XXX Manage Error:
                         q_x_pack = 1
                     record_counter = line.product_uom_qty / q_x_pack
+                    
+                # TODO create function for generate:
+                record_data = {
+                    'record_counter': record_counter,
+                    'record_q_x_pack': q_x_pack,
+                    #'record_name': 
+                    #'record_customer_name': 
+                    #'record_frame': 
+                    #'record_color': 
+                    #'record_fabric': 
+                    #'record_code': 
+                    #'record_customer_code': 
+                    #'record_ean13':
+                    #'record_ean8': 
+                    #'record_static_text1':
+                    #'record_static_text2':
+                    #'record_static_text3':            
+                    #'record_line':
+                    #'record_period':
+                    #'record_order_ref':
+                    #'record_order_date':
+                    #'record_counter_pack_total':
+                    }
                 
-                # -----------------------------------------------------------------
+                # -------------------------------------------------------------
                 # Create Job:            
-                # -----------------------------------------------------------------
-                job_pool.create(cr, uid, {
+                # -------------------------------------------------------------
+                # Integrate with line information:
+                record_data.update({
                     'sequence': sequence,
                     'label_id': label_id, # label.label
                     'report_id': report_id, #label.label.report
@@ -105,29 +132,16 @@ class MrpProduction(orm.Model):
 
                     #'error': # TODO
                     #'comment_error' # TODO
-                    'record_counter': record_counter,        
-                    #'record_name': 
-                    #'record_customer_name': 
-                    #'record_frame': 
-                    #'record_color': 
-                    #'record_fabric': 
-                    #'record_code': 
-                    #'record_customer_code': 
-                    #'record_ean13':
-                    #'record_ean8': 
-                    'record_q_x_pack': q_x_pack,
-                    #'record_static_text1':
-                    #'record_static_text2':
-                    #'record_static_text3':
-            
-                    #'record_line':
-                    #'record_period':
-                    #'record_order_ref':
-                    #'record_order_date':
-                    #'record_counter_pack_total':
-                    }, context=context)
+                    })
+                job_pool.create(cr, uid, record_data, context=context)
         return True
     
+    def label_check_report(self, cr, uid, ids, context=None):
+        ''' Report for check error label
+        '''
+        # TODO
+        return True
+        
     _columns = {
         'label_job_ids': fields.one2many(
             'label.label.job', 'mrp_id', 
