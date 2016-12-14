@@ -51,6 +51,7 @@ class MrpProduction(orm.Model):
         
         # Pool used:
         job_pool = self.pool.get('label.label.job')
+        partner_pool = self.pool.get('res.partner')
         
         mrp_proxy = self.browse(cr, uid, ids, context=context)[0]
         
@@ -68,48 +69,27 @@ class MrpProduction(orm.Model):
         for line in mrp_proxy.order_line_ids:
             for label in labels:
                 sequence += 1
-                q_x_pack = line.product_id.q_x_pack
                 
                 # -------------------------------------------------------------
                 # Search 3 label depend on note system management:
                 # -------------------------------------------------------------
-                # TODO loop for 3 label schema
+                # TODO generate labdel_id with system note management!!!!!!!!!!
                 report_id = False # TODO
                 label_id = 1 # TODO
                 
                 # -------------------------------------------------------------
                 # Generate extra data from order, product, partner, address
                 # -------------------------------------------------------------
+                record_data = partner_pool.generate_job_data_from_line_partner(
+                    cr, uid, line=line, context=context)
+                q_x_pack = record_data.get('q_x_pack', False)
+
                 if label == 'article':
                     record_counter = line.product_uom_qty
                 else:
-                    if not q_x_pack:
-                        # XXX Manage Error:
-                        q_x_pack = 1
-                    record_counter = line.product_uom_qty / q_x_pack
-                    
-                # TODO create function for generate:
-                record_data = {
-                    'record_counter': record_counter,
-                    'record_q_x_pack': q_x_pack,
-                    #'record_name': 
-                    #'record_customer_name': 
-                    #'record_frame': 
-                    #'record_color': 
-                    #'record_fabric': 
-                    #'record_code': 
-                    #'record_customer_code': 
-                    #'record_ean13':
-                    #'record_ean8': 
-                    #'record_static_text1':
-                    #'record_static_text2':
-                    #'record_static_text3':            
-                    #'record_line':
-                    #'record_period':
-                    #'record_order_ref':
-                    #'record_order_date':
-                    #'record_counter_pack_total':
-                    }
+                    if not q_x_pack: # TODO Manage Error:
+                        record_counter = line.product_uom_qty / q_x_pack
+                    # XXX Note: q_x_pack Remain false in job
                 
                 # -------------------------------------------------------------
                 # Create Job:            
@@ -123,12 +103,7 @@ class MrpProduction(orm.Model):
                     'demo': False,
                     'fast': False,
                     
-                    'product_id': line.product_id.id,
-                    'partner_id': line.order_id.partner_id.id,
-                    'address_id': line.order_id.destination_partner_id,
-                    'order_id': line.order_id.id,
-                    'line_id': line.id,
-                    'mrp_id': mrp_proxy.id,
+                    'record_counter': record_counter,
 
                     #'error': # TODO
                     #'comment_error' # TODO

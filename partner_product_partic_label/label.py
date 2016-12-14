@@ -106,6 +106,87 @@ class ResPartner(orm.Model):
     ''' Add product partic obj
     '''    
     _inherit = 'res.partner'
+    
+    def generate_job_data_from_line_partner(self, cr, uid, 
+            **parameter):
+        ''' Generate record for create printing jobs
+            Parameter >> Dict for not mandatory paremeters, list below:
+            
+            line: used for generate all parameter, instead read passed (*_id)
+            product_id: ID of product
+            partner_id: ID of partner
+            address_id: ID of address
+            order_id: ID of order
+            mrp_id: ID of MRP
+            context: dict of extra parameter
+        '''
+        # ---------------------------------------------------------------------
+        # Read parameters:
+        # ---------------------------------------------------------------------
+        context = parameter.get('context', {})
+        line = parameter.get('line', False)
+        
+        # Pool used:
+        product_pool = self.pool.get('product.product')
+        mrp_pool = self.pool.get('mrp.production')
+        partner_pool = self.pool.get('res.partner') # and address
+        order_pool = self.pool.get('sale.order')
+        
+        # ---------------------------------------------------------------------
+        # Header many2one data:
+        # ---------------------------------------------------------------------
+        if line:
+            res = {
+                'product_id': line.product_id.id,
+                'partner_id': line.order_id.partner_id.id,
+                'address_id': line.order_id.destination_partner_id.id,
+                'order_id': line.order_id.id,
+                'line_id': line.id,
+                'mrp_id': line.mrp_id.id,
+                }
+            product = line.product_id
+        else:
+            product_id = parameter.get('product_id', False)
+            if not product_id:
+                # Mandatory element, raise error
+                pass # TODO
+                
+            res = {
+                'product_id': product_id,
+                'partner_id': parameter.get('partner_id', False),
+                'address_id': parameter.get('address_id', False),
+                'order_id': parameter.get('order_id', False),
+                'line_id': False,
+                'mrp_id': parameter.get('mrp_id', False),
+                }
+            product = product_pool.browse(
+                cr, uid, product_id, context=context)
+        
+        # ---------------------------------------------------------------------
+        # Product fields:
+        # ---------------------------------------------------------------------
+        res.update({        
+                'record_name': product.name,
+                #'record_customer_name': 
+                #'record_frame': 
+                #'record_color': 
+                #'record_fabric': 
+                'record_code': product.default_code,
+                #'record_customer_code': 
+                'record_ean13': product.ean13,
+                'record_ean8': product.ean8,
+                #'record_static_text1':
+                #'record_static_text2':
+                #'record_static_text3':            
+                #'record_line':
+                #'record_period':
+                #'record_order_ref':
+                #'record_order_date':
+                #'record_counter_pack_total':
+                })
+            
+        return res
+        
 
     _columns = { 
         # ---------------------------------------------------------------------
