@@ -60,55 +60,72 @@ class MrpProduction(orm.Model):
             job_pool.unlink(cr, uid, remove_ids, context=context)
             
         sequence = 0
+        labels = [
+            'article',
+            'pack',
+            #('pallet', ),
+            ]
         for line in mrp_proxy.order_line_ids:
-            sequence += 1
-            
-            # -----------------------------------------------------------------
-            # Search 3 label depend on note system management:
-            # -----------------------------------------------------------------
-            # TODO loop for 3 label schema
-            report_id = False # TODO
-            label_id = False # TODO
-            
-            # -----------------------------------------------------------------
-            # Create Job:            
-            # -----------------------------------------------------------------
-            job_pool.create(cr, uid, {
-                'sequence': sequence,
-                'label_id': label_id, # label.label
-                'report_id': report_id, #label.label.report
-                #'lang_id':,
-                'demo': False,
-                'fast': False,
+            for label in labels:
+                sequence += 1
+                q_x_pack = line.product_id.q_x_pack
                 
-                'product_id': line.product_id.id,
-                'partner_id': line.order_id.partner_id.id,
-                'address_id': line.order_id.destination_partner_id,
-                'order_id': line.order_id.id,
-                'line_id': line.id,
-                'mrp_id': mrp_proxy.id,
+                # -----------------------------------------------------------------
+                # Search 3 label depend on note system management:
+                # -----------------------------------------------------------------
+                # TODO loop for 3 label schema
+                report_id = False # TODO
+                label_id = 1 # TODO
+                
+                if label == 'article':
+                    record_counter = line.product_uom_qty
+                else:
+                    if not q_x_pack:
+                        # XXX Manage Error:
+                        q_x_pack = 1
+                    record_counter = line.product_uom_qty / q_x_pack
+                
+                # -----------------------------------------------------------------
+                # Create Job:            
+                # -----------------------------------------------------------------
+                job_pool.create(cr, uid, {
+                    'sequence': sequence,
+                    'label_id': label_id, # label.label
+                    'report_id': report_id, #label.label.report
+                    #'lang_id':,
+                    'demo': False,
+                    'fast': False,
+                    
+                    'product_id': line.product_id.id,
+                    'partner_id': line.order_id.partner_id.id,
+                    'address_id': line.order_id.destination_partner_id,
+                    'order_id': line.order_id.id,
+                    'line_id': line.id,
+                    'mrp_id': mrp_proxy.id,
 
-                #'record_counter':         
-                #'record_name': 
-                #'record_customer_name': 
-                #'record_frame': 
-                #'record_color': 
-                #'record_fabric': 
-                #'record_code': 
-                #'record_customer_code': 
-                #'record_ean13':
-                #'record_ean8': 
-                #'record_q_x_pack': 
-                #'record_static_text1':
-                #'record_static_text2':
-                #'record_static_text3':
-        
-                #'record_line':
-                #'record_period':
-                #'record_order_ref':
-                #'record_order_date':
-                #'record_counter_pack_total':
-                }, context=context)
+                    #'error': # TODO
+                    #'comment_error' # TODO
+                    'record_counter': record_counter,        
+                    #'record_name': 
+                    #'record_customer_name': 
+                    #'record_frame': 
+                    #'record_color': 
+                    #'record_fabric': 
+                    #'record_code': 
+                    #'record_customer_code': 
+                    #'record_ean13':
+                    #'record_ean8': 
+                    'record_q_x_pack': q_x_pack,
+                    #'record_static_text1':
+                    #'record_static_text2':
+                    #'record_static_text3':
+            
+                    #'record_line':
+                    #'record_period':
+                    #'record_order_ref':
+                    #'record_order_date':
+                    #'record_counter_pack_total':
+                    }, context=context)
         return True
     
     _columns = {

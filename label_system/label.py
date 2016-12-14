@@ -484,6 +484,8 @@ class LabelLabelJob(orm.Model):
         # Picture image:
         #'image': fields.boolean('With image logo'),
         #'drawing': fields.boolean('With drawing logo'),
+        
+        # TODO manage error and comment for error
         }
         
     _defaults = {
