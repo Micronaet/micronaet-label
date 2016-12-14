@@ -18,9 +18,9 @@
                                 <!--field name="report_id" readonly="1" /-->
                                 <field name="layout_id" readonly="1" />
                                 <field name="type" readonly="1" />
-                                <field name="line_id" readonly="1" />
-                                <field name="partner_id" readonly="1" />
                                 <field name="order_id" readonly="1" />
+                                <field name="partner_id" readonly="1" />
+                                <field name="line_id" readonly="1" />
                                 <field name="record_q_x_pack" readonlt="1" string="Q. x pack"/>                                
                                 <field name="record_counter" readonlt="1" string="Total"/>                                
                                 <button name="print_fast_label" string="Print" type="object" icon="gtk-print" />
