@@ -13,17 +13,17 @@
                         <button name="label_check_report" type="object" string="Check label error" icon="gtk-print" />
                         <newline />
                         <field name="label_job_ids" nolabel="1" colspan="4"> 
-                            <tree editable="bottom" string="Jobs">
-                                <field name="sequence" readonly="1" string="#"/>
-                                <field name="label_id" readonly="1" />
-                                <!--field name="report_id" readonly="1" /-->
-                                <field name="layout_id" readonly="1" />
-                                <field name="type" readonly="1" />
-                                <field name="order_id" readonly="1" />
-                                <field name="partner_id" readonly="1" />
-                                <field name="line_id" readonly="1" />
-                                <field name="record_q_x_pack" readonlt="1" string="Q. x pack"/>                                
-                                <field name="record_counter" readonlt="1" string="Total"/>                                
+                            <tree string="Jobs">
+                                <field name="sequence" string="#"/>
+                                <field name="label_id" />
+                                <!--field name="report_id" /-->
+                                <field name="layout_id" />
+                                <field name="type" />
+                                <field name="order_id" />
+                                <field name="partner_id" />
+                                <field name="line_id" />
+                                <field name="record_q_x_pack" string="Q. x pack"/>                                
+                                <field name="record_counter" string="Total"/>                                
                                 <button name="print_fast_label" string="Print" type="object" icon="gtk-print" />
                             </tree>
                         </field>
