@@ -128,39 +128,72 @@ class ResPartner(orm.Model):
         
         # Pool used:
         product_pool = self.pool.get('product.product')
-        mrp_pool = self.pool.get('mrp.production')
         partner_pool = self.pool.get('res.partner') # and address
         order_pool = self.pool.get('sale.order')
+        mrp_pool = self.pool.get('mrp.production')
         
         # ---------------------------------------------------------------------
         # Header many2one data:
         # ---------------------------------------------------------------------
         if line:
-            res = {
-                'product_id': line.product_id.id,
-                'partner_id': line.order_id.partner_id.id,
-                'address_id': line.order_id.destination_partner_id.id,
-                'order_id': line.order_id.id,
-                'line_id': line.id,
-                'mrp_id': line.mrp_id.id,
-                }
+            # Create browse obj for readability:
             product = line.product_id
+            partner = line.order_id.partner_id
+            address = line.order_id.destination_partner_id
+            order = line.order_id
+            mrp = line.mrp_id
+
+            # Create record of m2o                
+            res = {
+                'product_id': product.id,
+                'partner_id': partner.id,
+                'address_id': address.id,
+                'order_id': order.id,
+                'line_id': line.id,
+                'mrp_id': mrp.id,
+                }
         else:
+            # Get ID from parameters:
             product_id = parameter.get('product_id', False)
+            partner_id = parameter.get('partner_id', False)
+            address_id = parameter.get('address_id', False)
+            order_id = parameter.get('order_id', False)
+            mrp_id = parameter.get('mrp_id', False)
+            
+            # Check mandatory ID:
             if not product_id:
                 # Mandatory element, raise error
                 pass # TODO
-                
+
+            # Create record of m2o                
             res = {
                 'product_id': product_id,
-                'partner_id': parameter.get('partner_id', False),
-                'address_id': parameter.get('address_id', False),
-                'order_id': parameter.get('order_id', False),
+                'partner_id': partner_id,
+                'address_id': address_id,
+                'order_id': order_id,
                 'line_id': False,
-                'mrp_id': parameter.get('mrp_id', False),
+                'mrp_id': mrp_id,
                 }
+                
+            # Browse record if present:
+            # TODO check if present ID instead raise error (no data for label)            
             product = product_pool.browse(
                 cr, uid, product_id, context=context)
+            partner = partner_pool.browse(
+                cr, uid, partner_id, context=context)
+            address = partner_pool.browse(
+                cr, uid, address_id, context=context)
+            order = order_pool.browse(
+                cr, uid, order_id, context=context)
+            mrp = mrp_pool.browse(
+                cr, uid, mrp_id, context=context)
+                
+        
+        # ---------------------------------------------------------------------
+        # Check parameter in partner form:
+        # ---------------------------------------------------------------------
+        
+        
         
         # ---------------------------------------------------------------------
         # Product fields:

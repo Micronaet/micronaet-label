@@ -63,8 +63,9 @@ class MrpProduction(orm.Model):
         sequence = 0
         labels = [
             'article',
-            'pack',
+            'package',
             #'pallet',
+            #'placeholder'
             ]
         for line in mrp_proxy.order_line_ids:
             for label in labels:
@@ -87,9 +88,11 @@ class MrpProduction(orm.Model):
                 if label == 'article':
                     record_counter = line.product_uom_qty
                 else:
-                    if not q_x_pack: # TODO Manage Error:
+                    if q_x_pack: # TODO Manage Error:
                         record_counter = line.product_uom_qty / q_x_pack
-                    # XXX Note: q_x_pack Remain false in job
+                    else:    
+                        record_counter = line.product_uom_qty
+                        # XXX Note: q_x_pack Remain false in job
                 
                 # -------------------------------------------------------------
                 # Create Job:            
