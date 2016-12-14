@@ -1,6 +1,20 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+        <record model="ir.ui.view" id="view_product_extra_form">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="ean13" position="after">
+                    <field name="ean8" />
+                </field>
+                <!--<field name="q_x_pack" position="after">
+                    <field name="q_x_pallet" />
+                </field>-->
+                
+            </field>
+        </record>
         <!--note.image-->
         <record model="ir.ui.view" id="view_note_system_label_image_form">
             <field name="name">note.image.form</field>

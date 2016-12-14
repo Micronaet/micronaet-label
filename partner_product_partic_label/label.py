@@ -84,6 +84,7 @@ class ProductProduct(orm.Model):
 
     _columns = { 
         'ean8': fields.char('EAN 8', size=8),
+        'q_x_pallet': fields.integer('Q. per pallet'),
         }
 
 class NoteImage(orm.Model):

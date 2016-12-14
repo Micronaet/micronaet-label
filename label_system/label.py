@@ -150,7 +150,7 @@ class LabelLabel(orm.Model):
                 if partner_ids:
                     partner_id = partner_ids[0]
                 else:
-                    partner_ids = False    
+                    partner_id = False    
             
                 # 1. type:
                 available_selection = [
@@ -232,7 +232,7 @@ class LabelLabel(orm.Model):
         assert len(ids) == 1, 'Works only with one record a time'
         
         job_pool = self.pool.get('label.label.job')
-        job_ids = job_pool.seach(cr, uid, [
+        job_ids = job_pool.search(cr, uid, [
             ('demo', '=', True)], context=context)
         if not job_ids:
             raise osv.except_osv(
