@@ -38,4 +38,82 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+class MrpProduction(orm.Model):
+    """ Model name: MrpProduction
+    """
+    
+    _inherit = 'mrp.production'
+    
+    def generate_label_job(self, cr, uid, ids, context=None):
+        ''' Generate list of jobs label
+        '''
+        assert len(ids) == 1, 'Works only with one record a time'
+        
+        # Pool used:
+        job_pool = self.pool.get('label.label.job')
+        
+        mrp_proxy = self.browse(cr, uid, ids, context=context)[0]
+        
+        # Remove previous label:
+        remove_ids = [item.id for item in mrp_proxy.label_job_ids]
+        if remove_ids:
+            job_pool.unlink(cr, uid, remove_ids, context=context)
+            
+        sequence = 0
+        for line in mrp_proxy.order_line_ids:
+            sequence += 1
+            
+            # -----------------------------------------------------------------
+            # Search 3 label depend on note system management:
+            # -----------------------------------------------------------------
+            # TODO loop for 3 label schema
+            report_id = False # TODO
+            label_id = False # TODO
+            
+            # -----------------------------------------------------------------
+            # Create Job:            
+            # -----------------------------------------------------------------
+            job_pool.create(cr, uid, {
+                'sequence': sequence,
+                'label_id': label_id, # label.label
+                'report_id': report_id, #label.label.report
+                #'lang_id':,
+                'demo': False,
+                'fast': False,
+                
+                'product_id': line.product_id.id,
+                'partner_id': line.order_id.partner_id.id,
+                'address_id': line.order_id.destination_partner_id,
+                'order_id': line.order_id.id,
+                'line_id': line.id,
+                'mrp_id': mrp_proxy.id,
+
+                #'record_counter':         
+                #'record_name': 
+                #'record_customer_name': 
+                #'record_frame': 
+                #'record_color': 
+                #'record_fabric': 
+                #'record_code': 
+                #'record_customer_code': 
+                #'record_ean13':
+                #'record_ean8': 
+                #'record_q_x_pack': 
+                #'record_static_text1':
+                #'record_static_text2':
+                #'record_static_text3':
+        
+                #'record_line':
+                #'record_period':
+                #'record_order_ref':
+                #'record_order_date':
+                #'record_counter_pack_total':
+                }, context=context)
+        return True
+    
+    _columns = {
+        'label_job_ids': fields.one2many(
+            'label.label.job', 'mrp_id', 
+            'Label Job'),
+        }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
