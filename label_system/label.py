@@ -561,72 +561,56 @@ class LabelLabelJob(orm.Model):
         # Data field:
         # -----------
         # Anagrafic text:
-        'record_data_code': fields.boolean('Company code'),
-        'record_data_code_partner': fields.boolean('Partner code'),
-        'record_data_description': fields.boolean(
-            'company description'),
-        'record_data_description_partner': fields.boolean(
-            'Partner description'),
-        'record_data_frame': fields.boolean('Frame'), # TODO add
-        'record_data_fabric': fields.boolean('Fabric'), # TODO add
+        'record_data_code': fields.char('Company code', size=20),
+        'record_data_code_partner': fields.char('Partner code', size=20),
+        'record_data_description': fields.char(
+            'company description', size=60),
+        'record_data_description_partner': fields.char(
+            'Partner description', size=60),
+        'record_data_frame': fields.char('Frame', size=50), # TODO add
+        'record_data_fabric': fields.char('Fabric', size=50), # TODO add
 
         # Anagrafic numeric:        
-        'record_data_q_x_pack': fields.boolean('Q. x pack'),
-        'record_data_q_x_pallet': fields.boolean('Q. x pallet'),
-        'record_data_dimension': fields.boolean('Dimension'),
-        'record_data_volume': fields.boolean('Volume'),
-        'record_data_weight_net': fields.boolean('Weight net'),
-        'record_data_weight_lord': fields.boolean('Weight lord'),
-        'record_data_parcel': fields.boolean('Parcel'),
-        'record_data_price': fields.boolean('Price'),
-        'record_data_price_uom': fields.boolean('Price uom'),
+        # TODO change float
+        'record_data_q_x_pack': fields.char('Q. x pack', size=10),
+        'record_data_q_x_pallet': fields.char('Q. x pallet', size=10),
+        'record_data_dimension': fields.char('Dimension', size=35),
+        'record_data_volume': fields.char('Volume', size=10),
+        'record_data_weight_net': fields.char('Weight net', size=10),
+        'record_data_weight_lord': fields.char('Weight lord', size=10),
+        'record_data_parcel': fields.char('Parcel', size=10),
+        'record_data_price': fields.char('Price', size=15),
+        'record_data_price_uom': fields.char('Price uom', size=10),
 
         # EAN data:
-        'record_data_ean13': fields.boolean('EAN13'),
-        'record_data_ean8': fields.boolean('EAN8'),
+        'record_data_ean13': fields.char('EAN13', size=13),
+        'record_data_ean8': fields.char('EAN8', size=8),
         
         # Production:
-        'record_data_line': fields.boolean('Production line'),
-        'record_data_period': fields.boolean('Period',
+        'record_data_line': fields.char('Production line', size=10),
+        'record_data_period': fields.char('Period', size=10,
             help='Production period YYMM  format es.: 1601'),
-        'record_data_lot': fields.boolean('Lot'),
+        'record_data_lot': fields.char('Lot', size=15),
         
         # Order:
-        'record_data_order_ref': fields.boolean('Order ref'), # customer
-        'record_data_order_date': fields.boolean('Order date'),
-        'record_data_destination_code': fields.boolean(
-            'Destination code'),
+        'record_data_order_ref': fields.char('Order ref', size=20), # customer
+        'record_data_order_date': fields.char('Order date', size=10),
+        'record_data_destination_code': fields.char(
+            'Destination code', size=10),
             
         # Image:
-        'record_data_company_logo': fields.boolean('Company logo'),
-        'record_data_partner_logo': fields.boolean('Partner logo'),
-        'record_data_linedrawing': fields.boolean('Line drawing'),
-        #'label_print_product_image': fields.boolean('Print product mage'),
+        # XXX Note: used related elements
+        #record_data_company_logo record_data_partner_logo
+        #record_data_linedrawing label_print_product_image        
         
         # Extra images:
-        'record_data_extra_image_ids': fields.many2many(
-            'note.image', 'note_job_image_label_rel', 
-            'job_id', 'image_id', 
-            'Extra image'),
+        # XXX Note: used related elements
+        #record_data_extra_image_ids
         
         # Static text:
         'record_data_text1': fields.text('Static text 1'), 
         'record_data_text2': fields.text('Static text 2'), 
         'record_data_text3': fields.text('Static text 3'), 
-        
-
-
-        
-        # -----------------------------------------------------------------
-        # Logo:
-        # -----------------------------------------------------------------
-        # TODO
-        # Logo Image:
-        #'company_logo': fields.boolean('With company logo'),
-        #'customer_logo': fields.boolean('With customer logo'),
-        # Picture image:
-        #'image': fields.boolean('With image logo'),
-        #'drawing': fields.boolean('With drawing logo'),
         
         # TODO manage error and comment for error
         }

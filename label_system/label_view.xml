@@ -204,6 +204,7 @@
                             <field name="report_id" readonly="1" attrs="{'readonly': [('fast','=',False)]}"/>
                             <field name="lang_id" widget="selection" attrs="{'readonly': [('fast','=',False)]}"/>
                             <field name="layout_id" widget="selection" attrs="{'readonly': [('fast','=',False)]}"/>
+                            <field name="record_print_counter_pack" attrs="{'readonly': [('fast','=',False)]}"/>
                             
                             <notebook colspan="4">
                                 <page string="Link data">
@@ -255,28 +256,86 @@
                                         <field name="record_string_q_x_pallet" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
                                         <field name="record_data_q_x_pallet" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
 
+                                        <field name="record_print_dimension" string="Dimension" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_string_dimension" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_dimension" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+
+                                        <field name="record_print_volume" string="Volume" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_string_volume" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_volume" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+
+                                        <field name="record_print_weight_net" string="Weight net" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_string_weight_net" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_weight_net" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
                                         
+                                        <field name="record_print_weight_lord" string="Weight lord" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_string_weight_lord" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_weight_lord" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+
+                                        <field name="record_print_parcel" string="Parcel" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_string_parcel" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_parcel" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+
+                                        <field name="record_print_price" string="Price" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_string_price" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_price" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+
+                                        <field name="record_print_price_uom" string="Price UOM" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_price_uom" nolabel="1" attrs="{'readonly': [('fast','=',False)]}" colspan="2"/>
+
                                         <separator string="Static" colspan="8"/>
-                                        <field name="record_static_text1" attrs="{'readonly': [('fast','=',False)]}" />
-                                        <field name="record_static_text2" attrs="{'readonly': [('fast','=',False)]}" />
-                                        <field name="record_static_text3" attrs="{'readonly': [('fast','=',False)]}" />
-                                    </group>
-                    
+                                        <field name="record_data_text1" attrs="{'readonly': [('fast','=',False)]}" colspan="4" />
+                                        <field name="record_data_text2" attrs="{'readonly': [('fast','=',False)]}" colspan="4"/>
+                                        <field name="record_data_text3" attrs="{'readonly': [('fast','=',False)]}" colspan="4" />
+                                    </group>                    
                                 </page>
+                                
                                 <page string="EAN">
-                                    <group col="4" colspan="4"> 
+                                    <group col="6" colspan="4"> 
+                                        <field name="record_print_ean13" string="EAN 13" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_ean13" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+
+                                        <field name="record_print_ean8" string="EAN 8" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_ean8" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
                                     </group>
                                 </page>
+                                
                                 <page string="Production">                                            
-                                    <group col="6" colspan="4"> 
+                                    <group col="8" colspan="4"> 
+                                        <field name="record_print_line" string="Line" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_string_line" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_line" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+
+                                        <field name="record_print_period" string="Period" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_string_period" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_period" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+
+                                        <field name="record_print_lot" string="Lot" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_string_lot" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_lot" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
                                     </group>
                                 </page>
+                                
                                 <page string="Order">
-                                    <group col="6" colspan="4"> 
+                                    <group col="8" colspan="4"> 
+                                        <field name="record_print_order_ref" string="Order ref." attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_string_order_ref" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_order_ref" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+
+                                        <field name="record_print_order_date" string="Order date." attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_string_order_date" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_order_date" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+
+                                        <field name="record_print_destination_code" string="Destination code" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_string_destination_code" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_destination_code" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
                                     </group>
                                 </page>
                                 <page string="Image">
-                                    <group col="4" colspan="4"> 
+                                    <group col="6" colspan="4"> 
+                                        <field name="record_print_company_logo" string="Print company logo" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_print_partner_logo" string="Print partner logo" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_print_linedrawing" string="Print linedrawing" attrs="{'readonly': [('fast','=',False)]}"/>
                                     </group>
                                 </page>
                             </notebook>
@@ -295,8 +354,8 @@
                     <field name="report_id" />
                     <field name="layout_id" />
                     <field name="type" />
-                    <field name="record_code" />
-                    <field name="record_name" />
+                    <field name="record_data_code" />
+                    <field name="record_data_description" />
                     <field name="record_counter" />
                     
                     <field name="product_id" />
@@ -318,8 +377,8 @@
             <field name="model">label.label.job</field>
             <field name="arch" type="xml">
                 <search string="Label job" version="7.0">        
-                    <field name="record_code" />
-                    <field name="record_name" />
+                    <field name="record_data_code" />
+                    <field name="record_data_description" />
                     <field name="label_id" />
                     <field name="report_id" />
                     <!--<field name="layout_id" />
