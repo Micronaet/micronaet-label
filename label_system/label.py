@@ -427,52 +427,195 @@ class LabelLabelJob(orm.Model):
         'line_id': fields.many2one('sale.order.line', 'Order line'),
         'mrp_id': fields.many2one('mrp.production', 'Production'),
 
-        # -----------------------------------------------------------------
+        # ---------------------------------------------------------------------
         #                               RECORD:
-        # -----------------------------------------------------------------        
+        # ---------------------------------------------------------------------    
         'record_counter': fields.integer('Counter', required=True, 
             help='Number of label printed'),
         
-        # -----------------------------------------------------------------
-        #                          Product data:
-        # -----------------------------------------------------------------
-        # TODO all check for choose if print!!
-        # Description (force product if present):
-        'record_name': fields.char('Product name', size=64), 
-        'record_customer_name': fields.char('Customer product name', size=64),
-        'record_frame': fields.text('Product frame'), 
-        'record_color': fields.text('Product color'), 
-        'record_fabric': fields.text('Product fabric'), 
+        # ---------------------------------------------------------------------
+        #                         PRODUCT DATA RECORD:
+        # ---------------------------------------------------------------------
+        # -------------
+        # Label string:
+        # -------------
+        # Anagrafic text:
+        'record_string_code': fields.char(
+            'Label company code', 
+            size=40, translate=True),
+        'record_string_code_partner': fields.char('Label partner code', 
+            size=40, translate=True),
+        'record_string_description': fields.char(
+            'Label company description', 
+            size=40, translate=True),
+        'record_string_description_partner': fields.char(
+            'Label partner description', 
+            size=40, translate=True),
+        'record_string_frame': fields.char('Label frame',
+            size=40, translate=True),
+        'record_string_fabric': fields.char('Label fabric', 
+            size=40, translate=True),
 
-        # Code:
-        'record_code': fields.char('Product code', size=20), 
-        'record_customer_code': fields.char('Customer code', size=20), 
-        'record_ean13': fields.char('EAN 13', size=13), 
-        'record_ean8': fields.char('EAN 8', size=8), 
+        # Anagrafic numeric:        
+        'record_string_q_x_pack': fields.char('Label Q. x pack', 
+            size=40, translate=True),
+        'record_string_q_x_pallet': fields.char('Label Q. x pallet', 
+            size=40, translate=True),
+        'record_string_dimension': fields.char('Label dimension', 
+            size=40, translate=True),
+        'record_string_volume': fields.char('Label volume', 
+            size=40, translate=True),
+        'record_string_weight_net': fields.char('Label weight net', 
+            size=40, translate=True),
+        'record_string_weight_lord': fields.char('Label weight lord', 
+            size=40, translate=True),
+        'record_string_parcel': fields.char('Label parcel', 
+            size=40, translate=True),
+        'record_string_price': fields.char('Label price', 
+            size=40, translate=True),
+        #'label_string_price_uom':
+
+        # EAN data:
+        #'record_string_ean13' 'record_string_ean8'
         
-        # Extra:            
-        'record_q_x_pack': fields.integer('Force q. x pack'),
-        
-        # Static:
-        'record_static_text1': fields.text('Static text 1'), 
-        'record_static_text2': fields.text('Static text 2'), 
-        'record_static_text3': fields.text('Static text 3'), 
-        
-        # -----------------------------------------------------------------
-        #                         Production data:
-        # -----------------------------------------------------------------
-        # Line:
-        'record_line': fields.char('Line', size=20, help='Production line'), 
-        'record_period': fields.char('Period', size=20, 
-            help='Production period YYMM  format es.: 1601'), 
+        # Production:
+        'record_string_line': fields.char('Label production line', 
+            size=40, translate=True),
+        'record_string_period': fields.char('Label period', 
+            size=40, translate=True),
+        'record_string_lot': fields.char('Label lot', 
+            size=40, translate=True),
         
         # Order:
-        'record_order_ref': fields.char('Order ref', size=30), 
-        'record_order_date': fields.date('Order date'), 
+        'record_string_order_ref': fields.char('Label order ref', 
+            size=40, translate=True), # customer
+        'record_string_order_date': fields.char('Label order date', 
+            size=40, translate=True),
+        'record_string_destination_code': fields.char(
+            'Label destination code', 
+            size=40, translate=True),
+            
+        # Image:
+        #'record_string_company_logo' 'record_string_partner_logo'
+        #'record_string_linedrawing' 'record_string_product_image'
+               
+        # Counter:            
+        'record_string_counter_pack': fields.char('Label counter pack', 
+            size=40, translate=True),   
 
-        # Counter:
-        'record_counter_pack_total': fields.boolean('Counter pack total',
-            help='For print in label: 1/25, 2/25... (reset every product)'),
+        # ---------------
+        # Required field:
+        # ---------------
+        # Anagrafic text:
+        'record_print_code': fields.boolean('Print company code'),
+        'record_print_code_partner': fields.boolean('Print partner code'),
+        'record_print_description': fields.boolean(
+            'Print company description'),
+        'record_print_description_partner': fields.boolean(
+            'Print partner description'),
+        'record_print_frame': fields.boolean('Print frame'), # TODO add
+        'record_print_fabric': fields.boolean('Print fabric'), # TODO add
+
+        # Anagrafic numeric:        
+        'record_print_q_x_pack': fields.boolean('Print Q. x pack'),
+        'record_print_q_x_pallet': fields.boolean('Print Q. x pallet'),#TODO add
+        'record_print_dimension': fields.boolean('Print dimension'),
+        'record_print_volume': fields.boolean('Print volume'),
+        'record_print_weight_net': fields.boolean('Print weight net'),
+        'record_print_weight_lord': fields.boolean('Print weight lord'),
+        'record_print_parcel': fields.boolean('Print parcel'),
+        'record_print_price': fields.boolean('Print price'),
+        'record_print_price_uom': fields.boolean('Print price uom'), # TODO add
+
+        # EAN data:
+        'record_print_ean13': fields.boolean('Print EAN13'),
+        'record_print_ean8': fields.boolean('Print EAN8'),
+        
+        # Production:
+        'record_print_line': fields.boolean('Print production line'),
+        'record_print_period': fields.boolean('Print period',
+            help='Production period YYMM  format es.: 1601'),
+        'record_print_lot': fields.boolean('Print lot'),
+        
+        # Order:
+        'record_print_order_ref': fields.boolean('Print order ref'), # customer
+        'record_print_order_date': fields.boolean('Print order date'),
+        'record_print_destination_code': fields.boolean(
+            'Print destination code'),
+            
+        # Image:
+        'record_print_company_logo': fields.boolean('Print company logo'),
+        'record_print_partner_logo': fields.boolean('Print partner logo'),
+        'record_print_linedrawing': fields.boolean('Print line drawing'), 
+        #'label_print_product_image': fields.boolean('Print product mage')
+        
+        # Counter:            
+        'record_print_counter_pack': fields.boolean('Print counter pack',
+            help='For print in label: 1/25, 2/25... (reset every product)'),  
+
+        # TODO remove:
+        #'record_counter_pack_total': fields.boolean('Counter pack total',
+        #    help='For print in label: 1/25, 2/25... (reset every product)'),
+
+        # -----------
+        # Data field:
+        # -----------
+        # Anagrafic text:
+        'record_data_code': fields.boolean('Company code'),
+        'record_data_code_partner': fields.boolean('Partner code'),
+        'record_data_description': fields.boolean(
+            'company description'),
+        'record_data_description_partner': fields.boolean(
+            'Partner description'),
+        'record_data_frame': fields.boolean('Frame'), # TODO add
+        'record_data_fabric': fields.boolean('Fabric'), # TODO add
+
+        # Anagrafic numeric:        
+        'record_data_q_x_pack': fields.boolean('Q. x pack'),
+        'record_data_q_x_pallet': fields.boolean('Q. x pallet'),
+        'record_data_dimension': fields.boolean('Dimension'),
+        'record_data_volume': fields.boolean('Volume'),
+        'record_data_weight_net': fields.boolean('Weight net'),
+        'record_data_weight_lord': fields.boolean('Weight lord'),
+        'record_data_parcel': fields.boolean('Parcel'),
+        'record_data_price': fields.boolean('Price'),
+        'record_data_price_uom': fields.boolean('Price uom'),
+
+        # EAN data:
+        'record_data_ean13': fields.boolean('EAN13'),
+        'record_data_ean8': fields.boolean('EAN8'),
+        
+        # Production:
+        'record_data_line': fields.boolean('Production line'),
+        'record_data_period': fields.boolean('Period',
+            help='Production period YYMM  format es.: 1601'),
+        'record_data_lot': fields.boolean('Lot'),
+        
+        # Order:
+        'record_data_order_ref': fields.boolean('Order ref'), # customer
+        'record_data_order_date': fields.boolean('Order date'),
+        'record_data_destination_code': fields.boolean(
+            'Destination code'),
+            
+        # Image:
+        'record_data_company_logo': fields.boolean('Company logo'),
+        'record_data_partner_logo': fields.boolean('Partner logo'),
+        'record_data_linedrawing': fields.boolean('Line drawing'),
+        #'label_print_product_image': fields.boolean('Print product mage'),
+        
+        # Extra images:
+        'record_data_extra_image_ids': fields.many2many(
+            'note.image', 'note_job_image_label_rel', 
+            'job_id', 'image_id', 
+            'Extra image'),
+        
+        # Static text:
+        'record_data_text1': fields.text('Static text 1'), 
+        'record_data_text2': fields.text('Static text 2'), 
+        'record_data_text3': fields.text('Static text 3'), 
+        
+
+
         
         # -----------------------------------------------------------------
         # Logo:

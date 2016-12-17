@@ -225,16 +225,18 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         #                      EXTRA LANGUAGE ELEMENTS:
         # ---------------------------------------------------------------------
-        'label_lang_code': fields.char(
-            'Print company code', 
-            size=40, help='Extra lang code, use format: EN|DE|FR|IT'),
+        #'label_lang_code': fields.char(
+        #    'Print company code', 
+        #    size=40, help='Extra lang code, use format: EN|DE|FR|IT'),
         'label_lang_description': fields.char(
-            'Print company description', 
-            size=40, help='Extra lang code, use format: EN|DE|FR|IT'),
-        'label_lang_frame': fields.char('Print frame',
-            size=40, help='Extra lang code, use format: EN|DE|FR|IT'),
-        'label_lang_fabric': fields.char('Print fabric', 
-            size=40, help='Extra lang code, use format: EN|DE|FR|IT'), 
+            'Lang for description', 
+            size=40, help='Extra lang descrition, use format: EN|DE|FR|IT'),
+        'label_lang_frame': fields.char('Lang for frame',
+            size=40, help='Extra lang frame, use format: EN|DE|FR|IT'),
+        'label_lang_fabric': fields.char('Label for fabric', 
+            size=40, help='Extra lang fabric, use format: EN|DE|FR|IT'), 
+        #'label_lang_color': fields.char('Lang for color', 
+        #    size=40, help='Extra lang code, use format: EN|DE|FR|IT'), 
 
         # ---------------------------------------------------------------------
         #                      LABEL STRING FOR ALL ELEMENTS:
@@ -313,12 +315,12 @@ class ResPartner(orm.Model):
             'Print company description'),
         'label_print_description_partner': fields.boolean(
             'Print partner description'),
-        'label_print_frame': fields.boolean('Print frame'), # TODO add
-        'label_print_fabric': fields.boolean('Print fabric'), # TODO add
+        'label_print_frame': fields.boolean('Print frame'),
+        'label_print_fabric': fields.boolean('Print fabric'),
 
         # Anagrafic numeric:        
         'label_print_q_x_pack': fields.boolean('Print Q. x pack'),
-        'label_print_q_x_pallet': fields.boolean('Print Q. x pallet'),#TODO add
+        'label_print_q_x_pallet': fields.boolean('Print Q. x pallet'),
         'label_print_dimension': fields.boolean('Print dimension'),
         'label_print_volume': fields.boolean('Print volume'),
         'label_print_weight_net': fields.boolean('Print weight net'),
@@ -333,7 +335,8 @@ class ResPartner(orm.Model):
         
         # Production:
         'label_print_line': fields.boolean('Print production line'),
-        'label_print_period': fields.boolean('Print period'),
+        'label_print_period': fields.boolean('Print period',
+            help='Production period YYMM  format es.: 1601'),
         'label_print_lot': fields.boolean('Print lot'),
         
         # Order:
@@ -344,8 +347,8 @@ class ResPartner(orm.Model):
             
         # Image:
         'label_print_company_logo': fields.boolean('Print company logo'),
-        'label_print_partner_logo': fields.boolean('Print partner logo'), # TODO add
-        'label_print_linedrawing': fields.boolean('Print line drawing'), # TODO add
+        'label_print_partner_logo': fields.boolean('Print partner logo'),
+        'label_print_linedrawing': fields.boolean('Print line drawing'),
         #'label_print_product_image': fields.boolean('Print product mage'), # TODO add what album
         
         # Extra images:
@@ -355,7 +358,8 @@ class ResPartner(orm.Model):
             'Extra image'),
                
         # Counter:            
-        'label_print_counter_pack': fields.boolean('Print counter pack'),   
+        'label_print_counter_pack': fields.boolean('Print counter pack',
+            help='For print in label: 1/25, 2/25... (reset every product)'),   
         }
         
     _defaults = {
@@ -375,6 +379,6 @@ class ResPartner(orm.Model):
         'label_print_lot': lambda *x: True,
         
         'label_print_company_logo': lambda *x: True,
-        }    
+        }
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
