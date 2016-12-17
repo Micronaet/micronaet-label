@@ -416,7 +416,7 @@ class LabelLabelJob(orm.Model):
             type='selection', string='Type', readonly=True),
                 
         # -----------------------------------------------------------------
-        #                          Linked object:
+        #                           Linked object:
         # -----------------------------------------------------------------
         'product_id': fields.many2one('product.product', 'Product'),
         'partner_id': fields.many2one('res.partner', 'Partner', 

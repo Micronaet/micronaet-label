@@ -121,6 +121,26 @@ class ResPartner(orm.Model):
             context: dict of extra parameter
         '''
         # ---------------------------------------------------------------------
+        # UTILITY FUNCTION:
+        # ---------------------------------------------------------------------
+        def get_label(company, partner, address, field):
+            ''' Check field from address, partner, company return first found
+            '''
+            if address:
+                res = address.__getattribute__(field) or \
+                    partner.__getattribute__(field) or \
+                    company.__getattribute__(field) or False
+            else:    
+                res = partner.__getattribute__(field) or\
+                    company.__getattribute__(field) or False
+            
+            if not res:
+                # TODO raise error?
+                pass    
+            
+            return res
+        
+        # ---------------------------------------------------------------------
         # Read parameters:
         # ---------------------------------------------------------------------
         context = parameter.get('context', {})
@@ -128,7 +148,7 @@ class ResPartner(orm.Model):
         
         # Pool used:
         product_pool = self.pool.get('product.product')
-        partner_pool = self.pool.get('res.partner') # and address
+        partner_pool = self.pool.get('res.partner') # and also address
         order_pool = self.pool.get('sale.order')
         mrp_pool = self.pool.get('mrp.production')
         
@@ -144,7 +164,7 @@ class ResPartner(orm.Model):
             mrp = line.mrp_id
 
             # Create record of m2o                
-            res = {
+            record = {
                 'product_id': product.id,
                 'partner_id': partner.id,
                 'address_id': address.id,
@@ -160,13 +180,47 @@ class ResPartner(orm.Model):
             order_id = parameter.get('order_id', False)
             mrp_id = parameter.get('mrp_id', False)
             
-            # Check mandatory ID:
-            if not product_id:
-                # Mandatory element, raise error
-                pass # TODO
+            # Check mandatory ID (else no data for label)
+            if product_id:
+                product = product_pool.browse(
+                    cr, uid, product_id, context=context)
+            else: # Mandatory element, raise error
+                raise osv.except_osv(
+                    _('No data'), 
+                    _('Product ref. not present'),
+                    )                
+            if partner_id:
+                partner = partner_pool.browse(
+                    cr, uid, partner_id, context=context)
+            else: # Mandatory element, raise error
+                raise osv.except_osv(
+                    _('No data'), 
+                    _('Partner ref. not present'),
+                    )
+            if address_id:
+                address = partner_pool.browse(
+                    cr, uid, address_id, context=context)
+            else:
+                address = False # not mandatory
+            if order_id:
+                order = order_pool.browse(
+                    cr, uid, order_id, context=context)
+            else: # Mandatory element, raise error
+                raise osv.except_osv(
+                    _('No data'), 
+                    _('Order ref. not present'),
+                    )
+            if mrp_id:
+                mrp = mrp_pool.browse(
+                    cr, uid, mrp_id, context=context)
+            else: # Mandatory element, raise error
+                raise osv.except_osv(
+                    _('No data'), 
+                    _('MRP ref. not present'),
+                    )
 
             # Create record of m2o                
-            res = {
+            record = {
                 'product_id': product_id,
                 'partner_id': partner_id,
                 'address_id': address_id,
@@ -174,51 +228,77 @@ class ResPartner(orm.Model):
                 'line_id': False,
                 'mrp_id': mrp_id,
                 }
+
+        company = partner.company_id # Common reference
                 
-            # Browse record if present:
-            # TODO check if present ID instead raise error (no data for label)            
-            product = product_pool.browse(
-                cr, uid, product_id, context=context)
-            partner = partner_pool.browse(
-                cr, uid, partner_id, context=context)
-            address = partner_pool.browse(
-                cr, uid, address_id, context=context)
-            order = order_pool.browse(
-                cr, uid, order_id, context=context)
-            mrp = mrp_pool.browse(
-                cr, uid, mrp_id, context=context)
-                
-        
         # ---------------------------------------------------------------------
-        # Check parameter in partner form:
+        # Check parameter in partner address form:
         # ---------------------------------------------------------------------
-        
+        # Check and label string from address or partner setup:
+        if address: # with address check there before instead of take partner:            
+            record.update({
+                # -------------------------------------------------------------
+                # String label:
+                # -------------------------------------------------------------
+                # Anagrafic text:
+                'record_string_code': get_label(
+                    company, partner, address, 
+                    'label_string_code'),
+                'record_string_code_partner': get_label(
+                    company, partner, address, 
+                    'label_string_code_partner'),
+                'record_string_description': get_label(
+                    company, partner, address, 
+                    'label_string_description'),
+                'record_string_description_partner': get_label(
+                    company, partner, address, 
+                    'label_string_description_partner'),
+                'record_string_frame': get_label(
+                    company, partner, address, 
+                    'label_string_frame'),
+                'record_string_fabric': get_label(
+                    company, partner, address, 
+                    'label_string_fabric'),
+
+                # Anagrafic numerig:
+                'record_string_q_x_pack': get_label(
+                    company, partner, address, 
+                    'record_string_q_x_pack'),
+                'record_string_q_x_pallet': get_label(
+                    company, partner, address, 
+                    'record_string_q_x_pallet'),
+                'record_string_dimension': get_label(
+                    company, partner, address, 
+                    'label_string_dimension'),
+                'record_string_volume': get_label(
+                    company, partner, address, 
+                    'label_string_volume'),
+                'record_string_weight_net': get_label(
+                    company, partner, address, 
+                    'label_string_weight_net'),
+                'record_string_weight_lord': get_label(
+                    company, partner, address, 
+                    'label_string_weight_lord'),
+                'record_string_parcel': get_label(
+                    company, partner, address, 
+                    'label_string_parcel'),
+                'record_string_price': get_label(
+                    company, partner, address, 
+                    'label_string_price'),
+                })
         
         
         # ---------------------------------------------------------------------
         # Product fields:
         # ---------------------------------------------------------------------
-        res.update({        
-                'record_name': product.name,
-                #'record_customer_name': 
-                #'record_frame': 
-                #'record_color': 
-                #'record_fabric': 
-                'record_code': product.default_code,
-                #'record_customer_code': 
-                'record_ean13': product.ean13,
-                'record_ean8': product.ean8,
-                #'record_static_text1':
-                #'record_static_text2':
-                #'record_static_text3':            
-                #'record_line':
-                #'record_period':
-                #'record_order_ref':
-                #'record_order_date':
-                #'record_counter_pack_total':
-                })
+        record.update({
+            'record_code': product.default_code,
+            #'record_customer_code': 
+            'record_ean13': product.ean13,
+            'record_ean8': product.ean8,
+            })
             
-        return res
+        return record
         
 
     _columns = { 
