@@ -284,9 +284,9 @@
                                         <field name="record_data_price_uom" nolabel="1" attrs="{'readonly': [('fast','=',False)]}" colspan="2"/>
 
                                         <separator string="Static" colspan="8"/>
-                                        <field name="record_data_text1" attrs="{'readonly': [('fast','=',False)]}" colspan="4" />
-                                        <field name="record_data_text2" attrs="{'readonly': [('fast','=',False)]}" colspan="4"/>
-                                        <field name="record_data_text3" attrs="{'readonly': [('fast','=',False)]}" colspan="4" />
+                                        <field name="record_data_text1" attrs="{'readonly': [('fast','=',False)]}" colspan="4" string="Text 1"/>
+                                        <field name="record_data_text2" attrs="{'readonly': [('fast','=',False)]}" colspan="4" string="Text 2"/>
+                                        <field name="record_data_text3" attrs="{'readonly': [('fast','=',False)]}" colspan="4" string="Text 3"/>
                                     </group>                    
                                 </page>
                                 
