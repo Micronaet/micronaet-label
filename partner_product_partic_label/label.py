@@ -129,10 +129,10 @@ class ResPartner(orm.Model):
             if address:
                 res = address.__getattribute__(field) or \
                     partner.__getattribute__(field) or \
-                    company.__getattribute__(field) or False
+                    company.partner_id.__getattribute__(field) or False
             else:    
                 res = partner.__getattribute__(field) or\
-                    company.__getattribute__(field) or False
+                    company.partner_id.__getattribute__(field) or False
             
             if not res:
                 # TODO raise error?
@@ -235,58 +235,57 @@ class ResPartner(orm.Model):
         # Check parameter in partner address form:
         # ---------------------------------------------------------------------
         # Check and label string from address or partner setup:
-        if address: # with address check there before instead of take partner:            
-            record.update({
-                # -------------------------------------------------------------
-                # String label:
-                # -------------------------------------------------------------
-                # Anagrafic text:
-                'record_string_code': get_label(
-                    company, partner, address, 
-                    'label_string_code'),
-                'record_string_code_partner': get_label(
-                    company, partner, address, 
-                    'label_string_code_partner'),
-                'record_string_description': get_label(
-                    company, partner, address, 
-                    'label_string_description'),
-                'record_string_description_partner': get_label(
-                    company, partner, address, 
-                    'label_string_description_partner'),
-                'record_string_frame': get_label(
-                    company, partner, address, 
-                    'label_string_frame'),
-                'record_string_fabric': get_label(
-                    company, partner, address, 
-                    'label_string_fabric'),
+        record.update({
+            # -------------------------------------------------------------
+            # String label:
+            # -------------------------------------------------------------
+            # Anagrafic text:
+            'record_string_code': get_label(
+                company, partner, address, 
+                'label_string_code'),
+            'record_string_code_partner': get_label(
+                company, partner, address, 
+                'label_string_code_partner'),
+            'record_string_description': get_label(
+                company, partner, address, 
+                'label_string_description'),
+            'record_string_description_partner': get_label(
+                company, partner, address, 
+                'label_string_description_partner'),
+            'record_string_frame': get_label(
+                company, partner, address, 
+                'label_string_frame'),
+            'record_string_fabric': get_label(
+                company, partner, address, 
+                'label_string_fabric'),
 
-                # Anagrafic numerig:
-                'record_string_q_x_pack': get_label(
-                    company, partner, address, 
-                    'record_string_q_x_pack'),
-                'record_string_q_x_pallet': get_label(
-                    company, partner, address, 
-                    'record_string_q_x_pallet'),
-                'record_string_dimension': get_label(
-                    company, partner, address, 
-                    'label_string_dimension'),
-                'record_string_volume': get_label(
-                    company, partner, address, 
-                    'label_string_volume'),
-                'record_string_weight_net': get_label(
-                    company, partner, address, 
-                    'label_string_weight_net'),
-                'record_string_weight_lord': get_label(
-                    company, partner, address, 
-                    'label_string_weight_lord'),
-                'record_string_parcel': get_label(
-                    company, partner, address, 
-                    'label_string_parcel'),
-                'record_string_price': get_label(
-                    company, partner, address, 
-                    'label_string_price'),
-                })
-        
+            # Anagrafic numerig:
+            'record_string_q_x_pack': get_label(
+                company, partner, address, 
+                'label_string_q_x_pack'),
+            'record_string_q_x_pallet': get_label(
+                company, partner, address, 
+                'label_string_q_x_pallet'),
+            'record_string_dimension': get_label(
+                company, partner, address, 
+                'label_string_dimension'),
+            'record_string_volume': get_label(
+                company, partner, address, 
+                'label_string_volume'),
+            'record_string_weight_net': get_label(
+                company, partner, address, 
+                'label_string_weight_net'),
+            'record_string_weight_lord': get_label(
+                company, partner, address, 
+                'label_string_weight_lord'),
+            'record_string_parcel': get_label(
+                company, partner, address, 
+                'label_string_parcel'),
+            'record_string_price': get_label(
+                company, partner, address, 
+                'label_string_price'),
+            })
+    
         
         # ---------------------------------------------------------------------
         # Product fields:
