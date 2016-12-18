@@ -684,7 +684,7 @@ class ResPartner(orm.Model):
             'Extra image'),
                
         # Counter:            
-        'label_print_counter_pack': fields.selection(get_tri_state, 
+        'label_print_counter_pack_total': fields.selection(get_tri_state, 
             'Print counter pack',
             help='For print in label: 1/25, 2/25... (reset every product)'),   
         }
