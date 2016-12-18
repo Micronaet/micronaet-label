@@ -430,7 +430,7 @@ class LabelLabelJob(orm.Model):
         # ---------------------------------------------------------------------
         #                               RECORD:
         # ---------------------------------------------------------------------    
-        'record_counter': fields.integer('Counter', required=True, 
+        'record_data_counter': fields.integer('Counter', required=True, 
             help='Number of label printed'),
         
         # ---------------------------------------------------------------------
@@ -617,7 +617,7 @@ class LabelLabelJob(orm.Model):
         
     _defaults = {
         'fast': lambda *x: True, #for manual creation
-        'record_counter': lambda *x: 1,
+        'record_data_counter': lambda *x: 1,
         }
         
 class LabelLabelReportJob(orm.Model):

@@ -199,7 +199,7 @@
                         <group col="4" colspan="4">
                             <field name="fast" invisible="1"/>                        
                             <field name="label_id" invisible="context.get('form_embedded', False)" attrs="{'readonly': [('fast','=',False)]}"/>
-                            <field name="record_counter" attrs="{'readonly': [('fast','=',False)]}" />
+                            <field name="record_data_counter" attrs="{'readonly': [('fast','=',False)]}" />
                             <field name="type" attrs="{'readonly': [('fast','=',False)]}" />
                             <field name="report_id" readonly="1" attrs="{'readonly': [('fast','=',False)]}"/>
                             <field name="lang_id" widget="selection" attrs="{'readonly': [('fast','=',False)]}"/>
@@ -356,7 +356,7 @@
                     <field name="type" />
                     <field name="record_data_code" />
                     <field name="record_data_description" />
-                    <field name="record_counter" />
+                    <field name="record_data_counter" />
                     
                     <field name="product_id" />
                     <field name="mrp_id" />                    
