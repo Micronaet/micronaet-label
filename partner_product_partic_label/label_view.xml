@@ -160,8 +160,8 @@
                                                     
                                                     <field name="label_print_parcel" />                                                    
                                                     <field name="label_string_parcel" nolabel="1" placeholder="String..."/>
-                                                    <field name="label_print_counter_pack" />
-                                                    <field name="label_string_counter_pack" nolabel="1" placeholder="String..."/>
+                                                    <field name="label_print_counter_pack_total" />
+                                                    <field name="label_string_counter_pack_total" nolabel="1" placeholder="String..."/>
                                                 </group>
                                             </page>
                                             <page string="EAN">
