@@ -50,14 +50,38 @@ class Parser(report_sxw.rml_parse):
         })
 
     # Method for local context
-    def load(self, record, field, mode='data', lang=False, counter=-1):
+    def load(self, record, field, mode='data', check_show=True, lang=False, 
+            counter=-1):
         ''' Abstract function for load data in report
-            record: pointer to job element with all record data
-            field: name of the key field to get (end part of record_mode syntax
-            mode: data, string, print mode 
+        
+            record: browse pointer to job element with all record data in it
+                The job will created from MRP process, in this case are read
+                only but the operator could change the data put in "fast" mode
+                the label for modify some field in it o re-print the less label
+            
+            field: name of the key field to get (end part of record_mode 
+                syntax in database): record + mode + field
+            
+            mode: 3 value are possible: 
+                data: return the data for the field passed
+                string: return the label string text for the field passed
+                print: return boolead for show or not show check
+                All the field must be passed as the simple name, procedure
+                append record + mode + field name for create field name present
+                in record job
+                NOTE: counter_pack_total is an ecception (field not in DB)
+                
+            check_show: means that if not present record_print_* whe record_data
+                or record_string fill be leaved empty (so write nothing), 
+                sometimes will be tested in record_print mode directly in the
+                report
+                
             lang: if present return field in data translation for language
+            
             counter: used for counter_pack_total data if present
         '''
+        empty = ''
+        
         # Check mode passed:
         if mode not in ('data', 'print', 'string'):
             #_logger.error('Check mode in label, no value: print, string, data')
@@ -68,8 +92,20 @@ class Parser(report_sxw.rml_parse):
         
         # Generate field name:        
         field = 'record_%s_%s' % (mode, field)
-        show = 'record_print_%s' % field == 'show' # show check
-        
+        # Test show depend on paramenter and other controls:
+        if check_show:
+            show_field = 'record_print_%s' % field
+            if show_field in record._columns:
+                show = record.__getattribute__(field) == 'show'
+            else:
+                _logger.error(
+                    'Show field not found: %s (assume yes)' % show_field)
+                show = True            
+        else:
+            show = True
+        if not show: 
+            return empty
+            
         if field == 'record_data_counter_pack_total':                    
             # Manage counter here:
             if counter < 0:
