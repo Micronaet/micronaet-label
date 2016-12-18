@@ -449,7 +449,7 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         # Get complex field:
         try:
-            line = mrp.lavoration_ids.workcenter_id.code
+            line = mrp.lavoration_ids[0].workcenter_id.code
         except:
             _logger.error('No line!')
             line = ''
@@ -477,9 +477,9 @@ class ResPartner(orm.Model):
             'record_data_volume': product.volume,
             'record_data_weight_net': product.weight_net,
             'record_data_weight_lord': product.weight,
-            'record_data_parcel': product.parcel,
-            'record_data_price': 'TODO', # TODO
-            'record_data_price_uom': 'TODO', # TODO
+            'record_data_parcel': 'TODO' or product.parcel,
+            'record_data_price': product.lst_price, # TODO
+            'record_data_price_uom': product.uom_id.name,
 
             # EAN data:
             'record_data_ean13': product.ean13, # TODO 
@@ -489,22 +489,25 @@ class ResPartner(orm.Model):
             #                                MRP:
             # -----------------------------------------------------------------
             'record_data_line': line,
-            'record_data_period': 'TODO', # TODO
-            'record_data_lot': 'TODO', # TODO
+            'record_data_period': '%s%s' % (
+                mrp.date_planned[2:4], mrp.date_planned[5:7]),
+            'record_data_lot': mrp.name.replace('MO', '').lstrip('0'),
             
             # -----------------------------------------------------------------
             #                               ORDER:
             # -----------------------------------------------------------------
-            'record_data_order_ref': 'TODO', # TODO
-            'record_data_order_date': 'TODO', # TODO
-            'record_data_destination_code': 'TODO', # TODO
+            'record_data_order_ref': order.client_order_ref or '', #label_order
+            'record_data_order_date': order.date_order[:10],
+            'record_data_destination_code': order.destination_partner_id.ref\
+                if order.destination_partner_id else '',
                 
             # -----------------------------------------------------------------
             #                               IMAGES:
             # -----------------------------------------------------------------
             # Image:
             # XXX Note: used related elements
-            #record_data_company_logo record_data_partner_logo
+            #record_data_company_logo 
+            #'record_data_partner_logo': order.company_id.partner_id.label_logo,
             #record_data_linedrawing label_print_product_image        
             
             # Extra images:
