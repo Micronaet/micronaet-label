@@ -24,6 +24,7 @@
 import os
 import sys
 import logging
+from openerp.osv import osv
 #import openerp
 #import openerp.netsvc as netsvc
 #import openerp.addons.decimal_precision as dp
@@ -59,35 +60,34 @@ class Parser(report_sxw.rml_parse):
         '''
         # Check mode passed:
         if mode not in ('data', 'print', 'string'):
-            _logger.error('Check mode in label, no value: print, string, data')
-            #raise osv.except_osv(
-            #    _('Program error'), 
-            #    _('Check mode in label, no value: print, string, data'),
-            #    )
+            #_logger.error('Check mode in label, no value: print, string, data')
+            raise osv.except_osv(
+                _('Program error'), 
+                _('Check mode in label, no value: print, string, data'),
+                )
         
         # Generate field name:        
         field = 'record_%s_%s' % (mode, field)
         show = 'record_print_%s' % field == 'show' # show check
         
-        if field not in record._columns:
-            _logger.error('Field not present: %s' % field)
-            #raise osv.except_osv(
-            #    _('Program error'), 
-            #    _('Field not present: %s' % field),
-            #    )
-        
-        # Manage counter here:
         if field == 'record_data_counter_pack_total':                    
+            # Manage counter here:
             if counter < 0:
-                _logger.error('Report error: counter passed without current')
-                #raise osv.except_osv(
-                #    _('Report error'), 
-                #    _('Report error: counter passed without current'),
-                #    )
+                #_logger.error('Report error: counter passed without current')
+                raise osv.except_osv(
+                    _('Report error'), 
+                    _('Report error: counter passed without current'),
+                    )
             return '%s / %s' % (
                 counter + 1, 
                 record.record_data_counter, # Total record
                 )
+        elif field not in record._columns:
+            #_logger.error('Field not present: %s' % field)
+            raise osv.except_osv(
+                _('Program error'), 
+                _('Field not present: %s' % field),
+                )        
         else: # Normal field:
             return record.__getattribute__(field)
 
