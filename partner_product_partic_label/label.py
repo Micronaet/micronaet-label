@@ -435,12 +435,9 @@ class ResPartner(orm.Model):
             #'label_print_product_image': 
             
             # Counter:            
-            'record_print_counter_pack': get_state_value(
+            'record_print_counter_pack_total': get_state_value(
                 company, partner, address, 
-                'label_print_counter_pack'),  
-
-            # TODO remove:
-            #'record_counter_pack_total':            
+                'label_print_counter_pack_total'),           
             })               
         
         # ---------------------------------------------------------------------
@@ -545,37 +542,37 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         # Anagrafic text:
         'label_string_code': fields.char(
-            'Print company code', 
+            'String company code', 
             size=40, translate=True),
-        'label_string_code_partner': fields.char('Print partner code', 
+        'label_string_code_partner': fields.char('String partner code', 
             size=40, translate=True),
         'label_string_description': fields.char(
-            'Print company description', 
+            'String company description', 
             size=40, translate=True),
         'label_string_description_partner': fields.char(
-            'Print partner description', 
+            'String partner description', 
             size=40, translate=True),
-        'label_string_frame': fields.char('Print frame',
+        'label_string_frame': fields.char('String frame',
             size=40, translate=True),
-        'label_string_fabric': fields.char('Print fabric', 
+        'label_string_fabric': fields.char('String fabric', 
             size=40, translate=True),
 
         # Anagrafic numeric:        
-        'label_string_q_x_pack': fields.char('Print Q. x pack', 
+        'label_string_q_x_pack': fields.char('String Q. x pack', 
             size=40, translate=True),
-        'label_string_q_x_pallet': fields.char('Print Q. x pallet', 
+        'label_string_q_x_pallet': fields.char('String Q. x pallet', 
             size=40, translate=True),
-        'label_string_dimension': fields.char('Print dimension', 
+        'label_string_dimension': fields.char('String dimension', 
             size=40, translate=True),
-        'label_string_volume': fields.char('Print volume', 
+        'label_string_volume': fields.char('String volume', 
             size=40, translate=True),
-        'label_string_weight_net': fields.char('Print weight net', 
+        'label_string_weight_net': fields.char('String weight net', 
             size=40, translate=True),
-        'label_string_weight_lord': fields.char('Print weight lord', 
+        'label_string_weight_lord': fields.char('String weight lord', 
             size=40, translate=True),
-        'label_string_parcel': fields.char('Print parcel', 
+        'label_string_parcel': fields.char('String parcel', 
             size=40, translate=True),
-        'label_string_price': fields.char('Print price', 
+        'label_string_price': fields.char('String price', 
             size=40, translate=True),
         #'label_string_price_uom':
 
@@ -583,20 +580,20 @@ class ResPartner(orm.Model):
         #'label_string_ean13' 'label_string_ean8'
         
         # Production:
-        'label_string_line': fields.char('Print production line', 
+        'label_string_line': fields.char('String production line', 
             size=40, translate=True),
-        'label_string_period': fields.char('Print period', 
+        'label_string_period': fields.char('String period', 
             size=40, translate=True),
-        'label_string_lot': fields.char('Print lot', 
+        'label_string_lot': fields.char('String lot', 
             size=40, translate=True),
         
         # Order:
-        'label_string_order_ref': fields.char('Print order ref', 
+        'label_string_order_ref': fields.char('String order ref', 
             size=40, translate=True), # customer
-        'label_string_order_date': fields.char('Print order date', 
+        'label_string_order_date': fields.char('String order date', 
             size=40, translate=True),
         'label_string_destination_code': fields.char(
-            'Print destination code', 
+            'String destination code', 
             size=40, translate=True),
             
         # Image:
@@ -604,7 +601,7 @@ class ResPartner(orm.Model):
         #'label_string_linedrawing' 'label_string_product_image'
                
         # Counter:            
-        'label_string_counter_pack': fields.char('Print counter pack', 
+        'label_string_counter_pack_total': fields.char('String counter pack', 
             size=40, translate=True),   
 
         # ---------------------------------------------------------------------

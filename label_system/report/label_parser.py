@@ -90,13 +90,11 @@ class Parser(report_sxw.rml_parse):
                 _('Check mode in label, no value: print, string, data'),
                 )
         
-        # Generate field name:        
-        field = 'record_%s_%s' % (mode, field)
         # Test show depend on paramenter and other controls:
         if check_show and mode == 'data':
             show_field = 'record_print_%s' % field
             if show_field in record._columns:
-                show = record.__getattribute__(field) == 'show'
+                show = record.__getattribute__(show_field) == 'show'
             else:
                 _logger.error(
                     'Show field not found: %s (assume yes)' % show_field)
@@ -106,6 +104,8 @@ class Parser(report_sxw.rml_parse):
         if not show: 
             return empty
             
+        # Generate field name:        
+        field = 'record_%s_%s' % (mode, field)
         if field == 'record_data_counter_pack_total':                    
             # Manage counter here:
             if counter < 0:

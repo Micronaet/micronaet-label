@@ -500,7 +500,7 @@ class LabelLabelJob(orm.Model):
         #'record_string_linedrawing' 'record_string_product_image'
                
         # Counter:            
-        'record_string_counter_pack': fields.char('Label counter pack', 
+        'record_string_counter_pack_total': fields.char('Label counter pack', 
             size=40, translate=True),   
 
         # ---------------
@@ -550,7 +550,7 @@ class LabelLabelJob(orm.Model):
         #'label_print_product_image': fields.boolean('Print product mage')
         
         # Counter:            
-        'record_print_counter_pack': fields.boolean('Print counter pack',
+        'record_print_counter_pack_total': fields.boolean('Print counter pack',
             help='For print in label: 1/25, 2/25... (reset every product)'),  
 
         # -----------
