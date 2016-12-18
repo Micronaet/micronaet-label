@@ -144,6 +144,25 @@ class ResPartner(orm.Model):
                 # TODO raise error?
                 _logger.warning('Field %s not found string value!' % field)            
             return res
+
+        def get_state_value(company, partner, address, field, warning=False):
+            ''' Check field from address, partner, company return state value
+                as True or False
+            '''
+            if address:
+                res = address.__getattribute__(field) or \
+                    partner.__getattribute__(field) or \
+                    company.partner_id.__getattribute__(field) or ''
+            else:    
+                res = partner.__getattribute__(field) or\
+                    company.partner_id.__getattribute__(field) or ''            
+            if warning and not res:
+                _logger.warning('Field %s not set up as show or hide!' % field) 
+
+            if res == 'show':
+                return True
+            else:
+                return False
         
         # ---------------------------------------------------------------------
         # Read parameters:
@@ -322,8 +341,106 @@ class ResPartner(orm.Model):
                 'label_string_counter_pack'),  
 
             # -----------------------------------------------------------------
-            # Hide Show check for label:
+            # Hide Show check for label (form partner tri-state):
             # -----------------------------------------------------------------
+            # Anagrafic text:
+            'record_print_code': get_state_value(
+                company, partner, address, 
+                'label_print_code'),
+            'record_print_code_partner': get_state_value(
+                company, partner, address, 
+                'label_print_code_partner'),
+            'record_print_description': get_state_value(
+                company, partner, address, 
+                'label_print_description'), 
+            'record_print_description_partner': get_state_value(
+                company, partner, address, 
+                'label_print_description_partner'), 
+            'record_print_frame': get_state_value(
+                company, partner, address, 
+                'label_print_frame'),
+            'record_print_fabric': get_state_value(
+                company, partner, address, 
+                'label_print_fabric'),
+
+            # Anagrafic numeric:
+            'record_print_q_x_pack': get_state_value(
+                company, partner, address, 
+                'label_print_q_x_pack'), 
+            'record_print_q_x_pallet': get_state_value(
+                company, partner, address, 
+                'label_print_q_x_pallet'), 
+            'record_print_dimension': get_state_value(
+                company, partner, address, 
+                'label_print_dimension'), 
+            'record_print_volume': get_state_value(
+                company, partner, address, 
+                'label_print_volume'), 
+            'record_print_weight_net': get_state_value(
+                company, partner, address, 
+                'label_print_weight_net'), 
+            'record_print_weight_lord': get_state_value(
+                company, partner, address, 
+                'label_print_weight_lord'),
+            'record_print_parcel': get_state_value(
+                company, partner, address, 
+                'label_print_parcel'), 
+            'record_print_price': get_state_value(
+                company, partner, address, 
+                'label_print_price'), 
+            'record_print_price_uom': get_state_value(
+                company, partner, address, 
+                'label_print_price_uom'),
+
+            # EAN data:
+            'record_print_ean13': get_state_value(
+                company, partner, address, 
+                'label_print_ean13'), 
+            'record_print_ean8': get_state_value(
+                company, partner, address, 
+                'label_print_ean8'), 
+            
+            # Production:
+            'record_print_line': get_state_value(
+                company, partner, address, 
+                'label_print_line'),
+            'record_print_period': get_state_value(
+                company, partner, address, 
+                'label_print_period'),
+            'record_print_lot': get_state_value(
+                company, partner, address, 
+                'label_print_lot'), 
+            
+            # Order:
+            'record_print_order_ref': get_state_value(
+                company, partner, address, 
+                'label_print_order_ref'),
+            'record_print_order_date': get_state_value(
+                company, partner, address, 
+                'label_print_order_date'),
+            'record_print_destination_code': get_state_value(
+                company, partner, address, 
+                'label_print_destination_code'),
+                
+            # Image:
+            'record_print_company_logo': get_state_value(
+                company, partner, address, 
+                'label_print_company_logo'), 
+            'record_print_partner_logo': get_state_value(
+                company, partner, address, 
+                'label_print_partner_logo'), 
+            'record_print_linedrawing': get_state_value(
+                company, partner, address, 
+                'label_print_linedrawing'), 
+            #'label_print_product_image': 
+            
+            # Counter:            
+            'record_print_counter_pack': get_state_value(
+                company, partner, address, 
+                'label_print_counter_pack'),  
+
+            # TODO remove:
+            #'record_counter_pack_total':
             
             })
                
