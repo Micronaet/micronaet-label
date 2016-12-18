@@ -441,8 +441,7 @@ class ResPartner(orm.Model):
 
             # TODO remove:
             #'record_counter_pack_total':            
-            })
-               
+            })               
         
         # ---------------------------------------------------------------------
         # Product, MRP, Order data fields:
@@ -693,24 +692,6 @@ class ResPartner(orm.Model):
             help='For print in label: 1/25, 2/25... (reset every product)'),   
         }
         
-    _defaults = {
-        # Show hide defaults:
-        # XXX Set up in company partner!!
-        #'label_print_code': lambda *x: 'show',
-        #'label_print_code_partner': lambda *x: 'show',
-        #'label_print_description': lambda *x: 'show',
-        #'label_print_description_partner': lambda *x: 'show',
-        #'label_print_frame': lambda *x: 'show',
-        #'label_print_fabric': lambda *x: 'show',
-        #'label_print_q_x_pack': lambda *x: 'show',
-        
-        #'label_print_ean13': lambda *x: 'show',
-        
-        #'label_print_line': lambda *x: 'show',
-        #'label_print_period': lambda *x: 'show',
-        #'label_print_lot': lambda *x: 'show',
-        
-        #'label_print_company_logo': lambda *x: 'show',
-        }
+    _defaults = {}
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
