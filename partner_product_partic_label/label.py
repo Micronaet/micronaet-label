@@ -336,9 +336,9 @@ class ResPartner(orm.Model):
             # Image (no label):
             
             # Counter:
-            'record_string_counter_pack': get_label(
+            'record_string_counter_pack_total': get_label(
                 company, partner, address, 
-                'label_string_counter_pack'),  
+                'label_string_counter_pack_total'),  
 
             # -----------------------------------------------------------------
             # Hide Show check for label (form partner tri-state):

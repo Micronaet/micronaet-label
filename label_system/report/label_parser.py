@@ -46,7 +46,7 @@ class Parser(report_sxw.rml_parse):
         self.localcontext.update({
             'get_report_label': self.get_report_label,
             'load': self.load,
-        
+            # TODO load_image function for extra image        
         })
 
     # Method for local context
@@ -91,7 +91,7 @@ class Parser(report_sxw.rml_parse):
                 )
         
         # Test show depend on paramenter and other controls:
-        if check_show and mode == 'data':
+        if check_show and mode in ('data', 'string'): #TODO don't check counter
             show_field = 'record_print_%s' % field
             if show_field in record._columns:
                 show = record.__getattribute__(show_field) == 'show'
@@ -104,7 +104,7 @@ class Parser(report_sxw.rml_parse):
         if not show: 
             return empty
             
-        # Generate field name:        
+        # Generate field name:
         field = 'record_%s_%s' % (mode, field)
         if field == 'record_data_counter_pack_total':                    
             # Manage counter here:
