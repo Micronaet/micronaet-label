@@ -107,6 +107,13 @@ class ResPartner(orm.Model):
     '''    
     _inherit = 'res.partner'
     
+    def get_tri_state(self, cr, uid, context=None):
+        return [ 
+            ('show', 'Show'), # ON
+            ('hide', 'Hide'), # OFF 
+            #('not', 'Not selected'), # NOT PRESENT
+            ]
+    
     def generate_job_data_from_line_partner(self, cr, uid, 
             **parameter):
         ''' Generate record for create printing jobs
@@ -129,15 +136,13 @@ class ResPartner(orm.Model):
             if address:
                 res = address.__getattribute__(field) or \
                     partner.__getattribute__(field) or \
-                    company.partner_id.__getattribute__(field) or False
+                    company.partner_id.__getattribute__(field) or ''
             else:    
                 res = partner.__getattribute__(field) or\
-                    company.partner_id.__getattribute__(field) or False
-            
+                    company.partner_id.__getattribute__(field) or ''            
             if not res:
                 # TODO raise error?
-                pass    
-            
+                _logger.warning('Field %s not found string value!' % field)            
             return res
         
         # ---------------------------------------------------------------------
@@ -236,9 +241,9 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         # Check and label string from address or partner setup:
         record.update({
-            # -------------------------------------------------------------
+            # -----------------------------------------------------------------
             # String label:
-            # -------------------------------------------------------------
+            # -----------------------------------------------------------------
             # Anagrafic text:
             'record_string_code': get_label(
                 company, partner, address, 
@@ -259,7 +264,7 @@ class ResPartner(orm.Model):
                 company, partner, address, 
                 'label_string_fabric'),
 
-            # Anagrafic numerig:
+            # Anagrafic numeric:
             'record_string_q_x_pack': get_label(
                 company, partner, address, 
                 'label_string_q_x_pack'),
@@ -284,17 +289,53 @@ class ResPartner(orm.Model):
             'record_string_price': get_label(
                 company, partner, address, 
                 'label_string_price'),
+            
+            # EAN (no label):
+            
+            # Production:
+            'record_string_line': get_label(
+                company, partner, address, 
+                'label_string_line'),
+            'record_string_period': get_label(
+                company, partner, address, 
+                'label_string_period'), 
+            'record_string_lot': get_label(
+                company, partner, address, 
+                'label_string_lot'),
+                
+            # Order:
+            'record_string_order_ref': get_label(
+                company, partner, address, 
+                'label_string_order_ref'), 
+            'record_string_order_date': get_label(
+                company, partner, address, 
+                'label_string_order_date'), 
+            'record_string_destination_code': get_label(
+                company, partner, address, 
+                'label_string_destination_code'), 
+            
+            # Image (no label):
+            
+            # Counter:
+            'record_string_counter_pack': get_label(
+                company, partner, address, 
+                'label_string_counter_pack'),  
+
+            # -----------------------------------------------------------------
+            # Hide Show check for label:
+            # -----------------------------------------------------------------
+            
             })
-    
+               
         
         # ---------------------------------------------------------------------
         # Product fields:
         # ---------------------------------------------------------------------
         record.update({
-            'record_code': product.default_code,
-            #'record_customer_code': 
-            'record_ean13': product.ean13,
-            'record_ean8': product.ean8,
+            'record_data_code': product.default_code,
+            #'record_data_customer_code': 
+            'record_data_ean13': product.ean13,
+            'record_data_ean8': product.ean8,
             })
             
         return record
@@ -387,48 +428,75 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         #               SHOW HIDE ELEMENT IN REPORT DEPEND ON PARTNER:
         # ---------------------------------------------------------------------
+        # XXX Note: element are in 3-state for parent required selection!
+        
         # Anagrafic text:
-        'label_print_code': fields.boolean('Print company code'),
-        'label_print_code_partner': fields.boolean('Print partner code'),
-        'label_print_description': fields.boolean(
+        'label_print_code': fields.selection(get_tri_state, 
+            'Print company code'),
+        'label_print_code_partner': fields.selection(get_tri_state, 
+            'Print partner code'),
+        'label_print_description': fields.selection(get_tri_state, 
             'Print company description'),
-        'label_print_description_partner': fields.boolean(
+        'label_print_description_partner': fields.selection(get_tri_state, 
             'Print partner description'),
-        'label_print_frame': fields.boolean('Print frame'),
-        'label_print_fabric': fields.boolean('Print fabric'),
+        'label_print_frame': fields.selection(get_tri_state, 
+            'Print frame'),
+        'label_print_fabric': fields.selection(get_tri_state, 
+            'Print fabric'),
 
         # Anagrafic numeric:        
-        'label_print_q_x_pack': fields.boolean('Print Q. x pack'),
-        'label_print_q_x_pallet': fields.boolean('Print Q. x pallet'),
-        'label_print_dimension': fields.boolean('Print dimension'),
-        'label_print_volume': fields.boolean('Print volume'),
-        'label_print_weight_net': fields.boolean('Print weight net'),
-        'label_print_weight_lord': fields.boolean('Print weight lord'),
-        'label_print_parcel': fields.boolean('Print parcel'),
-        'label_print_price': fields.boolean('Print price'),
-        'label_print_price_uom': fields.boolean('Print price uom'), # TODO add
+        'label_print_q_x_pack': fields.selection(get_tri_state, 
+            'Print Q. x pack'),
+        'label_print_q_x_pallet': fields.selection(get_tri_state, 
+            'Print Q. x pallet'),
+        'label_print_dimension': fields.selection(get_tri_state, 
+            'Print dimension'),
+        'label_print_volume': fields.selection(get_tri_state, 
+            'Print volume'),
+        'label_print_weight_net': fields.selection(get_tri_state, 
+            'Print weight net'),
+        'label_print_weight_lord': fields.selection(get_tri_state, 
+            'Print weight lord'),
+        'label_print_parcel': fields.selection(get_tri_state, 
+            'Print parcel'),
+        'label_print_price': fields.selection(get_tri_state, 
+            'Print price'),
+        'label_print_price_uom': fields.selection(get_tri_state, 
+            'Print price uom'), # TODO add
 
         # EAN data:
-        'label_print_ean13': fields.boolean('Print EAN13'),
-        'label_print_ean8': fields.boolean('Print EAN8'),
+        'label_print_ean13': fields.selection(get_tri_state, 
+            'Print EAN13'),
+        'label_print_ean8': fields.selection(get_tri_state, 
+            'Print EAN8'),
         
         # Production:
-        'label_print_line': fields.boolean('Print production line'),
-        'label_print_period': fields.boolean('Print period',
+        'label_print_line': fields.selection(get_tri_state, 
+            'Print production line'),
+        'label_print_period': fields.selection(get_tri_state, 
+            'Print period',
             help='Production period YYMM  format es.: 1601'),
-        'label_print_lot': fields.boolean('Print lot'),
+        'label_print_lot': fields.selection(get_tri_state, 
+            'Print lot'),
         
         # Order:
-        'label_print_order_ref': fields.boolean('Print order ref'), # customer
-        'label_print_order_date': fields.boolean('Print order date'),
-        'label_print_destination_code': fields.boolean(
+        'label_print_order_ref': fields.selection(get_tri_state, 
+            'Print order ref'), # customer
+        'label_print_order_date': fields.selection(get_tri_state, 
+            'Print order date'),
+        'label_print_destination_code': fields.selection(get_tri_state, 
+            
             'Print destination code'),
             
         # Image:
-        'label_print_company_logo': fields.boolean('Print company logo'),
-        'label_print_partner_logo': fields.boolean('Print partner logo'),
-        'label_print_linedrawing': fields.boolean('Print line drawing'),
-        #'label_print_product_image': fields.boolean('Print product mage'), # TODO add what album
+        'label_print_company_logo': fields.selection(get_tri_state, 
+            'Print company logo'),
+        'label_print_partner_logo': fields.selection(get_tri_state, 
+            'Print partner logo'),
+        'label_print_linedrawing': fields.selection(get_tri_state, 
+            'Print line drawing'),
+        #'label_print_product_image': fields.selection(get_tri_state, 
+        #    'Print product mage'), # TODO add what album
         
         # Extra images:
         'label_print_extra_image_ids': fields.many2many(
@@ -437,27 +505,28 @@ class ResPartner(orm.Model):
             'Extra image'),
                
         # Counter:            
-        'label_print_counter_pack': fields.boolean('Print counter pack',
+        'label_print_counter_pack': fields.selection(get_tri_state, 
+            'Print counter pack',
             help='For print in label: 1/25, 2/25... (reset every product)'),   
         }
         
     _defaults = {
         # Show hide defaults:
-        'label_print_code': lambda *x: True,
-        'label_print_code_partner': lambda *x: True,
-        'label_print_description': lambda *x: True,
-        'label_print_description_partner': lambda *x: True,
-        'label_print_frame': lambda *x: True,
-        'label_print_fabric': lambda *x: True,
-        'label_print_q_x_pack': lambda *x: True,
+        'label_print_code': lambda *x: 'show',
+        'label_print_code_partner': lambda *x: 'show',
+        'label_print_description': lambda *x: 'show',
+        'label_print_description_partner': lambda *x: 'show',
+        'label_print_frame': lambda *x: 'show',
+        'label_print_fabric': lambda *x: 'show',
+        'label_print_q_x_pack': lambda *x: 'show',
         
-        'label_print_ean13': lambda *x: True,
+        'label_print_ean13': lambda *x: 'show',
         
-        'label_print_line': lambda *x: True,
-        'label_print_period': lambda *x: True,
-        'label_print_lot': lambda *x: True,
+        'label_print_line': lambda *x: 'show',
+        'label_print_period': lambda *x: 'show',
+        'label_print_lot': lambda *x: 'show',
         
-        'label_print_company_logo': lambda *x: True,
+        'label_print_company_logo': lambda *x: 'show',
         }
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

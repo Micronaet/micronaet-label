@@ -516,7 +516,7 @@ class LabelLabelJob(orm.Model):
         'record_print_frame': fields.boolean('Print frame'), # TODO add
         'record_print_fabric': fields.boolean('Print fabric'), # TODO add
 
-        # Anagrafic numeric:        
+        # Anagrafic numeric:
         'record_print_q_x_pack': fields.boolean('Print Q. x pack'),
         'record_print_q_x_pallet': fields.boolean('Print Q. x pallet'),#TODO add
         'record_print_dimension': fields.boolean('Print dimension'),
