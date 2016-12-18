@@ -81,7 +81,7 @@ class Parser(report_sxw.rml_parse):
             counter: used for counter_pack_total data if present
         '''
         empty = ''
-        
+
         # Check mode passed:
         if mode not in ('data', 'print', 'string'):
             #_logger.error('Check mode in label, no value: print, string, data')
@@ -94,7 +94,7 @@ class Parser(report_sxw.rml_parse):
         if check_show and mode in ('data', 'string'): #TODO don't check counter
             show_field = 'record_print_%s' % field
             if show_field in record._columns:
-                show = record.__getattribute__(show_field) == 'show'
+                show = record.__getattribute__(show_field)
             else:
                 _logger.error(
                     'Show field not found: %s (assume yes)' % show_field)
@@ -105,8 +105,8 @@ class Parser(report_sxw.rml_parse):
             return empty
             
         # Generate field name:
-        field = 'record_%s_%s' % (mode, field)
-        if field == 'record_data_counter_pack_total':                    
+        field_name = 'record_%s_%s' % (mode, field)
+        if field_name == 'record_data_counter_pack_total':                    
             # Manage counter here:
             if counter < 0:
                 #_logger.error('Report error: counter passed without current')
@@ -118,14 +118,27 @@ class Parser(report_sxw.rml_parse):
                 counter + 1, 
                 record.record_data_counter, # Total record
                 )
-        elif field not in record._columns:
-            #_logger.error('Field not present: %s' % field)
+        elif field in ('company_logo', 'partner_logo', 'linedrawing'):
+            # TODO manage better
+            # Return image:
+            if field == 'company_logo':
+                return record.partner_id.company_id.partner_id.label_image
+            elif field == 'partner_logo':
+                return record.partner_id.label_image
+            elif field == 'linedrawing':
+                return '' # TODO manage linedrawing
+                #return record.product_id.linedrawing
+            else:
+                return ''    
+                
+        elif field_name not in record._columns:
+            #_logger.error('Field not present: %s' % field_name)
             raise osv.except_osv(
                 _('Program error'), 
-                _('Field not present: %s' % field),
+                _('Field not present: %s' % field_name),
                 )        
         else: # Normal field:
-            return record.__getattribute__(field)
+            return record.__getattribute__(field_name)
 
     def get_report_label(self, data=None):
         ''' Master function for generate label elements
