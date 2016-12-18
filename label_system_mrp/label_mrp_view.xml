@@ -23,7 +23,7 @@
                                 <field name="partner_id" />
                                 <field name="line_id" />
                                 <field name="record_data_q_x_pack" string="Q. x pack"/>                                
-                                <field name="record_counter" string="Total"/>                                
+                                <field name="record_data_counter" string="Total"/>                                
                                 <button name="print_fast_label" string="Print" type="object" icon="gtk-print" />
                             </tree>
                         </field>

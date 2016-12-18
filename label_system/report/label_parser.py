@@ -36,7 +36,6 @@ from openerp.report.report_sxw import rml_parse
 #from datetime import datetime, timedelta
 #from openerp.tools.translate import _
 
-
 _logger = logging.getLogger(__name__)
 
 class Parser(report_sxw.rml_parse):
@@ -50,55 +49,47 @@ class Parser(report_sxw.rml_parse):
         })
 
     # Method for local context
-    def load(self, record, field, mandatory=False, empty='', error='ERR', 
-            counter=-1):
+    def load(self, record, field, mode='data', lang=False, counter=-1):
         ''' Abstract function for load data in report
-            record: dict with all fields for the label
-            field: name of the key field to get
-            mandatory: means that field generate error if not present
-            empty: value for empty data (instead of False)
-            error: text value for error data (for show in label)
+            record: pointer to job element with all record data
+            field: name of the key field to get (end part of record_mode syntax
+            mode: data, string, print mode 
+            lang: if present return field in data translation for language
             counter: used for counter_pack_total data if present
         '''
+        # Check mode passed:
+        if mode not in ('data', 'print', 'string'):
+            _logger.error('Check mode in label, no value: print, string, data')
+            #raise osv.except_osv(
+            #    _('Program error'), 
+            #    _('Check mode in label, no value: print, string, data'),
+            #    )
         
-        if field in record:
-            res = record[field]
-            if mandatory and not res:
-                _logger.error('Empty mandatory field %s' % field)
-                return error
-            elif res:
-                # Manage counter here:
-                if field == 'counter_pack_total':                    
-                    if counter < 0:
-                        _logger.error(
-                            'Report error, pass counter pack')
-                        current = error
-                    else:
-                        current = counter + 1
-                    if res:
-                        return '%s / %s' % (
-                            current, record.get('counter', error))
-                    else:
-                        if mandatory:
-                            _logger.error(
-                                'Mandatory field %s but empty' % field)
-                            return error
-                        else:
-                            return empty            
-                else:
-                    return res
-            else:
-                _logger.warning('Empty field %s' % field)
-                return empty
-        else:
-            if mandatory:
-                _logger.error(
-                    'Field %s not present in record structure' % field)
-                return error
-            else:
-                _logger.warning(
-                    'Field %s not present in record structure' % field)
-                return empty
+        # Generate field name:        
+        field = 'record_%s_%s' % (mode, field)
+        show = 'record_print_%s' % field == 'show' # show check
+        
+        if field not in record._columns:
+            _logger.error('Field not present: %s' % field)
+            #raise osv.except_osv(
+            #    _('Program error'), 
+            #    _('Field not present: %s' % field),
+            #    )
+        
+        # Manage counter here:
+        if field == 'record_data_counter_pack_total':                    
+            if counter < 0:
+                _logger.error('Report error: counter passed without current')
+                #raise osv.except_osv(
+                #    _('Report error'), 
+                #    _('Report error: counter passed without current'),
+                #    )
+            return '%s / %s' % (
+                counter + 1, 
+                record.record_data_counter, # Total record
+                )
+        else: # Normal field:
+            return record.__getattribute__(field)
 
     def get_report_label(self, data=None):
         ''' Master function for generate label elements
@@ -114,23 +105,16 @@ class Parser(report_sxw.rml_parse):
         context = {}
         
         # Pool used:
-        label_pool = self.pool.get('label.label')        
         job_pool = self.pool.get('label.label.job')
         
         item_ids = data.get('record_ids', [])
         if not item_ids:
-            raise osv.except_osv(
-                _('Fast print'),
-                _('No data for fast print'),
-                )
+            _logger.error('No data for fast print')
+            #raise osv.except_osv(
+            #    _('Fast print'),
+            #    _('No data for fast print'),
+            #    )
 
-        records = [] # for report loop:                
-        for job in job_pool.browse(cr, uid, item_ids, context=context):
-            record = {}
-            for field in job_pool._columns.keys():
-                if not field.startswith('record_'):
-                    continue # jump field
-                record[field[7:]] = job.__getattribute__(field) or ''
-            records.append(record)
-        return records
+        return [job for job in job_pool.browse(
+            cr, uid, item_ids, context=context)] # for report loop:                
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
