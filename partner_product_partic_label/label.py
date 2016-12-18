@@ -440,23 +440,86 @@ class ResPartner(orm.Model):
                 'label_print_counter_pack'),  
 
             # TODO remove:
-            #'record_counter_pack_total':
-            
+            #'record_counter_pack_total':            
             })
                
         
         # ---------------------------------------------------------------------
-        # Product fields:
+        # Product, MRP, Order data fields:
         # ---------------------------------------------------------------------
+        # Get complex field:
+        try:
+            line = mrp.lavoration_ids.workcenter_id.code
+        except:
+            _logger.error('No line!')
+            line = ''
+        
+        # Update record with data:    
         record.update({
+            # -----------------------------------------------------------------
+            #                               PRODUCT:
+            # -----------------------------------------------------------------
             'record_data_code': product.default_code,
-            #'record_data_customer_code': 
-            'record_data_ean13': product.ean13,
-            'record_data_ean8': product.ean8,
+            'record_data_code_partner': 'TODO', # TODO
+            'record_data_description': product.name, # TODO use label name?
+            'record_data_description_partner': 'TODO', # TODO 
+            'record_data_frame': 'TODO', # TODO
+            'record_data_fabric': 'TODO', # TODO
+
+            # Anagrafic numeric:        
+            # TODO change float
+            'record_data_q_x_pack': product.q_x_pack or '',
+            'record_data_q_x_pallet': product.q_x_pallet or '',
+            'record_data_dimension': '%sx%sx%s' % (
+                product.height, product.width, product.length) if (
+                    product.height and product.width and product.lenght) else\
+                        '',
+            'record_data_volume': product.volume,
+            'record_data_weight_net': product.weight_net,
+            'record_data_weight_lord': product.weight,
+            'record_data_parcel': product.parcel,
+            'record_data_price': 'TODO', # TODO
+            'record_data_price_uom': 'TODO', # TODO
+
+            # EAN data:
+            'record_data_ean13': product.ean13, # TODO 
+            'record_data_ean8': product.ean8, # TODO
+            
+            # -----------------------------------------------------------------
+            #                                MRP:
+            # -----------------------------------------------------------------
+            'record_data_line': line,
+            'record_data_period': 'TODO', # TODO
+            'record_data_lot': 'TODO', # TODO
+            
+            # -----------------------------------------------------------------
+            #                               ORDER:
+            # -----------------------------------------------------------------
+            'record_data_order_ref': 'TODO', # TODO
+            'record_data_order_date': 'TODO', # TODO
+            'record_data_destination_code': 'TODO', # TODO
+                
+            # -----------------------------------------------------------------
+            #                               IMAGES:
+            # -----------------------------------------------------------------
+            # Image:
+            # XXX Note: used related elements
+            #record_data_company_logo record_data_partner_logo
+            #record_data_linedrawing label_print_product_image        
+            
+            # Extra images:
+            # XXX Note: used related elements
+            #record_data_extra_image_ids
+            
+            # -----------------------------------------------------------------
+            #                            STATIC TEXT:
+            # -----------------------------------------------------------------
+            'record_data_text1': 'TODO', # TODO
+            'record_data_text2': 'TODO', # TODO
+            'record_data_text3': 'TODO', # TODO
             })
             
-        return record
-        
+        return record        
 
     _columns = { 
         # ---------------------------------------------------------------------
