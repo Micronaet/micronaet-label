@@ -86,12 +86,12 @@ class MrpProduction(orm.Model):
                 q_x_pack = record_data.get('q_x_pack', False)
 
                 if label == 'article':
-                    record_counter = line.product_uom_qty
+                    record_data_counter = line.product_uom_qty
                 else:
                     if q_x_pack: # TODO Manage Error:
-                        record_counter = line.product_uom_qty / q_x_pack
+                        record_data_counter = line.product_uom_qty / q_x_pack
                     else:    
-                        record_counter = line.product_uom_qty
+                        record_data_counter = line.product_uom_qty
                         # XXX Note: q_x_pack Remain false in job
                 
                 # -------------------------------------------------------------
@@ -106,7 +106,7 @@ class MrpProduction(orm.Model):
                     'demo': False,
                     'fast': False,
                     
-                    'record_counter': record_counter,
+                    'record_data_counter': record_data_counter,
 
                     #'error': # TODO
                     #'comment_error' # TODO

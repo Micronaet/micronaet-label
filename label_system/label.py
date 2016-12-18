@@ -553,10 +553,6 @@ class LabelLabelJob(orm.Model):
         'record_print_counter_pack': fields.boolean('Print counter pack',
             help='For print in label: 1/25, 2/25... (reset every product)'),  
 
-        # TODO remove:
-        #'record_counter_pack_total': fields.boolean('Counter pack total',
-        #    help='For print in label: 1/25, 2/25... (reset every product)'),
-
         # -----------
         # Data field:
         # -----------
