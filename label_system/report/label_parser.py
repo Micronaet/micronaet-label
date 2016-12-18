@@ -93,7 +93,7 @@ class Parser(report_sxw.rml_parse):
         # Generate field name:        
         field = 'record_%s_%s' % (mode, field)
         # Test show depend on paramenter and other controls:
-        if check_show:
+        if check_show and mode == 'data':
             show_field = 'record_print_%s' % field
             if show_field in record._columns:
                 show = record.__getattribute__(field) == 'show'
