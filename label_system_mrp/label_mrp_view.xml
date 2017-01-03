@@ -12,8 +12,8 @@
                         <button name="generate_label_job" type="object" string="Generate label jobs" icon="gtk-execute" confirm="(Re)generate print job from production order? all jobs present will be regenerated, confirm?" />
                         <button name="label_check_report" type="object" string="Check label error" icon="gtk-print" />
                         <newline />
-                        <field name="label_job_ids" nolabel="1" colspan="4"> 
-                            <tree string="Jobs">
+                        <field name="label_job_ids" nolabel="1" colspan="4" >  
+                            <tree string="Jobs" colors="red:label_id==False">
                                 <field name="sequence" string="#"/>
                                 <field name="label_id" />
                                 <!--field name="report_id" /-->
