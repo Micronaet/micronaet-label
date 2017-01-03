@@ -71,8 +71,9 @@ class Parser(report_sxw.rml_parse):
                 in record job
                 NOTE: counter_pack_total is an ecception (field not in DB)
                 
-            check_show: means that if not present record_print_* whe record_data
-                or record_string fill be leaved empty (so write nothing), 
+            check_show: means that if not present record_print_* when
+                record_data or record_string fill be leaved empty
+                (so write nothing), 
                 sometimes will be tested in record_print mode directly in the
                 report
                 
@@ -84,7 +85,7 @@ class Parser(report_sxw.rml_parse):
 
         # Check mode passed:
         if mode not in ('data', 'print', 'string'):
-            #_logger.error('Check mode in label, no value: print, string, data')
+            #_logger.error('Check mode in label, no value: print,string,data')
             raise osv.except_osv(
                 _('Program error'), 
                 _('Check mode in label, no value: print, string, data'),
@@ -118,6 +119,7 @@ class Parser(report_sxw.rml_parse):
                 counter + 1, 
                 record.record_data_counter, # Total record
                 )
+                
         elif field in ('company_logo', 'partner_logo', 'linedrawing'):
             # TODO manage better
             # Return image:
@@ -129,14 +131,15 @@ class Parser(report_sxw.rml_parse):
                 return '' # TODO manage linedrawing
                 #return record.product_id.linedrawing
             else:
-                return ''    
+                return ''
                 
         elif field_name not in record._columns:
             #_logger.error('Field not present: %s' % field_name)
             raise osv.except_osv(
                 _('Program error'), 
                 _('Field not present: %s' % field_name),
-                )        
+                )      
+                  
         else: # Normal field:
             return record.__getattribute__(field_name)
 

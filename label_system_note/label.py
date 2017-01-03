@@ -38,11 +38,97 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+class NoteType(orm.Model):
+    """ Model name: NoteType
+    """    
+    _inherit = 'note.type'
+    
+    _columns = {
+        'print_label': fields.boolean('Label type'),
+        'label_category': fields.selection([
+            ('article', 'Article'),
+            ('package', 'Package'),
+            ], 'Label category'),
+        }
+    
+    _defaults = {    
+        'label_category': lambda *x: 'article',
+        }
+
 class NoteNote(orm.Model):
     """ Model name: NoteNote
     """    
     _inherit = 'note.note'
     
+    def get_label_from_order_line(self, cr, uid, line, context=None):
+        ''' Read line and explode other data, search label and return better
+            priority
+        '''
+        product_pool = self.pool.get('product.product')
+        
+        if not line:
+            raise osv.except_osv(
+                _('Label generation'), 
+                _('Error no line selected, cannot choose label'),
+                )
+                
+        # Create extra filter from line:
+        product = line.product_id # mandatory
+        partner = line.order_id.partner_id # mandatory
+        address = line.order_id.destination_partner_id # optional
+        order = line.order_id # mandatory
+        #line mandatory
+        
+        # TODO filter category selected
+        
+        # 1. Search partner label:
+        label_ids = set(self.search(cr, uid, [
+            ('print_label', '=', True),
+            ('partner_id', '=', partner.id),
+            ], context=context))
+            
+        # 2. Search address label:
+        if address:
+            label_ids.update(set(self.search(cr, uid, [
+                ('print_label', '=', True),
+                ], context=context)))
+                
+        # 3. Search product no customer (so no address)
+        label_ids.update(set(self.search(cr, uid, [
+            ('print_label', '=', True),
+            ('product_id', '=', product.id),
+            ('partner_id', '=', False),
+            ], context=context)))
+            
+        # 4. Search order
+        label_ids.update(set(self.search(cr, uid, [
+            ('print_label', '=', True),
+            ('order_id', '=', order.id),
+            ], context=context)))
+            
+        # 5. Search line    
+        label_ids.update(set(self.search(cr, uid, [
+            ('print_label', '=', True),
+            ('line_id', '=', line.id),
+            ], context=context)))
+            
+        if not label_ids:
+            return False
+                
+        label_proxy = self.browse(cr, uid, list(label_ids), context=context)
+        labels = sorted(
+            label_proxy, 
+            key=lambda l: product_pool.get_note_priority(
+                l.product_id.id, 
+                l.partner_id.id,
+                l.address_id.id,
+                l.order_id.id,
+                l.line_id.id,
+                )
+            )
+        # TODO manage label not required
+        return labels[-1].label_id.id
+        
     _columns = {
         'print_label': fields.boolean('Label note'),
         'print_not_required': fields.boolean('Label not required'),

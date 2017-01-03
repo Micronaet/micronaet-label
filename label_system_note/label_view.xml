@@ -1,6 +1,21 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+        <record model="ir.ui.view" id="view_note_type_label_form">
+            <field name="name">note.type.form</field>
+            <field name="model">note.type</field>
+            <field name="inherit_id" ref="note_system_management.view_note_type_form"/>
+            <field name="arch" type="xml">
+                <field name="linked_image" position="after">
+                    <field name="print_label" />
+                    <field name="label_category" 
+                        attrs="{
+                            'required': [('print_label','=',True)], 
+                            'invisible': [('print_label','=',False)]}" />
+                    
+                </field>
+            </field>
+        </record>
         <record model="ir.ui.view" id="view_note_note_label_form">
             <field name="name">note.note.label.form</field>
             <field name="model">note.note</field>

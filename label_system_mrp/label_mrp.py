@@ -52,6 +52,7 @@ class MrpProduction(orm.Model):
         # Pool used:
         job_pool = self.pool.get('label.label.job')
         partner_pool = self.pool.get('res.partner')
+        note_pool = self.pool.get('note.note')
         
         mrp_proxy = self.browse(cr, uid, ids, context=context)[0]
         
@@ -74,16 +75,17 @@ class MrpProduction(orm.Model):
                 # -------------------------------------------------------------
                 # Search 3 label depend on note system management:
                 # -------------------------------------------------------------
-                # TODO generate labdel_id with system note management!!!!!!!!!!
+                # TODO generate label_id with system note management!
+                label_id = note_pool.get_label_from_order_line(
+                    cr, uid, line, context=context)
                 report_id = False # TODO
-                label_id = 1 # TODO
                 
                 # -------------------------------------------------------------
                 # Generate extra data from order, product, partner, address
                 # -------------------------------------------------------------
                 record_data = partner_pool.generate_job_data_from_line_partner(
                     cr, uid, line=line, context=context)
-                q_x_pack = record_data.get('q_x_pack', False)
+                q_x_pack = record_data.get('q_x_pack', False)# used for # label
 
                 if label == 'article':
                     record_data_counter = line.product_uom_qty

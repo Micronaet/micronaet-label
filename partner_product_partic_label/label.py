@@ -445,10 +445,10 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         # Get complex field:
         try:
-            line = mrp.lavoration_ids[0].workcenter_id.code
+            line_code = mrp.lavoration_ids[0].workcenter_id.code
         except:
             _logger.error('No line!')
-            line = ''
+            line_code = ''
         
         # Update record with data:    
         record.update({
@@ -484,7 +484,7 @@ class ResPartner(orm.Model):
             # -----------------------------------------------------------------
             #                                MRP:
             # -----------------------------------------------------------------
-            'record_data_line': line,
+            'record_data_line': line_code,
             'record_data_period': '%s%s' % (
                 mrp.date_planned[2:4], mrp.date_planned[5:7]),
             'record_data_lot': mrp.name.replace('MO', '').lstrip('0'),
@@ -663,8 +663,7 @@ class ResPartner(orm.Model):
             'Print order ref'), # customer
         'label_print_order_date': fields.selection(get_tri_state, 
             'Print order date'),
-        'label_print_destination_code': fields.selection(get_tri_state, 
-            
+        'label_print_destination_code': fields.selection(get_tri_state,             
             'Print destination code'),
             
         # Image:
