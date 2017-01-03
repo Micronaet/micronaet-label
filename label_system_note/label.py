@@ -52,15 +52,21 @@ class NoteType(orm.Model):
         }
     
     _defaults = {    
-        'label_category': lambda *x: 'article',
+        #'label_category': lambda *x: 'article',
         }
+        
+    #TODO _sql_constraints = [(
+    #    'label_category_uniq', 'unique (label_category)', 
+    #    'Label category must be unique in all category!',
+    #    ),        
+    #    ]    
 
 class NoteNote(orm.Model):
     """ Model name: NoteNote
     """    
     _inherit = 'note.note'
     
-    def get_label_from_order_line(self, cr, uid, line, context=None):
+    def get_label_from_order_line(self, cr, uid, line, category, context=None):
         ''' Read line and explode other data, search label and return better
             priority
         '''
@@ -71,6 +77,12 @@ class NoteNote(orm.Model):
                 _('Label generation'), 
                 _('Error no line selected, cannot choose label'),
                 )
+
+        if not category:
+            raise osv.except_osv(
+                _('Label generation'), 
+                _('Error no category passed: article or package!'),
+                )
                 
         # Create extra filter from line:
         product = line.product_id # mandatory
@@ -79,11 +91,10 @@ class NoteNote(orm.Model):
         order = line.order_id # mandatory
         #line mandatory
         
-        # TODO filter category selected
-        
         # 1. Search partner label:
         label_ids = set(self.search(cr, uid, [
             ('print_label', '=', True),
+            ('type_id.label_category', '=', category),
             ('partner_id', '=', partner.id),
             ], context=context))
             
@@ -91,11 +102,14 @@ class NoteNote(orm.Model):
         if address:
             label_ids.update(set(self.search(cr, uid, [
                 ('print_label', '=', True),
+                ('type_id.label_category', '=', category),
+                ('address_id', '=', False),
                 ], context=context)))
                 
         # 3. Search product no customer (so no address)
         label_ids.update(set(self.search(cr, uid, [
             ('print_label', '=', True),
+            ('type_id.label_category', '=', category),
             ('product_id', '=', product.id),
             ('partner_id', '=', False),
             ], context=context)))
@@ -103,12 +117,14 @@ class NoteNote(orm.Model):
         # 4. Search order
         label_ids.update(set(self.search(cr, uid, [
             ('print_label', '=', True),
+            ('type_id.label_category', '=', category),
             ('order_id', '=', order.id),
             ], context=context)))
             
         # 5. Search line    
         label_ids.update(set(self.search(cr, uid, [
             ('print_label', '=', True),
+            ('type_id.label_category', '=', category),
             ('line_id', '=', line.id),
             ], context=context)))
             

@@ -77,7 +77,7 @@ class MrpProduction(orm.Model):
                 # -------------------------------------------------------------
                 # TODO generate label_id with system note management!
                 label_id = note_pool.get_label_from_order_line(
-                    cr, uid, line, context=context)
+                    cr, uid, line, label, context=context)
                 report_id = False # TODO
                 
                 # -------------------------------------------------------------
