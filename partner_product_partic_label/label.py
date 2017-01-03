@@ -688,6 +688,7 @@ class ResPartner(orm.Model):
             help='For print in label: 1/25, 2/25... (reset every product)'),   
         }
         
-    _defaults = {}
+    _defaults = {
+        }
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -68,6 +68,7 @@ class MrpProduction(orm.Model):
             #'pallet',
             #'placeholder'
             ]
+            
         for line in mrp_proxy.order_line_ids:
             for label in labels:
                 sequence += 1

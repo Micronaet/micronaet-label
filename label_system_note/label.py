@@ -129,26 +129,35 @@ class NoteNote(orm.Model):
             ], context=context)))
             
         if label_ids:
-            label_ids = list(label_ids)
-        else:
-            return False
-            # TODO activate this block remove return when add default company
-            # Search default from company data
-            partner = partner.company_id.partner_id # change partner in company
+            partner_id = partner.id
+        else: # Search default from company data
+            partner_id = partner.company_id.partner_id
             
             # 1. Search company label:
-            label_ids = self.search(cr, uid, [
+            label_ids = set(self.search(cr, uid, [
                 ('print_label', '=', True),
                 ('type_id.label_category', '=', category),
-                ('partner_id', '=', partner.id),
-                ], context=context)
+                ('partner_id', '=', partner_id),
+                ], context=context))
+
+            # 2. Search company-product
+            label_ids = set(self.search(cr, uid, [
+                ('print_label', '=', True),
+                ('type_id.label_category', '=', category),
+                ('partner_id', '=', partner_id),
+                ('product_id', '=', product.id),
+                ], context=context))
                 
-        label_proxy = self.browse(cr, uid, label_ids, context=context)
+            if not label_ids:
+                _logger.error('No label found!')
+                return False # raise error    
+                
+        label_proxy = self.browse(cr, uid, list(label_ids), context=context)
         labels = sorted(
             label_proxy, 
             key=lambda l: product_pool.get_note_priority(
                 l.product_id.id, 
-                l.partner_id.id,
+                partner_id,
                 l.address_id.id,
                 l.order_id.id,
                 l.line_id.id,
