@@ -18,49 +18,23 @@
 ###############################################################################
 
 {
-    'name': 'Label System Management',
+    'name': 'EAN 13 Extra',
     'version': '0.1',
-    'category': 'Label',
-    'description': '''
-        Label system management, integrated in note management        
+    'category': 'Product',
+    'description': '''  
+        Extra ean for single produc      
         ''',
     'author': 'Micronaet S.r.l. - Nicola Riolini',
     'website': 'http://www.micronaet.it',
     'license': 'AGPL-3',
     'depends': [
         'base',
-        
-        # Partic:  
-        'partner_product_partic', # Add partic there
-        
-        # For fast label:
         'product',
-        'sale',
-        'mrp',    
-        
-        # For extra ean single:
-        'ean_single',
         ],
     'init_xml': [],
     'demo': [],
     'data': [
-        # Group and security access:
-        'security/label_group.xml',
-        'security/ir.model.access.csv',    
-        
-        # Startup data:
-        'data/config_data.xml',
-        'data/label_format_data.xml',
-        'data/label_label_job_data.xml',
-
-        # Workflow:
-        'workflow/label_workflow.xml',
-
-        # Views:
-        'label_view.xml',
-        
-        # Scheduler:
-        'scheduler.xml',
+        'extra_ean_view.xml',
         ],
     'active': False,
     'installable': True,
