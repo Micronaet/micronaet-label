@@ -21,6 +21,8 @@ import os
 import sys
 import logging
 import openerp
+import xlrd
+import xlsxwriter
 import openerp.netsvc as netsvc
 import openerp.addons.decimal_precision as dp
 from openerp.osv import fields, osv, expression, orm
@@ -107,6 +109,78 @@ class ResPartner(orm.Model):
     '''    
     _inherit = 'res.partner'
     
+    # -------------------------------------------------------------------------
+    # Button:
+    # -------------------------------------------------------------------------
+    def export_partic_xls_file(self, cr, uid, ids, context=None): 
+        ''' Export in XLS for content partic for partner
+        '''
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        
+        # Get filename:
+        if current_proxy.filename:
+            filename = current_proxy.label_partic_file
+        else:
+            filename = '%s.%s.xls' % (
+                clean_ascii(current_proxy.name),
+                current_proxy.id,
+                )
+            self.write(cr, uid, ids, {
+                'label_partic_file': filename,
+                }, context=context)    
+                
+        WB = xlsxwriter.Workbook(fullname)
+        self.WS = WB.add_worksheet()#campaign_proxy.code)
+        self.row = 0
+        
+        # Write header fields:
+        extra_pool = self.pool.get('res.partner.product.partic.label')
+        # Partic field:
+        header = [
+            'ID',
+            'default_code',
+            'partner_pricelist',
+            'partner_code',
+            'partner_description',
+            'ean8',
+            'ean13',
+            ]
+        import pdb; pdb.set_trace()
+        # Extra data:    
+        extra_fields = [f[0] for f in extra_pool._columns['name'].selection]
+        header.extend(extra_fields) # selection elements        
+        write_xls_file(header)    
+        
+        # Write data row:
+        for partic in current_proxy.partic_ids:        
+            # Partic field:
+            partic_row = [
+                partic.id,
+                partic.product_id.default_code,
+                partic.partner_pricelist,
+                partic.partner_code,
+                partic.partner_description,
+                partic.ean8,
+                partic.ean13,
+                ]
+                
+            # TODO add extra fields:
+            extra_data = {}            
+            for x in partic.label_field_ids:
+                extra_data[x.name] = x.value
+            for f in extra_fields:
+                partic_row.append(extra_data.get(f, ''))    
+            
+            write_xls_file(partic_row)    
+                
+        return True
+
+    def impoort_partic_xls_file(self, cr, uid, ids, context=None): 
+        ''' Import in XLS for content partic for partner
+        '''
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        return True
+        
     def get_tri_state(self, cr, uid, context=None):
         return [ 
             ('show', 'Show'), # ON
@@ -130,6 +204,16 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         # UTILITY FUNCTION:
         # ---------------------------------------------------------------------
+        def write_xls_file(line):
+            ''' Write line in excel file, use self parameter for get WS and row
+            '''
+            col = 0
+            for item in line:
+                self.WS.write(self.row, col, item)
+                col += 1
+            self.row += 1
+            return
+            
         def get_label(company, partner, address, field):
             ''' Check field from address, partner, company return first found
             '''
@@ -260,6 +344,8 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         # Check and label string from address or partner setup:
         record.update({
+            'label_partic_file': fields.char('Partic import file', size=80),
+            
             # -----------------------------------------------------------------
             # String label:
             # -----------------------------------------------------------------
