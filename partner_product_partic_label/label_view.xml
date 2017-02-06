@@ -67,9 +67,10 @@
                                 <page string="Product partic">
                                     <group col="4" colspan="4"> 
                                         <separator string="Product partic.:" colspan="4"/>
-                                        <button name="export_partic_xls_file" string="Export XLS" type="object" />
-                                        <button name="import_partic_xls_file" string="Import XLS" type="object" attrs="{'invisible': [('label_partic_file','=',False)]}" />
+                                        <button name="export_partic_xls_file" string="Export XLS" type="object" colspan="1"/>
+                                        <button name="import_partic_xls_file" string="Import XLS" type="object" attrs="{'invisible': [('label_partic_file','=',False)]}" colspan="1"/>
                                         <field name="label_partic_file" attrs="{'invisible': [('label_partic_file','=',False)]}"/>
+                                        <newline/>
                                         <field name="partic_ids" colpan="4" nolabel="1">
                                             <tree string="Product partic.">
                                                 <field name="partner_id" invisible="1"/>
