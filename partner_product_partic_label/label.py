@@ -140,7 +140,6 @@ class ResPartner(orm.Model):
     def export_partic_xls_file(self, cr, uid, ids, context=None): 
         ''' Export in XLS for content partic for partner
         '''
-        import pdb; pdb.set_trace()
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         path = '/home/administrator/photo/xls/partic' # TODO custom value!
         
