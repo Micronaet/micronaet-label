@@ -110,34 +110,64 @@ class ResPartner(orm.Model):
     _inherit = 'res.partner'
     
     # -------------------------------------------------------------------------
+    # Utility:
+    # -------------------------------------------------------------------------
+    def clean_ascii(self, value):
+        ''' Clean no ascii char
+        '''
+        res = ''
+        special = '._- '
+        for c in value:
+            if c.isalnum() or c in special:
+                res += c
+            else:
+                res += '_'    
+        return res
+        
+    def write_xls_file(self, line):
+        ''' Write line in excel file, use self parameter for get WS and row
+        '''
+        col = 0
+        for item in line:
+            self.WS.write(self.row, col, item)
+            col += 1
+        self.row += 1
+        return
+    
+    # -------------------------------------------------------------------------
     # Button:
     # -------------------------------------------------------------------------
     def export_partic_xls_file(self, cr, uid, ids, context=None): 
         ''' Export in XLS for content partic for partner
         '''
+        import pdb; pdb.set_trace()
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        path = '/home/administrator/photo/xls/partic' # TODO custom value!
         
         # Get filename:
-        if current_proxy.filename:
+        if current_proxy.label_partic_file:
             filename = current_proxy.label_partic_file
         else:
             filename = '%s.%s.xls' % (
-                clean_ascii(current_proxy.name),
+                self.clean_ascii(current_proxy.name),
                 current_proxy.id,
                 )
             self.write(cr, uid, ids, {
                 'label_partic_file': filename,
                 }, context=context)    
+        
+        filename = os.path.join(os.path.expanduser(path), filename)
+        _logger.info('Export XLS file: %s' % filename)
                 
-        WB = xlsxwriter.Workbook(fullname)
-        self.WS = WB.add_worksheet()#campaign_proxy.code)
+        WB = xlsxwriter.Workbook(filename)
+        self.WS = WB.add_worksheet('Particolarita')
         self.row = 0
         
         # Write header fields:
         extra_pool = self.pool.get('res.partner.product.partic.label')
         # Partic field:
         header = [
-            'ID',
+            #'ID',
             'default_code',
             'partner_pricelist',
             'partner_code',
@@ -145,17 +175,17 @@ class ResPartner(orm.Model):
             'ean8',
             'ean13',
             ]
-        import pdb; pdb.set_trace()
+
         # Extra data:    
         extra_fields = [f[0] for f in extra_pool._columns['name'].selection]
         header.extend(extra_fields) # selection elements        
-        write_xls_file(header)    
+        self.write_xls_file(header)    
         
         # Write data row:
         for partic in current_proxy.partic_ids:        
             # Partic field:
             partic_row = [
-                partic.id,
+                #partic.id,
                 partic.product_id.default_code,
                 partic.partner_pricelist,
                 partic.partner_code,
@@ -171,14 +201,90 @@ class ResPartner(orm.Model):
             for f in extra_fields:
                 partic_row.append(extra_data.get(f, ''))    
             
-            write_xls_file(partic_row)    
-                
+            self.write_xls_file(partic_row)    
+
+        _logger.info('End export XLS file: %s' % filename)                
         return True
 
-    def impoort_partic_xls_file(self, cr, uid, ids, context=None): 
+    def import_partic_xls_file(self, cr, uid, ids, context=None): 
         ''' Import in XLS for content partic for partner
         '''
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        path = '/home/administrator/photo/xls/partic' # TODO custom value!
+        max_line = 100000
+        
+        # Get filename:
+        if not current_proxy.label_partic_file:
+            raise osv.except_osv(
+                _('Filename error'), 
+                _('No file name for import XLS partic'),
+                )
+
+        filename = current_proxy.label_partic_file
+        
+        filename = os.path.join(os.path.expanduser(path), filename)
+        _logger.info('Import XLS file: %s' % filename)
+
+        try:                
+            WB = xlrd.open_workbook(filename)
+            WS = WB.sheet_by_index(0)
+        except:
+            raise osv.except_osv(
+                _('Open file error'), 
+                _('Cannot found file: %s [%s]' % (filename, sys.exc_info())),
+                )  
+
+        # Read partic yet present:
+        partic_present = {} # DB for code yet present
+        for partic in current_proxy.partic_ids: 
+            partic_present[partic.product_id.defaut_code] = partic.id
+            
+        header = False
+        for i in range(0, max_line):
+            try:
+                if i == 0:
+                    header = WS.row(i)
+                    continue
+                else:
+                    row = WS.row(i)
+            except:
+                # Out of range error ends import:
+                _log.warning('Read end at line: %s' % i)
+                break
+                    
+            # Parse line:
+            default_code = row[0].value
+            if not default_code:
+                raise osv.except_osv(
+                    _('Code not found'), 
+                    _('Code not found in line: %s' % i),
+                    )
+                
+            partner_pricelist = float(row[1].value)            
+            partner_code = row[2].value
+            partner_description = row[3].value
+            ean8 = row[4].value
+            ean13 = row[5].value
+            
+            # Parametrize for extra:
+            frame = row[6].value
+            fabric =  row[7].value
+            static_text1 = row[8].value
+            static_text2 = row[9].value
+            static_text3 = row[10].value
+            
+            data = {
+                'partner_id': current_proxy.id,
+                
+                }
+
+            if default_code in partic_present:
+                item_id = partic_present[defaut_code]  
+                
+            else: 
+                item_id = 0# TODO create
+        
+        _logger.info('End import XLS file: %s' % filename)                
         return True
         
     def get_tri_state(self, cr, uid, context=None):
@@ -203,17 +309,7 @@ class ResPartner(orm.Model):
         '''
         # ---------------------------------------------------------------------
         # UTILITY FUNCTION:
-        # ---------------------------------------------------------------------
-        def write_xls_file(line):
-            ''' Write line in excel file, use self parameter for get WS and row
-            '''
-            col = 0
-            for item in line:
-                self.WS.write(self.row, col, item)
-                col += 1
-            self.row += 1
-            return
-            
+        # ---------------------------------------------------------------------            
         def get_label(company, partner, address, field):
             ''' Check field from address, partner, company return first found
             '''
@@ -343,9 +439,7 @@ class ResPartner(orm.Model):
         # Check parameter in partner address form:
         # ---------------------------------------------------------------------
         # Check and label string from address or partner setup:
-        record.update({
-            'label_partic_file': fields.char('Partic import file', size=80),
-            
+        record.update({            
             # -----------------------------------------------------------------
             # String label:
             # -----------------------------------------------------------------
@@ -607,6 +701,8 @@ class ResPartner(orm.Model):
         return record        
 
     _columns = { 
+        'label_partic_file': fields.char('Partic import file', size=80),
+                
         # ---------------------------------------------------------------------
         #                      EXTRA LANGUAGE ELEMENTS:
         # ---------------------------------------------------------------------
