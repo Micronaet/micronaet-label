@@ -25,8 +25,10 @@
                                     </group>
                                 </page>
                                 <page string="Code">
-                                    <field name="ean13" />
-                                    <field name="ean8" />
+                                    <group col="4" colspan="4">
+                                        <field name="ean13" />
+                                        <field name="ean8" />
+                                    </group>
                                 </page>
                             </notebook>
                         </group>
