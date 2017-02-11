@@ -78,17 +78,6 @@ class ResPartnerProductPartic(orm.Model):
             'Label field'),
         }
 
-# TODO mode in a new module?
-class ProductProduct(orm.Model):
-    ''' Add product partic obj
-    '''    
-    _inherit = 'product.product'
-
-    _columns = { 
-        'ean8': fields.char('EAN 8', size=8),
-        'q_x_pallet': fields.integer('Q. per pallet'),
-        }
-
 class NoteImage(orm.Model):
     ''' Add product partic obj
     '''    

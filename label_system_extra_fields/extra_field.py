@@ -63,6 +63,8 @@ class ProductProduct(orm.Model):
         'label_frame': fields.char('Label Frame', size=64, translate=True),
         'label_fabric_color': fields.char('Label fabric color', size=64, 
             translate=True),
+        'ean8': fields.char('EAN 8', size=8),
+        'q_x_pallet': fields.integer('Q. per pallet'),
         }
         
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
