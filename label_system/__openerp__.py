@@ -65,4 +65,5 @@
     'active': False,
     'installable': True,
     'auto_install': False,
+    'apps': True,
     }

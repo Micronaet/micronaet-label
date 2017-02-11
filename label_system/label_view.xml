@@ -1,6 +1,54 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+        <!--product.product-->
+        <record model="ir.ui.view" id="view_product_product_label_data_form">
+            <field name="name">product.product.label.form</field>
+            <field name="model">product.product</field>
+            <field name="priority" eval="40"/>
+            <field name="arch" type="xml">
+                <form string="Product label" version="7.0">        
+                    <sheet>
+                        <group col="4" colspan="4">
+                            <field name="name" />
+                            <field name="default_code" />
+                            <notebook colspan="4">
+                                <page string="Description">
+                                    <field name="label_frame" />
+                                    <field name="label_fabric_color" />
+                                </page>
+                                <page string="Value">
+                                    <field name="q_x_pack" />
+                                </page>
+                            </notebook>
+                        </group>
+                    </sheet>        
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_product_product_label_data_tree">
+            <field name="name">product.product.label.tree</field>
+            <field name="model">product.product</field>
+            <field name="priority" eval="40"/>
+            <field name="arch" type="xml">
+                <tree string="Product lavel">
+                    <field name="name" />
+                    <field name="default_code" />
+                    <field name="q_x_pack" />
+                    <field name="label_frame" />
+                    <field name="label_fabric_color" />
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_product_product_label_data">
+            <field name="name">Product data label</field>
+            <field name="res_model">product.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_product_product_label_data_tree"/>
+            <field name="context">{'form_view_ref': 'label_system.view_product_product_label_data_form'}</field>
+            <field name="domain">[]</field>
+        </record>
         <!--label.layout-->
         <record model="ir.ui.view" id="view_label_layout_form">
             <field name="name">label.layout.form</field>
@@ -494,7 +542,13 @@
                     action="action_label_label_disabled"
                     sequence="20" 
                     />
-
+            <menuitem 
+                parent="menu_label_label_root" 
+                id="menu_product_product_label_data"
+                action="action_product_product_label_data"
+                sequence="20" 
+                />                
+            
             <menuitem 
                 parent="menu_label_label_root" 
                 id="menu_label_label_report_root"
