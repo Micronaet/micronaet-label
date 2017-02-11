@@ -38,6 +38,14 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+# TODO parametrize reading the one in label_system:
+#label_type = [
+#    ('article', 'Article'),
+#    ('package', 'Package'),
+#    ('pallet', 'Pallet'),
+#    ('placeholder', 'Placeholder'),
+#    ]
+    
 class NoteType(orm.Model):
     """ Model name: NoteType
     """    
@@ -70,106 +78,153 @@ class NoteNote(orm.Model):
         ''' Read line and explode other data, search label and return better
             priority
         '''
-        product_pool = self.pool.get('product.product')
+        # Utility:
+        def search_label_presence(self, cr, uid, domain, category, 
+                context=None):
+            ''' Search if label is present else return nothing
+            '''
+            domain.update([
+                ('print_label', '=', True),            
+                ('type_id.label_category', '=', category),
+                ])
+            label_ids = self.search(cr, uid, domain, context=context)            
+            if label_ids:
+                if len(label_ids) > 1:
+                    _logger.error('More than one label!') # do nothing
+                return self.browse(
+                    cr, uid, label_ids, context=context)[0].label_id.id
+            return False
         
-        if not line:
+        if not line or not category:
             raise osv.except_osv(
                 _('Label generation'), 
-                _('Error no line selected, cannot choose label'),
+                _('Error no line selected or no category, so no label!'),
                 )
 
-        if not category:
-            raise osv.except_osv(
-                _('Label generation'), 
-                _('Error no category passed: article or package!'),
-                )
-                
+        # ---------------------------------------------------------------------
         # Create extra filter from line:
+        # ---------------------------------------------------------------------
         product = line.product_id # mandatory
         partner = line.order_id.partner_id # mandatory
         address = line.order_id.destination_partner_id # optional
         order = line.order_id # mandatory
         #line mandatory
-        
-        # 1. Search partner label:
-        label_ids = set(self.search(cr, uid, [
-            ('print_label', '=', True),
-            ('type_id.label_category', '=', category),
-            ('partner_id', '=', partner.id),
-            ], context=context))
-            
-        # 2. Search address label:
-        if address:
-            label_ids.update(set(self.search(cr, uid, [
-                ('print_label', '=', True),
-                ('type_id.label_category', '=', category),
-                ('address_id', '=', False),
-                ], context=context)))
-                
-        # 3. Search product no customer (so no address)
-        label_ids.update(set(self.search(cr, uid, [
-            ('print_label', '=', True),
-            ('type_id.label_category', '=', category),
-            ('product_id', '=', product.id),
-            ('partner_id', '=', False),
-            ], context=context)))
-            
-        # 4. Search order
-        label_ids.update(set(self.search(cr, uid, [
+
+        # ---------------------------------------------------------------------        
+        # Search label form highest priority to lower:
+        # ---------------------------------------------------------------------
+        # ---------------
+        # Order and line:
+        # ---------------
+        # 1. Search sale order line label
+        label_id = self.search_label_presence(cr, uid, [
+            ('line_id', '=', line.id),
+            ], category, context=None)
+        if label_id:
+            return label_id
+
+        # 2. Search order label
+        label_id = self.search_label_presence(cr, uid, [
             ('print_label', '=', True),
             ('type_id.label_category', '=', category),
             ('order_id', '=', order.id),
-            ], context=context)))
-            
-        # 5. Search line    
-        label_ids.update(set(self.search(cr, uid, [
-            ('print_label', '=', True),
-            ('type_id.label_category', '=', category),
-            ('line_id', '=', line.id),
-            ], context=context)))
-            
-        if label_ids:
-            partner_id = partner.id
-        else: # Search default from company data
-            partner_id = partner.company_id.partner_id
-            
-            # 1. Search company label:
-            label_ids = set(self.search(cr, uid, [
-                ('print_label', '=', True),
-                ('type_id.label_category', '=', category),
-                ('partner_id', '=', partner_id),
-                ], context=context))
+            ('line_id', '=', False), # no line particularity
+            ], category, context=context)
+        if label_id:
+            return label_id
 
-            # 2. Search company-product
-            label_ids = set(self.search(cr, uid, [
-                ('print_label', '=', True),
-                ('type_id.label_category', '=', category),
-                ('partner_id', '=', partner_id),
+        # ----------------
+        # Address present:
+        # ----------------
+        if address:
+            # 3A. Search product with address
+            label_id = self.search_label_presence(cr, uid, [
                 ('product_id', '=', product.id),
-                ], context=context))
-                
-            if not label_ids:
-                _logger.error('No label found!')
-                return False # raise error    
-                
-        label_proxy = self.browse(cr, uid, list(label_ids), context=context)
-        labels = sorted(
-            label_proxy, 
-            key=lambda l: product_pool.get_note_priority(
-                l.product_id.id, 
-                partner_id,
-                l.address_id.id,
-                l.order_id.id,
-                l.line_id.id,
-                )
-            )
-        # TODO manage label not required
-        return labels[-1].label_id.id
+                ('partner_id', '=', address.id),
+                ('order_id', '=', False),
+                ('line_id', '=', False),            
+                ], category, context=context)
+            if label_id:
+                return label_id
+
+            # 3B. Search address
+            label_id = self.search_label_presence(cr, uid, [
+                ('partner_id', '=', address.id),
+                ('product_id', '=', False),
+                ('order_id', '=', False),
+                ('line_id', '=', False),            
+                ], category, context=context)
+            if label_id:
+                return label_id
+
+        # ---------------
+        # Partner search:
+        # ---------------
+        # 4A. Search product with partner
+        label_id = self.search_label_presence(cr, uid, [
+            ('product_id', '=', product.id),
+            ('partner_id', '=', partner.id),
+            ('order_id', '=', False),
+            ('line_id', '=', False),            
+            ], category, context=context)
+        if label_id:
+            return label_id
+
+        # 4B. Search partner
+        label_id = self.search_label_presence(cr, uid, [
+            ('partner_id', '=', partner.id),
+            ('product_id', '=', False),
+            ('order_id', '=', False),
+            ('line_id', '=', False),            
+            ], category, context=context)
+        if label_id:
+            return label_id
+
+        # ---------------
+        # Product search:
+        # ---------------
+        # 5. Search product label:
+        label_id = self.search_label_presence(cr, uid, [
+            ('product_id', '=', product.id),
+            ('partner_id', '=', False),
+            ('order_id', '=', False),
+            ('line_id', '=', False),            
+            ], category, context=context)
+        if label_id:
+            return label_id
+        
+        # ---------------
+        # Company search:
+        # ---------------
+        company_id = partner.company_id.partner_id.id   
+        # 6A. Search company label with product:
+        label_id = self.search_label_presence(cr, uid, [
+            ('product_id', '=', product.id),
+            ('partner_id', '=', company_id),
+            ('order_id', '=', False),
+            ('line_id', '=', False),            
+            ], category, context=context)
+        if label_id:
+            return label_id
+
+        # 6B. Search company label with product:
+        label_id = self.search_label_presence(cr, uid, [
+            ('product_id', '=', False),
+            ('partner_id', '=', company_id),
+            ('order_id', '=', False),
+            ('line_id', '=', False),            
+            ], category, context=context)
+        if label_id:
+            return label_id
+
+        _logger.error('No label found!')
+        return False # raise error    
         
     _columns = {
         'print_label': fields.boolean('Label note'),
         'print_not_required': fields.boolean('Label not required'),
         'label_id': fields.many2one('label.label', 'Label'),
+        #'label_type': fields.selection(label_type, 'Type of label'),        
         }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

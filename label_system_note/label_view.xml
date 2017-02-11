@@ -11,7 +11,7 @@
                     <field name="label_category" 
                         attrs="{
                             'required': [('print_label','=',True)], 
-                            'invisible': [('print_label','=',False)]}" />                    
+                            'invisible': [('print_label','=',False)]}" />   
                 </field>
             </field>
         </record>
