@@ -14,11 +14,15 @@
                             <field name="default_code" />
                             <notebook colspan="4">
                                 <page string="Description">
-                                    <field name="label_frame" />
-                                    <field name="label_fabric_color" />
+                                    <group col="4" colspan="4">
+                                        <field name="label_frame" />
+                                        <field name="label_fabric_color" />
+                                    </group>
                                 </page>
                                 <page string="Value">
-                                    <field name="q_x_pack" />
+                                    <group col="4" colspan="4">
+                                        <field name="q_x_pack" />
+                                    </group>
                                 </page>
                             </notebook>
                         </group>
