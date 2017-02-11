@@ -52,8 +52,9 @@ class ProductProduct(orm.Model):
     _inherit = 'product.product'
 
     _columns = {
-        'label_frame': fields.char('Label Frame', size=64),
-        'label_fabric_color': fields.char('Label fabric color', size=64),
+        'label_frame': fields.char('Label Frame', size=64, translate=True),
+        'label_fabric_color': fields.char('Label fabric color', size=64, 
+            translate=True),
         }
     
 # TODO manage printer for direct report with CUPS?
