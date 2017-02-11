@@ -91,7 +91,8 @@ class NoteImage(orm.Model):
         
     _sql_constraints = [(
         'label_code_uniq', 'unique(label_code)', 
-        'The label code must be unique!'), ]
+        'The label code must be unique!'), 
+        ]
 
 class ResPartner(orm.Model):
     ''' Add product partic obj
@@ -689,7 +690,8 @@ class ResPartner(orm.Model):
         return record        
 
     _columns = { 
-        'label_partic_file': fields.char('Partic import file', size=80),
+        'label_partic_file': fields.char('Partic import file', size=80,
+            help='Used for import export data in partner form'),
                 
         # ---------------------------------------------------------------------
         #                      EXTRA LANGUAGE ELEMENTS:
@@ -856,9 +858,6 @@ class ResPartner(orm.Model):
         'label_print_counter_pack_total': fields.selection(get_tri_state, 
             'Print counter pack',
             help='For print in label: 1/25, 2/25... (reset every product)'),   
-        }
-        
-    _defaults = {
         }
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
