@@ -47,12 +47,15 @@ class ProductProduct(orm.Model):
     # Utility:
     # -------------------------------------------------------------------------
     def get_all_fields_to_update(self, all_db=None):
-        ''' Overridable function for update other fields:
+        ''' Override function for update other fields:
         '''    
         res = {}
 
         if all_db is None:
             all_db = {}
+        import pdb; pdb.set_trace()
+        res['label_frame'] = all_db[2]
+        res['label_fabric_color'] = all_db[4]
         return res
         
     _columns = {
