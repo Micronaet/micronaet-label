@@ -44,6 +44,17 @@ label_type = [
     ('pallet', 'Pallet'),
     ('placeholder', 'Placeholder'),
     ]
+   
+class ProductProduct(orm.Model):
+    """ Product extra fields for label
+    """
+
+    _inherit = 'product.product'
+
+    _columns = {
+        'label_frame': fields.char('Label Frame', size=64),
+        'label_fabric_color': fields.char('Label fabric color', size=64),
+        }
     
 # TODO manage printer for direct report with CUPS?
 class LabelLabel(orm.Model):
