@@ -24,6 +24,10 @@
                                         <field name="q_x_pack" />
                                     </group>
                                 </page>
+                                <page string="Code">
+                                    <field name="ean13" />
+                                    <field name="ean8" />
+                                </page>
                             </notebook>
                         </group>
                     </sheet>        
@@ -41,6 +45,8 @@
                     <field name="q_x_pack" />
                     <field name="label_frame" />
                     <field name="label_fabric_color" />
+                    <field name="ean13" />
+                    <field name="ean8" />
                 </tree>
             </field>
         </record>

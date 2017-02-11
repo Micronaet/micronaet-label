@@ -52,10 +52,11 @@ class ProductProduct(orm.Model):
         res = {}
 
         if all_db is None:
-            all_db = {}
-        import pdb; pdb.set_trace()
-        res['label_frame'] = all_db[2]
-        res['label_fabric_color'] = all_db[4]
+            _logger.warning('No all_db for generate extra fields')
+            return res
+            
+        res['label_frame'] = all_db['B']
+        res['label_fabric_color'] = all_db['D']
         return res
         
     _columns = {
