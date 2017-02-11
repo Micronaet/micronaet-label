@@ -18,54 +18,26 @@
 ###############################################################################
 
 {
-    'name': 'Label System Management',
+    'name': 'Label extra fields',
     'version': '0.1',
-    'category': 'Label',
+    'category': 'label',
     'description': '''
-        Label system management, integrated in note management        
+        Add 2 fields for update management label with 2 fields calculated with
+        speech code        
         ''',
     'author': 'Micronaet S.r.l. - Nicola Riolini',
     'website': 'http://www.micronaet.it',
     'license': 'AGPL-3',
     'depends': [
         'base',
-        
-        # Partic:  
-        'partner_product_partic', # Add partic there
-        
-        # For fast label:
-        'product',
-        'sale',
-        'mrp',    
-        
-        # For extra ean single:
-        'ean_single',
-        
-        'label_system_extra_fields', # extra fields used
+        'product_speech_code',
         ],
     'init_xml': [],
     'demo': [],
     'data': [
-        # Group and security access:
-        'security/label_group.xml',
-        'security/ir.model.access.csv',    
-        
-        # Startup data:
-        'data/config_data.xml',
-        'data/label_format_data.xml',
-        'data/label_label_job_data.xml',
-
-        # Workflow:
-        'workflow/label_workflow.xml',
-
-        # Views:
-        'label_view.xml',
-        
-        # Scheduler:
-        'scheduler.xml',
+        'extra_view.xml',
         ],
     'active': False,
     'installable': True,
     'auto_install': False,
-    'application': True,
     }
