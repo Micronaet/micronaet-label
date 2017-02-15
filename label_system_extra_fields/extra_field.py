@@ -55,8 +55,11 @@ class ProductProduct(orm.Model):
             _logger.warning('No all_db for generate extra fields')
             return res
             
-        res['label_frame'] = all_db['B']
-        res['label_fabric_color'] = all_db['D']
+        _logger.warning('All DB database: %s' % (all_db, ))
+        if 'B' in all_db:
+            res['label_frame'] = all_db['B']
+        if 'D' in all_db:
+            res['label_fabric_color'] = all_db['D']
         return res
         
     _columns = {
