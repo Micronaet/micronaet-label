@@ -76,8 +76,8 @@ class ProductProduct(orm.Model):
         ''' 
         product_pool = self.pool.get('product.product')
 
-        filename = '/home/administrator/photo/xls/barcode.xls'
-        filelog = '/home/administrator/photo/xls/barcode_import_log.xlsx'
+        filename = '/home/administrator/photo/xls/ean/barcode.xls'
+        filelog = '/home/administrator/photo/xls/ean/barcode_import_log.xlsx'
 
         try:
             WB = xlrd.open_workbook(filename)
