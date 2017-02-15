@@ -75,6 +75,7 @@ class ProductProduct(orm.Model):
         product_pool = self.pool.get('product.product')
 
         filename = '/home/administrator/photo/xls/barcode.xls'
+        filelog = '/home/administrator/photo/xls/barcode_import_log.xls'
 
         try:
             WB = xlrd.open_workbook(filename)
@@ -83,24 +84,36 @@ class ProductProduct(orm.Model):
                 _('Error XLSX'), 
                 _('Cannot read XLS file: %s' % filename),
                 )
+                
+        WB_log = xlsxwriter.Workbook(filelog)
+        WS_log = WB_log.add_worksheet('ODOO')
+        WS_log.write(0, 0, 'Codice')
+        WS_log.write(0, 1, 'Errore codice')
+        WS_log.write(0, 2, 'Errore ean')
+        counter = 0
+
         import pdb; pdb.set_trace()       
         WS = xl_workbook.sheet_by_index(0)
         for row in range(0, WS.nrows):
+            counter += 1
             # Read data from file:
             default_code = WS.cell(row_idx, 0)
             ean13 = WS.cell(row_idx, 2)
             ean13_s = WS.cell(row_idx, 4)
             ean13_p = WS.cell(row_idx, 5)
             
+            WS_log.write(counter, 0, default_code)                
             product_ids = self.search(cr, uid, [
                 ('default_code', '=', default_code),
                 ], context=context)
                 
             if not product_ids:
                 _logger.error('Code not found: %s' % default_code)
+                WS_log.write(counter, 1, 'Codice non trovato')
                 continue
                 
             if len(product_ids) > 1:
+                WS_log.write(counter, 1, 'Codice doppio')
                 _logger.warning('Code double: %s' % default_code)
                     
                          
@@ -117,6 +130,7 @@ class ProductProduct(orm.Model):
                 }
             if not ean_org and ean13 != ean13_current:
                 data['ean13_org'] = ean13_current
+                WS_log.write(counter, 2, 'Diverso %s' % ean13_current)
                 
             product_pool.write(cr, uid, product_ids, data, context=context)        
         return True
