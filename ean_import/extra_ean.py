@@ -21,6 +21,8 @@ import os
 import sys
 import logging
 import openerp
+import xlrd
+import xlsxwriter
 import openerp.netsvc as netsvc
 import openerp.addons.decimal_precision as dp
 from openerp.osv import fields, osv, expression, orm
@@ -75,7 +77,7 @@ class ProductProduct(orm.Model):
         product_pool = self.pool.get('product.product')
 
         filename = '/home/administrator/photo/xls/barcode.xls'
-        filelog = '/home/administrator/photo/xls/barcode_import_log.xls'
+        filelog = '/home/administrator/photo/xls/barcode_import_log.xlsx'
 
         try:
             WB = xlrd.open_workbook(filename)
@@ -84,6 +86,7 @@ class ProductProduct(orm.Model):
                 _('Error XLSX'), 
                 _('Cannot read XLS file: %s' % filename),
                 )
+        WS = WB.sheet_by_index(0)
                 
         WB_log = xlsxwriter.Workbook(filelog)
         WS_log = WB_log.add_worksheet('ODOO')
@@ -92,17 +95,29 @@ class ProductProduct(orm.Model):
         WS_log.write(0, 2, 'Errore ean')
         counter = 0
 
-        import pdb; pdb.set_trace()       
-        WS = xl_workbook.sheet_by_index(0)
-        for row in range(0, WS.nrows):
+        for row in range(1, WS.nrows): # jump first line
             counter += 1
-            # Read data from file:
-            default_code = WS.cell(row_idx, 0)
-            ean13 = WS.cell(row_idx, 2)
-            ean13_s = WS.cell(row_idx, 4)
-            ean13_p = WS.cell(row_idx, 5)
             
-            WS_log.write(counter, 0, default_code)                
+            # Read data from file:
+            default_code = WS.cell(row, 0).value
+            ean13 = WS.cell(row, 2).value
+            ean13_s = WS.cell(row, 4).value
+            ean13_p = WS.cell(row, 5).value
+
+            if not default_code:
+                WS_log.write(counter, 0, 'No default code')
+                continue
+            
+            if default_code[:2] in ('MT', 'PO', 'SE', 'TL'):
+                ean13 = ean13_s # keep single in this case
+                WS_log.write(counter, 4, 'Usato codice singolo')   
+                
+            if len(ean13) != 13:
+                WS_log.write(counter, 2, 'No EAN13')   
+                ean13 = False             
+                
+            WS_log.write(counter, 0, default_code)
+            _logger.info('Update product: %s' % default_code)              
             product_ids = self.search(cr, uid, [
                 ('default_code', '=', default_code),
                 ], context=context)
@@ -123,16 +138,22 @@ class ProductProduct(orm.Model):
             ean13_current = product_proxy.ean13
             ean13_org = product_proxy.ean13_org
             
+            ean13 = ean13 or ean13_current # keep current
             data = {
-                ('ean13', '=', ean13),
-                ('ean13_s', '=', ean13_s),
-                ('ean13_p', '=', ean13_p),
+                'ean13': ean13,
+                'ean13_s': ean13_s,
+                'ean13_p': ean13_p,
                 }
-            if not ean_org and ean13 != ean13_current:
-                data['ean13_org'] = ean13_current
-                WS_log.write(counter, 2, 'Diverso %s' % ean13_current)
                 
-            product_pool.write(cr, uid, product_ids, data, context=context)        
+            if not ean13_org and ean13 != ean13_current:
+                data['ean13_org'] = ean13_current
+                WS_log.write(counter, 2, 'Diverso %s' % ean13_current)    
+                            
+            try:
+                product_pool.write(cr, uid, product_ids, data, context=context)        
+            except:
+                WS_log.write(counter, 2, 'Ean non valido %s' % ean13)                
+                
         return True
         
         

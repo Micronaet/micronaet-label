@@ -12,6 +12,7 @@
                        <field name="ean13_s" /><button name="assign_single_ean_13" string="Set this" type="object" colspan="1" attrs="{'invisible': [('ean13_s','=',False)]}"/>
                        <field name="ean13_p" /><button name="assign_pack_ean_13" string="Set this" type="object" colspan="1" attrs="{'invisible': [('ean13_p','=',False)]}"/>
                        <field name="ean13_org" /><button name="assign_org_ean_13" string="Set this" type="object" colspan="1" attrs="{'invisible': [('ean13_org','=',False)]}"/>
+                       <button name="import_barcode" string="Import barcode" type="object" colspan="3"/>
                    </group>
                </field>
            </field>
