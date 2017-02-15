@@ -38,13 +38,6 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
-# TODO parametrize reading the one in label_system:
-#label_type = [
-#    ('article', 'Article'),
-#    ('package', 'Package'),
-#    ('pallet', 'Pallet'),
-#    ('placeholder', 'Placeholder'),
-#    ]
     
 class NoteType(orm.Model):
     """ Model name: NoteType
@@ -224,7 +217,5 @@ class NoteNote(orm.Model):
         'print_label': fields.boolean('Label note'),
         'print_not_required': fields.boolean('Label not required'),
         'label_id': fields.many2one('label.label', 'Label'),
-        #'label_type': fields.selection(label_type, 'Type of label'),        
         }
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

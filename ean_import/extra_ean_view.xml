@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+       <record model="ir.ui.view" id="view_product_product_ean_import_form">
+           <field name="name">product.product.ean.import.form</field>
+           <field name="model">product.product</field>
+           <field name="inherit_id" ref="product.product_normal_form_view"/>
+           <field name="arch" type="xml">
+               <field name="ean13" position="before">
+                   <group colspan="2" col="3">
+                       <separator string="EAN import check:" colspan="3"/>
+                       <field name="ean13_s" /><button name="assign_single_ean_13" string="Set this" type="object" colspan="1" attrs="{'invisible': [('ean13_s','=',False)]}"/>
+                       <field name="ean13_p" /><button name="assign_pack_ean_13" string="Set this" type="object" colspan="1" attrs="{'invisible': [('ean13_p','=',False)]}"/>
+                       <field name="ean13_org" /><button name="assign_org_ean_13" string="Set this" type="object" colspan="1" attrs="{'invisible': [('ean13_org','=',False)]}"/>
+                   </group>
+               </field>
+           </field>
+       </record>
+    </data>
+</openerp>
+
