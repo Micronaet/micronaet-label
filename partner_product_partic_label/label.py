@@ -183,19 +183,19 @@ class ResPartner(orm.Model):
             # Partic field:
             partic_row = [
                 #partic.id,
-                partic.product_id.default_code,
-                partic.partner_pricelist,
-                partic.partner_code,
-                partic.partner_description,
-                partic.ean8,
-                partic.ean13,
+                partic.product_id.default_code or '',
+                partic.partner_pricelist or 0.0,
+                partic.partner_code or '',
+                partic.partner_description or '',
+                partic.ean8 or '', 
+                partic.ean13 or '',
                 
                 # Extra data:
-                partic.frame,
-                partic.fabric_color,
-                partic.text1,
-                partic.text2,
-                partic.text3,                
+                partic.frame or '',
+                partic.fabric_color or '',
+                partic.text1 or '',
+                partic.text2 or '',
+                partic.text3 or '',                
                 ]
                 
             # TODO add extra fields:
@@ -213,7 +213,10 @@ class ResPartner(orm.Model):
     def import_partic_xls_file(self, cr, uid, ids, context=None): 
         ''' Import in XLS for content partic for partner
         '''
+        # Pool used
         partic_pool = self.pool.get('res.partner.product.partic')
+        product_pool = self.pool.get('product.product')
+        
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         path = '/home/administrator/photo/xls/partic' # TODO custom value!
         max_line = 100000
@@ -242,7 +245,7 @@ class ResPartner(orm.Model):
         # Read partic yet present:
         partic_present = {} # DB for code yet present
         for partic in current_proxy.partic_ids: 
-            partic_present[partic.product_id.defaut_code] = partic.id
+            partic_present[partic.product_id.default_code] = partic.id
             
         header = False
         for i in range(0, max_line):
@@ -254,7 +257,7 @@ class ResPartner(orm.Model):
                     row = WS.row(i)
             except:
                 # Out of range error ends import:
-                _log.warning('Read end at line: %s' % i)
+                _logger.warning('Read end at line: %s' % i)
                 break
                     
             # Parse line:
@@ -286,7 +289,7 @@ class ResPartner(orm.Model):
 
             partic_id = partic_present.get(default_code, False)
             if partic_id:
-                item_id = partic_present[defaut_code]
+                item_id = partic_present[default_code]
                 partic_pool.write(cr, uid, partic_id, data, context=context)
                 
             else:
