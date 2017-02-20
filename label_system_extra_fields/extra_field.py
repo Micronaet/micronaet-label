@@ -59,10 +59,10 @@ class ProductProduct(orm.Model):
         
         if 'B' in all_db:
             res['label_frame'] = all_db['B']
-            logger.error('Cannot set frame field')
+            _logger.error('Cannot set frame field')
         if 'D' in all_db:
             res['label_fabric_color'] = all_db['D']
-            logger.error('Cannot set color field')
+            _logger.error('Cannot set color field')
         return res
         
     _columns = {
