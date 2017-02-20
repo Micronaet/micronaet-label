@@ -100,6 +100,7 @@
                                                         
                                                         <field name="frame" />
                                                         <field name="fabric_color" />  
+                                                        <newline/>
                                                                                                                 
                                                         <field name="text1" colspan="4"/>
                                                         <field name="text2" colspan="4" />
