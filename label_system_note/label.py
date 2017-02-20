@@ -134,7 +134,6 @@ class NoteNote(orm.Model):
             # 3A. Search product with address
             label_id = self.search_label_presence(cr, uid, [
                 ('product_id', '=', product.id),
-                #('partner_id', '=', address.id),
                 ('address_id', '=', address.id),
                 ('order_id', '=', False),
                 ('line_id', '=', False),            
@@ -144,7 +143,6 @@ class NoteNote(orm.Model):
 
             # 3B. Search address
             label_id = self.search_label_presence(cr, uid, [
-                #('partner_id', '=', address.id),
                 ('address_id', '=', address.id),
                 ('product_id', '=', False),
                 ('order_id', '=', False),
@@ -181,7 +179,7 @@ class NoteNote(orm.Model):
         # ---------------
         # Product search:
         # ---------------
-        # 5. Search product label:
+        # 5. Search product label: XXX more priority from partner default!
         label_id = self.search_label_presence(cr, uid, [
             ('product_id', '=', product.id),
             ('partner_id', '=', False),
@@ -195,6 +193,7 @@ class NoteNote(orm.Model):
         # ---------------
         # Company search:
         # ---------------
+        # XXX Note: no partner address elements!
         company_id = partner.company_id.partner_id.id   
         # 6A. Search company label with product:
         label_id = self.search_label_presence(cr, uid, [

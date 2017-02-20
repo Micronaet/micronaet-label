@@ -230,10 +230,22 @@
             <field name="context">{'form_view_ref': 'partner_product_partic_label.view_res_partner_label_form'}</field>
             <field name="domain">[]</field>
         </record>
+        <record model="ir.actions.act_window" id="action_res_partner_default_label">
+            <field name="name">Partner default label</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'form_view_ref': 'partner_product_partic_label.view_res_partner_label_form'}</field>
+            <field name="domain">[('id', '=', 1)]</field>
+        </record>
         <menuitem 
             parent="label_system.menu_label_label_configuration" 
             id="menu_action_res_partner_label" 
             action="action_res_partner_label"/>
+            <menuitem 
+                parent="menu_action_res_partner_label" 
+                id="menu_res_partner_default_label" 
+                action="action_res_partner_default_label"/>
         
     </data>
 </openerp>
