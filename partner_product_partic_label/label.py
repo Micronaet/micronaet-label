@@ -74,10 +74,10 @@ class ResPartnerProductPartic(orm.Model):
         'partner_pricelist': fields.float('Partner pricelist', digits=(16, 3)), 
 
         'frame': fields.char('Frame', size=30),# translate=True),
-        'fabric_color': fields.char('Fabric color', size=30)#, translate=True),
+        'fabric_color': fields.char('Fabric color', size=30),#, translate=True),
         'text1': fields.text('Text 1'),#translate=True),
         'text2': fields.text('Text 2'),#, translate=True),
-        'text3': fields.text('Text 3')#, translate=True),
+        'text3': fields.text('Text 3'),#, translate=True),
         
         # TODO remove:  
         # Image fields:
@@ -665,14 +665,19 @@ class ResPartner(orm.Model):
             cr, uid, product.id, partner.id, 
             address.id if address else False, context=context)
             
-        # Force partner product description:    
+        # Force partner product description:
+        # Default settinqg:
+        frame = product.label_frame or ''
+        fabric_color = product.label_fabric_color or ''
+        ean13 = product.ean13 or ''
+        ean8 = product.ean8 or ''
         if product_partic:
-            frame = product_partic.frame
-            fabric_color = product_partic.fabric_color
+            frame = frame and product_partic.frame or ''
+            fabric_color = fabric_color and product_partic.fabric_color or ''
             partner_code = product_partic.partner_code or ''
             partner_description = product_partic.partner_description or ''
-            ean13 = product_partic.ean13 
-            ean8 = product_partic.ean8
+            ean13 = ean13 and product_partic.ean13 or ''
+            ean8 = ean8 and product_partic.ean8 or ''
             text1 = product_partic.text1
             text2 = product_partic.text2
             text3 = product_partic.text3
@@ -681,13 +686,7 @@ class ResPartner(orm.Model):
             partner_description = ''
             text1 = ''
             text2 = ''
-            text3 = ''
-        
-        # or use product description    
-        frame = frame or product.label_frame or ''
-        fabric_color = fabric_color or product.label_fabric_color or ''
-        ean13 = ean13 or product.ean13 or ''
-        ean8 = ean8 or product.ean8 or ''
+            text3 = ''        
             
         record.update({
             # -----------------------------------------------------------------
