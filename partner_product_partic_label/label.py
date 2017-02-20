@@ -321,6 +321,40 @@ class ResPartner(orm.Model):
         else:
             return False    
     
+    def get_translate_description_data(self, cr, uid, product, field, langs,
+            separator='\n', context=None):
+        ''' Load description for product translateble field
+            product: proxy obj
+            field: field name
+            langs: text database for extra lang
+            separator: from one field to another
+            context: dictionary
+        '''        
+        check_lang = {
+            'en': 'en_US', 
+            'fr': 'fr_FR',
+            } # TODO better!
+        
+        if context is None:
+            context = {}
+        product_pool = self.pool.get('product.product')
+        
+        res = product.__getattribute__(field) or '' # default language
+        if not langs:
+            return res
+            
+        ctx = context.copy()
+        for lang in langs.split('|'):
+            lang_db = lang.lower()
+            if lang_db not in check_lang:   
+                _logger.error('Lang format not present: %s' % lang)
+                continue
+            ctx['lang'] = check_lang[lang_db]
+            product_lang = product_pool.browse(
+                cr, uid, product.id, context=ctx)
+            res += '%s%s' % (separator, product_lang.__getattribute__(field))            
+        return res  
+
     def generate_job_data_from_line_partner(self, cr, uid, 
             **parameter):
         ''' Generate record for create printing jobs
@@ -388,7 +422,7 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         if line:
             # Create browse obj for readability:
-            product = line.product_id
+            product = line.product_id # TODO lang?
             partner = line.order_id.partner_id
             address = line.order_id.destination_partner_id
             order = line.order_id
@@ -648,6 +682,18 @@ class ResPartner(orm.Model):
             })               
         
         # ---------------------------------------------------------------------
+        # Get information for merge language fields:
+        # ---------------------------------------------------------------------
+        merge_lang = {
+            'description': get_label(
+                company, partner, address, 'label_lang_description'),
+            'frame': get_label(
+                company, partner, address, 'label_lang_frame'),
+            'fabric': get_label(
+                company, partner, address, 'label_lang_fabric')             
+            }
+            
+        # ---------------------------------------------------------------------
         # Product, MRP, Order data fields:
         # ---------------------------------------------------------------------
         # Get complex field:
@@ -660,15 +706,28 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         # Partic update:
         # ---------------------------------------------------------------------
+        separator = '\n' # for pack TODO - for article?
         # Update record with data:    
         product_partic = self.get_partic_partner_product_label(
             cr, uid, product.id, partner.id, 
             address.id if address else False, context=context)
             
         # Force partner product description:
-        # Default settinqg:
-        frame = product.label_frame or ''
-        fabric_color = product.label_fabric_color or ''
+
+        # ---------------------------------------------------------------------
+        # Translated fields append:
+        # ---------------------------------------------------------------------        
+        description = self.get_translate_description_data(
+            cr, uid, product, 'name', merge_lang['description'],
+            separator=separator, context=context)
+
+        frame = self.get_translate_description_data(
+            cr, uid, product, 'label_frame', merge_lang['frame'],
+            separator=separator, context=context)
+        fabric_color = self.get_translate_description_data(
+            cr, uid, product, 'label_fabric_color', merge_lang['fabric'],
+            separator=separator, context=context)
+                
         ean13 = product.ean13 or ''
         ean8 = product.ean8 or ''
         if product_partic:
@@ -694,7 +753,7 @@ class ResPartner(orm.Model):
             # -----------------------------------------------------------------
             'record_data_code': product.default_code,
             'record_data_code_partner': partner_code,
-            'record_data_description': product.name, # TODO use label name?
+            'record_data_description': description,
             'record_data_description_partner': partner_description,
                 
             'record_data_frame': frame,
