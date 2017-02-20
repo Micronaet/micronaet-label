@@ -90,7 +90,6 @@ class NoteNote(orm.Model):
         ''' Read line and explode other data, search label and return better
             priority
         '''
-        import pdb; pdb.set_trace()
         if not line or not category:
             raise osv.except_osv(
                 _('Label generation'), 

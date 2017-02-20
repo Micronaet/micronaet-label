@@ -386,7 +386,6 @@ class LabelLabelJob(orm.Model):
         ''' Print this label
         '''
         job_proxy = self.browse(cr, uid, ids, context=context)[0]
-        
         report_name = job_proxy.label_id.report_id.report_name
         return {
             'type': 'ir.actions.report.xml',

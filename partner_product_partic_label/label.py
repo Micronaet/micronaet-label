@@ -43,6 +43,7 @@ _logger = logging.getLogger(__name__)
 class ResPartnerProductParticLabel(orm.Model):
     """ Model name: ResPartnerProductParticLabel
     """
+    # TODO remove:
     
     _name = 'res.partner.product.partic.label'
     _description = 'Label partic'
@@ -71,7 +72,14 @@ class ResPartnerProductPartic(orm.Model):
         'ean13': fields.char('EAN 13', size=13),
         'ean8': fields.char('EAN 8', size=8),
         'partner_pricelist': fields.float('Partner pricelist', digits=(16, 3)), 
-    
+
+        'frame': fields.char('Frame', size=30, translate=True),
+        'fabric_color': fields.char('Fabric color', size=30, translate=True),
+        'text1': fields.text('Text 1', translate=True),
+        'text2': fields.text('Text 2', translate=True),
+        'text3': fields.text('Text 3', translate=True),
+        
+        # TODO remove:  
         # Image fields:
         'label_field_ids': fields.one2many(
             'res.partner.product.partic.label', 'partic_id', 
@@ -181,14 +189,21 @@ class ResPartner(orm.Model):
                 partic.partner_description,
                 partic.ean8,
                 partic.ean13,
+                
+                # Extra data:
+                partic.frame,
+                partic.fabric_color,
+                partic.text1,
+                partic.text2,
+                partic.text3,                
                 ]
                 
             # TODO add extra fields:
-            extra_data = {}            
-            for x in partic.label_field_ids:
-                extra_data[x.name] = x.value
-            for f in extra_fields:
-                partic_row.append(extra_data.get(f, ''))    
+            #extra_data = {}            
+            #for x in partic.label_field_ids:
+            #    extra_data[x.name] = x.value
+            #for f in extra_fields:
+            #    partic_row.append(extra_data.get(f, ''))    
             
             self.write_xls_file(partic_row)    
 
@@ -257,10 +272,10 @@ class ResPartner(orm.Model):
             
             # Parametrize for extra:
             frame = row[6].value
-            fabric =  row[7].value
-            static_text1 = row[8].value
-            static_text2 = row[9].value
-            static_text3 = row[10].value
+            fabric_color =  row[7].value
+            text1 = row[8].value
+            text2 = row[9].value
+            text3 = row[10].value
             
             data = {
                 'partner_id': current_proxy.id,
@@ -282,6 +297,29 @@ class ResPartner(orm.Model):
             ('hide', 'Hide'), # OFF 
             #('not', 'Not selected'), # NOT PRESENT
             ]
+    
+    def get_partic_partner_product_label(self, cr, uid, product_id, partner_id, 
+            address_id=False, context=None):
+        ''' Get partner product partic information
+        '''
+        partic_pool = self.pool.get('res.partner.product.partic')        
+        res = False
+        if address_id:
+            res = partic_pool.search(cr, uid, [
+                ('partner_id', '=', address_id),
+                ('product_id', '=', product_id),
+                ], context=context)
+                
+        if not res: # no address or no partic for address        
+            res = partic_pool.search(cr, uid, [
+                ('partner_id', '=', address_id),
+                ('product_id', '=', product_id),
+                ], context=context)
+        # TODO check double        
+        if res:
+            return partic_pool.browse(cr, uid, res, context=context)[0]
+        else:
+            return False    
     
     def generate_job_data_from_line_partner(self, cr, uid, 
             **parameter):
@@ -310,8 +348,8 @@ class ResPartner(orm.Model):
                 res = partner.__getattribute__(field) or\
                     company.partner_id.__getattribute__(field) or ''            
             if not res:
-                # TODO raise error?
-                _logger.warning('Field %s not found string value!' % field)            
+                # Not an error (TODO raise?):
+                _logger.warning('Warning %s not found string value!' % field)            
             return res
 
         def get_state_value(company, partner, address, field, warning=False):
@@ -331,8 +369,8 @@ class ResPartner(orm.Model):
             if res == 'show':
                 return True
             else:
-                return False
-        
+                return False        
+            
         # ---------------------------------------------------------------------
         # Read parameters:
         # ---------------------------------------------------------------------
@@ -619,17 +657,49 @@ class ResPartner(orm.Model):
             _logger.error('No line!')
             line_code = ''
         
+        # ---------------------------------------------------------------------
+        # Partic update:
+        # ---------------------------------------------------------------------
         # Update record with data:    
+        product_partic = self.get_partic_partner_product_label(
+            cr, uid, product.id, partner.id, 
+            address.id if address else False, context=context)
+            
+        # Force partner product description:    
+        if product_partic:
+            frame = product_partic.frame
+            fabric_color = product_partic.fabric_color
+            partner_code = product_partic.partner_code or ''
+            partner_description = product_partic.partner_description or ''
+            ean13 = product_partic.ean13 
+            ean8 = product_partic.ean8
+            text1 = product_partic.text1
+            text2 = product_partic.text2
+            text3 = product_partic.text3
+        else: # else nothing        
+            partner_code = ''
+            partner_description = ''
+            text1 = ''
+            text2 = ''
+            text3 = ''
+        
+        # or use product description    
+        frame = frame or product.label_frame or ''
+        fabric_color = fabric_color or product.label_fabric_color or ''
+        ean13 = ean13 or product.ean13 or ''
+        ean8 = ean8 or product.ean8 or ''
+            
         record.update({
             # -----------------------------------------------------------------
             #                               PRODUCT:
             # -----------------------------------------------------------------
             'record_data_code': product.default_code,
-            'record_data_code_partner': 'TODO', # TODO
+            'record_data_code_partner': partner_code,
             'record_data_description': product.name, # TODO use label name?
-            'record_data_description_partner': 'TODO', # TODO 
-            'record_data_frame': 'TODO', # TODO
-            'record_data_fabric': 'TODO', # TODO
+            'record_data_description_partner': partner_description,
+                
+            'record_data_frame': frame,
+            'record_data_fabric': fabric_color,
 
             # Anagrafic numeric:        
             # TODO change float
@@ -647,8 +717,8 @@ class ResPartner(orm.Model):
             'record_data_price_uom': product.uom_id.name,
 
             # EAN data:
-            'record_data_ean13': product.ean13, # TODO 
-            'record_data_ean8': product.ean8, # TODO
+            'record_data_ean13': ean13,
+            'record_data_ean8': ean8,
             
             # -----------------------------------------------------------------
             #                                MRP:
@@ -682,9 +752,9 @@ class ResPartner(orm.Model):
             # -----------------------------------------------------------------
             #                            STATIC TEXT:
             # -----------------------------------------------------------------
-            'record_data_text1': 'TODO', # TODO
-            'record_data_text2': 'TODO', # TODO
-            'record_data_text3': 'TODO', # TODO
+            'record_data_text1': text1,
+            'record_data_text2': text2,
+            'record_data_text3': text3,
             })
             
         return record        
@@ -753,11 +823,11 @@ class ResPartner(orm.Model):
         
         # Production:
         'label_string_line': fields.char('String production line', 
-            size=40, translate=True),
+            size=40, translate=True, help='Line code in database'),
         'label_string_period': fields.char('String period', 
-            size=40, translate=True),
+            size=40, translate=True, help='YYMM of production'),
         'label_string_lot': fields.char('String lot', 
-            size=40, translate=True),
+            size=40, translate=True, help='MRP number'),
         
         # Order:
         'label_string_order_ref': fields.char('String order ref', 

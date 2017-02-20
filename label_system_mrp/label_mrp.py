@@ -62,9 +62,7 @@ class MrpProduction(orm.Model):
             job_pool.unlink(cr, uid, remove_ids, context=context)
             
         sequence = 0
-        labels = [
-            'article', 'package', #'pallet', 'placeholder'
-            ]
+        labels = ['article', 'package'] #'pallet', 'placeholder'
             
         for line in mrp_proxy.order_line_ids:
             for label in labels:
@@ -83,8 +81,9 @@ class MrpProduction(orm.Model):
                 # -------------------------------------------------------------
                 record_data = partner_pool.generate_job_data_from_line_partner(
                     cr, uid, line=line, context=context)
-                q_x_pack = record_data.get('q_x_pack', False)# used for # label
-
+                # used for # label:
+                q_x_pack = record_data.get('record_data_q_x_pack', False)
+                
                 if label == 'article':
                     record_data_counter = line.product_uom_qty
                 else:

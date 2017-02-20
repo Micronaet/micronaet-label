@@ -96,16 +96,23 @@
                                                         <field name="ean8" />
                                                         <field name="ean13" />
                                                         
-                                                        <field name="partner_description" />     
-                                                        <separator string="Label force:" colspan="4"/>
+                                                        <field name="partner_description" />   
+                                                        
+                                                        <field name="frame" />
+                                                        <field name="fabric_color" />  
+                                                                                                                
+                                                        <field name="text1" colspan="4"/>
+                                                        <field name="text2" colspan="4" />
+                                                        <field name="text3" colspan="4" />
+                                                        
+                                                        <!--<separator string="Label force:" colspan="4"/>
                                                         <field name="label_field_ids" colspan="4" nolabel="1">
                                                             <tree string="Label partic." editable="bottom">
-                                                                <!--<field name="force" />-->
                                                                 <field name="name" />
                                                                 <field name="value" />                                                                
                                                                 <field name="partic_id" invisible="1"/>
                                                             </tree>
-                                                        </field>
+                                                        </field>-->
                                                     </group>
                                                 </sheet>
                                             </form>
