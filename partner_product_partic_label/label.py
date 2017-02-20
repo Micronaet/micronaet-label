@@ -213,6 +213,7 @@ class ResPartner(orm.Model):
     def import_partic_xls_file(self, cr, uid, ids, context=None): 
         ''' Import in XLS for content partic for partner
         '''
+        partic_pool = self.pool.get('res.partner.product.partic')
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         path = '/home/administrator/photo/xls/partic' # TODO custom value!
         max_line = 100000
@@ -263,30 +264,41 @@ class ResPartner(orm.Model):
                     _('Code not found'), 
                     _('Code not found in line: %s' % i),
                     )
-                
-            partner_pricelist = float(row[1].value)            
-            partner_code = row[2].value
-            partner_description = row[3].value
-            ean8 = row[4].value
-            ean13 = row[5].value
-            
-            # Parametrize for extra:
-            frame = row[6].value
-            fabric_color =  row[7].value
-            text1 = row[8].value
-            text2 = row[9].value
-            text3 = row[10].value
             
             data = {
                 'partner_id': current_proxy.id,
+                #'product_id': product_id
                 
+                # Field to import:    
+                'partner_pricelist': float(row[1].value),
+                'partner_code': row[2].value or '',
+                'partner_description': row[3].value or '',
+                'ean8': row[4].value or '',
+                'ean13': row[5].value or '',
+                
+                # Parametrize for extra:
+                'frame': row[6].value or '',
+                'fabric_color': row[7].value or '',
+                'text1': row[8].value or '',
+                'text2': row[9].value or '',
+                'text3': row[10].value or '',
                 }
 
-            if default_code in partic_present:
-                item_id = partic_present[defaut_code]  
+            partic_id = partic_present.get(default_code, False)
+            if partic_id:
+                item_id = partic_present[defaut_code]
+                partic_pool.write(cr, uid, partic_id, data, context=context)
                 
-            else: 
-                item_id = 0# TODO create
+            else:
+                product_ids = product_pool.search(cr, uid, [
+                    ('default_code', '=', default_code)], context=context)
+                if not product_ids:
+                    _logger.error('New product not present: %s' % default_code)
+                    continue    
+                    
+                data['product_id'] = product_ids[0]
+                partic_pool.create(cr, uid, data, context=context)
+                            
         
         _logger.info('End import XLS file: %s' % filename)                
         return True
