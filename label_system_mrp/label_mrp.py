@@ -63,8 +63,7 @@ class MrpProduction(orm.Model):
             
         sequence = 0
         labels = [
-            'article', 'package',
-            #'pallet', #'placeholder'
+            'article', 'package', #'pallet', 'placeholder'
             ]
             
         for line in mrp_proxy.order_line_ids:
