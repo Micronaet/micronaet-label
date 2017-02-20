@@ -166,7 +166,7 @@ class Parser(report_sxw.rml_parse):
             #    _('Fast print'),
             #    _('No data for fast print'),
             #    )
-
-        return [job for job in job_pool.browse(
-            cr, uid, item_ids, context=context)] # for report loop:                
+        
+        return job_pool.browse(cr, uid, item_ids, context=context)
+            
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
