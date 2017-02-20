@@ -112,6 +112,13 @@
                                         </field>
                                     </group>    
                                 </page>
+                                <page string="Note system" editable="bottom" >
+                                    <separator string="Partner note:" colspan="4" attrs="{'invisible': [('is_address','=',True)]}"/>
+                                    <field name="note_ids" colspan="4" context="{'partner_embedded':True, 'default_partner_id': active_id}" attrs="{'invisible': [('is_address','=',True)]}"/>
+                                     
+                                    <!--<separator string="Partner address note:" colspan="4" attrs="{'invisible': [('is_address','=',False)]}"/>
+                                    <field name="address_note_ids" colspan="4" context="{'partner_embedded':True, 'default_address_id': active_id, 'default_partner_id': parent_id}" attrs="{'invisible': [('is_address','=',False)]}"/>-->
+                                </page>                                
                                 <page string="Label setup">
                                     <group col="4" colspan="4"> 
                                         <separator string="Show hide element" colspan="4"/>
