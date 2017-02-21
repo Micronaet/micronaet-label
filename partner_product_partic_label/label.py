@@ -43,8 +43,7 @@ _logger = logging.getLogger(__name__)
 class ResPartnerProductParticLabel(orm.Model):
     """ Model name: ResPartnerProductParticLabel
     """
-    # TODO remove:
-    
+    # TODO remove:    
     _name = 'res.partner.product.partic.label'
     _description = 'Label partic'
     
@@ -367,7 +366,9 @@ class ResPartner(orm.Model):
             ctx['lang'] = check_lang[lang_db]
             product_lang = product_pool.browse(
                 cr, uid, product.id, context=ctx)
-            res += '%s%s' % (separator, product_lang.__getattribute__(field))            
+            res += '%s%s' % (
+                separator, 
+                product_lang.__getattribute__(field) or '')
         return res  
 
     def generate_job_data_from_line_partner(self, cr, uid, 

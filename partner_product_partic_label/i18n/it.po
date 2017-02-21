@@ -188,7 +188,7 @@ msgstr "Stampa rif. ordine"
 #. module: partner_product_partic_label
 #: field:res.partner,label_print_line:0
 msgid "Print production line"
-msgstr "Stampa linea produzione"
+msgstr "Stampa periodo di produzione"
 
 #. module: partner_product_partic_label
 #: model:ir.model,name:partner_product_partic_label.model_product_product
