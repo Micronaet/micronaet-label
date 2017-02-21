@@ -38,6 +38,52 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+class LabelLabelJob(orm.Model):
+    """ Model name: Label job
+    """
+    
+    _inherit = 'label.label.job'
+
+    # -------------------------------------------------------------------------
+    # Utility:
+    # -------------------------------------------------------------------------
+    def open_partner_view(self, cr, uid, partner_id, context=None):
+        model_pool = self.pool.get('ir.model.data')
+        view_id = model_pool.get_object_reference(cr, uid, 
+            'partner_product_partic_label', 'view_res_partner_label_form')[1]
+        
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Partner label setup'),
+            'view_type': 'form',
+            'view_mode': 'form,tree',
+            'res_id': partner_id,
+            'res_model': 'res.partner',
+            'view_id': view_id,
+            'views': [(view_id, 'form'), (False, 'tree')],
+            'domain': [],
+            'context': context,
+            'target': 'current',
+            'nodestroy': False,
+            }
+    
+    # -------------------------------------------------------------------------
+    # Button event:
+    # -------------------------------------------------------------------------
+    def open_partner_label_setup(self, cr, uid, ids, context=None):
+        ''' Open partner setup form
+        '''
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        partner_id = current_proxy.partner_id.id
+        return self.open_partner_view(cr, uid, partner_id, context=context)
+
+    def open_partner_address_label_setup(self, cr, uid, ids, context=None):
+        ''' Open partner setup form
+        '''
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        address_id = current_proxy.address_id.id
+        return self.open_partner_view(cr, uid, address_id, context=context)
+
 class MrpProduction(orm.Model):
     """ Model name: MrpProduction
     """

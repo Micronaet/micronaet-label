@@ -25,6 +25,10 @@ import os
 import sys
 import logging
 from openerp.osv import osv
+from openerp.report import report_sxw
+from openerp.report.report_sxw import rml_parse
+
+# XXX problem during import procedure:
 #import openerp
 #import openerp.netsvc as netsvc
 #import openerp.addons.decimal_precision as dp
@@ -32,8 +36,6 @@ from openerp.osv import osv
 #from datetime import datetime, timedelta
 #from openerp import SUPERUSER_ID#, api
 #from openerp import tools
-from openerp.report import report_sxw
-from openerp.report.report_sxw import rml_parse
 #from datetime import datetime, timedelta
 #from openerp.tools.translate import _
 
@@ -99,14 +101,18 @@ class Parser(report_sxw.rml_parse):
             else:
                 _logger.error(
                     'Show field not found: %s (assume yes)' % show_field)
-                show = True            
+                show = True # for not present fields           
         else:
             show = True
         if not show: 
             return empty
-            
+        
+        # ---------------------------------------------------------------------    
         # Generate field name:
+        # ---------------------------------------------------------------------    
         field_name = 'record_%s_%s' % (mode, field)
+        
+        # Counters
         if field_name == 'record_data_counter_pack_total':                    
             # Manage counter here:
             if counter < 0:
@@ -119,7 +125,8 @@ class Parser(report_sxw.rml_parse):
                 counter + 1, 
                 record.record_data_counter, # Total record
                 )
-                
+        
+        # Logo and images:        
         elif field in ('company_logo', 'partner_logo', 'linedrawing'):
             # TODO manage better
             # Return image:
@@ -132,7 +139,8 @@ class Parser(report_sxw.rml_parse):
                 #return record.product_id.linedrawing
             else:
                 return ''
-                
+        
+        # Field not present:        
         elif field_name not in record._columns:
             #_logger.error('Field not present: %s' % field_name)
             raise osv.except_osv(
@@ -140,7 +148,8 @@ class Parser(report_sxw.rml_parse):
                 _('Field not present: %s' % field_name),
                 )      
                   
-        else: # Normal field:
+        # Field (normale data)          
+        else:
             return record.__getattribute__(field_name)
 
     def get_report_label(self, data=None):
