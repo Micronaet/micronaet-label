@@ -38,6 +38,16 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+class SaleOrderLine(orm.Model):
+    """ Model name: Line in pallet
+    """
+    
+    _inherit = 'sale.order.line'
+    
+    _columns = {
+        'pallet_id': fields.many2one('label.pallet', 'Pallet'),
+        }
+
 class LabelPallet(orm.Model):
     """ Model name: LabelPallet
     """
@@ -48,17 +58,12 @@ class LabelPallet(orm.Model):
     _order = 'code'
     
     _columns = {
-        'code': fields.int('Code', required=True),
-        }
-
-class SaleOrderLine(orm.Model):
-    """ Model name: Line in pallet
-    """
-    
-    _inherit = 'sale.order.line'
-    
-    _columns = {
-        'pallet_id': fields.many2one('label.pallet', 'Pallet'),
+        'code': fields.integer('Code', required=True),
+        'mrp_id': fields.many2one(
+            'mrp.production', 'Production', 
+            required=False),
+        'line_ids': fields.one2many(
+            'sale.order.line', 'pallet_id', 'Order line'),
         }
 
 class MrpProduction(orm.Model):

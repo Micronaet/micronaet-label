@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <openerp>
-    <data>
-
+    <data>    
         <record model="ir.ui.view" id="default_mrp_production_label_job_form_view">
             <field name="name">Production label pallet</field>
             <field name="model">mrp.production</field>
@@ -9,16 +8,40 @@
             <field name="arch" type="xml">
                 <xpath expr="//page[@string='Label']" position="after">
                     <page string="Pallet">
-                        <field name="pallet_ids" nolabel="1" colspan="4"/>
-                            <tree string="Jobs" colors="red:label_id==False">
+                        <button name="%(action_link_pallet_creation)d" string="Assign pallet" type="action" />
+                        <field name="pallet_ids" nolabel="1" colspan="4">                            
+                            <tree string="Pallet">
                                 <field name="code" />
                             </tree>
+                            <form string="Pallet">
+                                <field name="code" />
+                                <field name="mrp_id" invisible="1" />
+                                <field name="line_ids">
+                                    <tree editable="bottom">
+                                        <field name="name" />
+                                        <field name="order_id" />
+                                        <field name="partner_id" />
+                                        <field name="state" invisible="1" />
+                                    </tree>
+                                </field>
+                                
+                            </form>
                         </field>
                     </page>
                 </xpath>    
             </field>
-        </record>    
-
+        </record>
+        
+        <record model="ir.ui.view" id="production_sale_order_line_tree_view">
+            <field name="name">Production sol pallet</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="production_accounting_external.production_sale_order_line_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="mrp_sequence" position="after">
+                    <field name="pallet_id" />
+                    <!--<button name="get_pallet_info" string="Pallet" type="object" />-->                    
+                </field>
+            </field>
+        </record>
     </data>
 </openerp>
-

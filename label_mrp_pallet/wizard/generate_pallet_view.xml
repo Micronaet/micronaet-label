@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+       <!-- label.pallet.generate.wizard -->
+       <record id="label_pallet_generate_wizard_view" model="ir.ui.view">
+            <field name="name">Pallet assign</field>
+            <field name="model">label.pallet.generate.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Wizard" version="7.0">
+                   <header>
+                       <button string="Cancel" special="cancel" />
+                       <button name="action_assign" string="Assign" type="object" icon="gtk-jump-to" class="oe_highlight" />
+                   </header>                   
+                   <group colspan="4" col="4">
+                        <field name="partner_id" />
+                        <field name="mode" />
+                   </group>
+                </form>
+            </field>
+      </record>
+      <record model="ir.actions.act_window" id="action_link_pallet_creation">
+          <field name="name">Pallet assign</field>
+          <field name="res_model">label.pallet.generate.wizard</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">form</field>
+          <field name="target">new</field>
+          <field name="view_id" ref="label_pallet_generate_wizard_view"/>
+      </record>      
+    </data>
+</openerp>

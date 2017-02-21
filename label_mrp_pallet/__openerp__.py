@@ -40,7 +40,9 @@
     'init_xml': [],
     'demo': [],
     'data': [
-        'security/ir.model.access.csv',    
+        'security/ir.model.access.csv',   
+         
+        'wizard/generate_pallet_view.xml',
         'pallet_view.xml',
         ],
     'active': False,
