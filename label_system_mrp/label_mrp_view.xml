@@ -12,25 +12,29 @@
                         <button name="generate_label_job" type="object" string="Generate label jobs" icon="gtk-execute" confirm="(Re)generate print job from production order? all jobs present will be regenerated, confirm?" />
                         <button name="label_check_report" type="object" string="Check label error" icon="gtk-print" />
                         <newline />
-                        <field name="label_job_ids" nolabel="1" colspan="4" >  
-                            <tree string="Jobs" colors="red:label_id==False">
-                                <field name="sequence" string="#"/>
-                                <field name="label_id" />
-                                <!--field name="report_id" /-->
-                                <field name="layout_id" />
-                                <field name="type" />
-                                <field name="order_id" />
-                                
-                                <button name="open_partner_label_setup" string="Open partner label setup" type="object" icon="gtk-goto-last"/>
-                                <button name="open_partner_address_label_setup" string="Open partner address label setup" type="object" icon="gtk-media-next" attrs="{'invisible': [('address_id','=',False)]}"/>
-                                <field name="partner_id" />
-                                <field name="address_id" invisible="1"/>
-                                <field name="line_id" />
-                                <field name="record_data_q_x_pack" string="Q. x pack"/>                                
-                                <field name="record_data_counter" string="Total"/>                                
-                                <button name="print_fast_label" string="Print" type="object" icon="gtk-print" />
-                            </tree>
-                        </field>
+                        <notebook colspan="4">
+                            <page string="Label">
+                                <field name="label_job_ids" nolabel="1" colspan="4" >  
+                                    <tree string="Jobs" colors="red:label_id==False">
+                                        <field name="sequence" string="#"/>
+                                        <field name="label_id" />
+                                        <!--field name="report_id" /-->
+                                        <field name="layout_id" />
+                                        <field name="type" />
+                                        <field name="order_id" />
+                                        
+                                        <button name="open_partner_label_setup" string="Open partner label setup" type="object" icon="gtk-goto-last"/>
+                                        <button name="open_partner_address_label_setup" string="Open partner address label setup" type="object" icon="gtk-media-next" attrs="{'invisible': [('address_id','=',False)]}"/>
+                                        <field name="partner_id" />
+                                        <field name="address_id" invisible="1"/>
+                                        <field name="line_id" />
+                                        <field name="record_data_q_x_pack" string="Q. x pack"/>                                
+                                        <field name="record_data_counter" string="Total"/>                                
+                                        <button name="print_fast_label" string="Print" type="object" icon="gtk-print" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                     </group>
                 </page>
             </xpath>            

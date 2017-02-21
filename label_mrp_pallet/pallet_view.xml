@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="default_mrp_production_label_job_form_view">
+            <field name="name">Production label pallet</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="label_system_mrp.default_mrp_production_label_job_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Label']" position="after">
+                    <page string="Pallet">
+                        <field name="pallet_ids" nolabel="1" colspan="4"/>
+                            <tree string="Jobs" colors="red:label_id==False">
+                                <field name="code" />
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>    
+            </field>
+        </record>    
+
+    </data>
+</openerp>
+
