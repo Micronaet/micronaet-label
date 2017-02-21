@@ -44,6 +44,16 @@ class SaleOrderLine(orm.Model):
     
     _inherit = 'sale.order.line'
     
+    # -------------------------------------------------------------------------
+    # Button event:
+    # -------------------------------------------------------------------------
+    def pallet_unlink_line(self, cr, uid, ids, context=None):
+        ''' Unlink pallet
+        ''' 
+        return self.write(cr, uid, ids, {
+            'pallet_id': False,
+            }, context=context)
+            
     _columns = {
         'pallet_id': fields.many2one('label.pallet', 'Pallet'),
         }
