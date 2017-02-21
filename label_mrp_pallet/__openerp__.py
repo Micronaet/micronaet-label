@@ -44,6 +44,8 @@
          
         'wizard/generate_pallet_view.xml',
         'pallet_view.xml',
+        
+        'report/pallet_label_report.xml',
         ],
     'active': False,
     'installable': True,
