@@ -578,7 +578,9 @@ class LabelLabelJob(orm.Model):
         'record_data_price_uom': fields.char('Price uom', size=10),
 
         # EAN data:
+        'record_data_ean13_s': fields.char('EAN13 single', size=13),
         'record_data_ean13': fields.char('EAN13', size=13),
+        'record_data_ean8_s': fields.char('EAN8 single', size=8),
         'record_data_ean8': fields.char('EAN8', size=8),
         
         # Production:

@@ -69,7 +69,9 @@ class ResPartnerProductPartic(orm.Model):
     _columns = {
         # Customer code:
         'ean13': fields.char('EAN 13', size=13),
+        'ean13_s': fields.char('EAN 13 single', size=13),
         'ean8': fields.char('EAN 8', size=8),
+        'ean8_s': fields.char('EAN 8 single', size=8),
         'partner_pricelist': fields.float('Partner pricelist', digits=(16, 3)), 
 
         'frame': fields.char('Frame', size=30),# translate=True),
@@ -793,6 +795,7 @@ class ResPartner(orm.Model):
             # EAN data:
             'record_data_ean13': ean13,
             'record_data_ean8': ean8,
+            # TODO single
             
             # -----------------------------------------------------------------
             #                                MRP:

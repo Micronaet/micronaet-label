@@ -351,12 +351,20 @@
                                 </page>
                                 
                                 <page string="EAN">
-                                    <group col="6" colspan="4"> 
-                                        <field name="record_print_ean13" string="EAN 13" attrs="{'readonly': [('fast','=',False)]}"/>
-                                        <field name="record_data_ean13" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                    <group col="4" colspan="4"> 
+                                        <group col="2" colspan="2"> 
+                                            <separator string="EAN13" colspan="2"/>
+                                            <field name="record_print_ean13" string="EAN 13" attrs="{'readonly': [('fast','=',False)]}"/>
+                                            <field name="record_data_ean13" attrs="{'readonly': [('fast','=',False)]}"/>
+                                            <field name="record_data_ean13_s" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        </group>
 
-                                        <field name="record_print_ean8" string="EAN 8" attrs="{'readonly': [('fast','=',False)]}"/>
-                                        <field name="record_data_ean8" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <group col="2" colspan="2"> 
+                                            <separator string="EAN8" colspan="2"/>
+                                            <field name="record_print_ean8" string="EAN 8" attrs="{'readonly': [('fast','=',False)]}"/>
+                                            <field name="record_data_ean8" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                            <field name="record_data_ean8_s" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        </group>
                                     </group>
                                 </page>
                                 
