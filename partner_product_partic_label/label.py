@@ -301,8 +301,7 @@ class ResPartner(orm.Model):
                     
                 data['product_id'] = product_ids[0]
                 partic_pool.create(cr, uid, data, context=context)
-                            
-        
+                                    
         _logger.info('End import XLS file: %s' % filename)                
         return True
         
@@ -743,11 +742,18 @@ class ResPartner(orm.Model):
         fabric_color = self.get_translate_description_data(
             cr, uid, product, 'label_fabric_color', merge_lang['fabric'],
             separator=separator, context=context)
-                
+        
+        # Depend on check q_x_pack:
         ean13 = product.ean13 or ''
-        ean13_s = '' # TODO product.ean13_s or ''
         ean8 = product.ean8 or ''
-        ean8_s = '' # TODO product.ean8_s or ''
+        if q_x_pack == 1:
+           ean13_s = ean13
+           ean8_s = ean8
+        else: # other cases
+            # TODO:
+            ean13_s = '' # TODO product.ean13_s or ''
+            ean8_s = '' # TODO product.ean8_s or ''
+            
         if product_partic:
             frame = frame and product_partic.frame or ''
             fabric_color = fabric_color and product_partic.fabric_color or ''
