@@ -372,8 +372,7 @@ class ResPartner(orm.Model):
                 product_lang.__getattribute__(field) or '')
         return res  
 
-    def generate_job_data_from_line_partner(self, cr, uid, 
-            **parameter):
+    def generate_job_data_from_line_partner(self, cr, uid, **parameter):
         ''' Generate record for create printing jobs
             Parameter >> Dict for not mandatory paremeters, list below:
             
@@ -746,14 +745,18 @@ class ResPartner(orm.Model):
             separator=separator, context=context)
                 
         ean13 = product.ean13 or ''
+        ean13_s = '' # TODO product.ean13_s or ''
         ean8 = product.ean8 or ''
+        ean8_s = '' # TODO product.ean8_s or ''
         if product_partic:
             frame = frame and product_partic.frame or ''
             fabric_color = fabric_color and product_partic.fabric_color or ''
             partner_code = product_partic.partner_code or ''
             partner_description = product_partic.partner_description or ''
             ean13 = ean13 and product_partic.ean13 or ''
+            ean13_s = ean13_s and product_partic.ean13_s or ''
             ean8 = ean8 and product_partic.ean8 or ''
+            ean8_s = ean8_s and product_partic.ean8_s or ''
             text1 = product_partic.text1
             text2 = product_partic.text2
             text3 = product_partic.text3
@@ -793,7 +796,9 @@ class ResPartner(orm.Model):
 
             # EAN data:
             'record_data_ean13': ean13,
+            'record_data_ean13_s': ean13_s,
             'record_data_ean8': ean8,
+            'record_data_ean8_s': ean8_s,
             # TODO single
             
             # -----------------------------------------------------------------

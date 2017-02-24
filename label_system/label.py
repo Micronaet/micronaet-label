@@ -565,7 +565,7 @@ class LabelLabelJob(orm.Model):
         'record_data_frame': fields.char('Frame', size=50), # TODO add
         'record_data_fabric': fields.char('Fabric', size=50), # TODO add
 
-        # Anagrafic numeric:        
+        # Anagrafic numeric:
         # TODO change float
         'record_data_q_x_pack': fields.char('Q. x pack', size=10),
         'record_data_q_x_pallet': fields.char('Q. x pallet', size=10),
