@@ -21,7 +21,6 @@ import os
 import sys
 import logging
 import openerp
-import openerp.netsvc as netsvc
 import openerp.addons.decimal_precision as dp
 from openerp.osv import fields, osv, expression, orm
 from datetime import datetime, timedelta
@@ -34,6 +33,7 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
     DEFAULT_SERVER_DATETIME_FORMAT, 
     DATETIME_FORMATS_MAP, 
     float_compare)
+from pyPdf import PdfFileWriter, PdfFileReader
 
 
 _logger = logging.getLogger(__name__)
@@ -90,16 +90,30 @@ class MrpProduction(orm.Model):
     
     _inherit = 'mrp.production'
     
+    def merge_pdf_mrp_label_jobs_demo(self, cr, uid, ids, context=None):
+        ''' 1 x label job in demo mode
+        '''
+        ctx = context.copy()
+        ctx['demo_mode'] = True
+        return self.merge_pdf_mrp_label_jobs(cr, uid, ids, context=ctx)
+        
     def merge_pdf_mrp_label_jobs(self, cr, uid, ids, context=None):
         ''' Merge procedure for all same label layout files:
-        '''
-        from pyPdf import PdfFileWriter, PdfFileReader
+        '''        
+        if context is None:
+            context = {}
+            
+        demo_mode = context.get('demo_mode', False)
+        if demo_mode: 
+            _logger.info('Demo mode for PDF generation')        
+        else:
+            _logger.info('Normal mode for PDF generation')        
         
         label_pool = self.pool.get('label.label.job')
-        
         report_pdf = {} # database of file keep format as the same
         pdf_id = 0
         for job in self.browse(cr, uid, ids, context=context).label_job_ids:
+            pdf_id += 1 
             label = job.label_id
             layout = job.label_id.layout_id
             
@@ -113,22 +127,14 @@ class MrpProduction(orm.Model):
                 'model': 'label.label.job',
                 'active_id': job.id,
                 'active_ids': [job.id],
+                'demo_mode': demo_mode, # XXX set as demo mode (1x)
                 }
         
             # -----------------------------------------------------------------
             # Call report:            
             # -----------------------------------------------------------------
-            report_service = 'report.%s' % report_name
-            service = netsvc.LocalService(report_service)            
-
             result, extension = openerp.report.render_report(
-                cr, uid, ids, report_name, datas, context)
-            #(result, extension) = service.create(cr, uid, [job.id], {
-            #        'model': 'label.label.job',
-            #        'active_id': job.id,
-            #        'active_ids': [job.id],
-            #        'data': datas,                    
-            #        }, context=context)
+                cr, uid, [job.id], report_name, datas, context)
             
             if extension.upper() != 'PDF':
                 #_logger.error('ODT is not PDF for report!')
@@ -138,9 +144,10 @@ class MrpProduction(orm.Model):
                     )
                     
             # Generate file:    
-            filename = '/tmp/label_job_%s_%s.%s' % (
-                job.mrp_id.name,
+            filename = '/tmp/%ssingle_job_%s_%s.%s' % (
+                'DEMO_' if demo_mode else '',
                 pdf_id,
+                job.mrp_id.name,
                 extension,
                 )
             report_pdf[layout].append(filename) # for merge procedure
@@ -153,7 +160,7 @@ class MrpProduction(orm.Model):
         # Merge PDF file in one:
         # ---------------------------------------------------------------------
         for layout, files in report_pdf.iteritems():
-            pdf_filename = '/tmp/print_pdf_%s_%s.pdf' % (
+            pdf_filename = '/tmp/%s_%s.pdf' % (
                 job.mrp_id.name,
                 layout.code,
                 )
