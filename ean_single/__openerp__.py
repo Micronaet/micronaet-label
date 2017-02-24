@@ -22,7 +22,7 @@
     'version': '0.1',
     'category': 'Product',
     'description': '''  
-        Extra ean for single produc      
+        Extra ean for single product    
         ''',
     'author': 'Micronaet S.r.l. - Nicola Riolini',
     'website': 'http://www.micronaet.it',

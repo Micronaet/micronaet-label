@@ -171,7 +171,9 @@ class ResPartner(orm.Model):
             'partner_code',
             'partner_description',
             'ean8',
+            'ean8_s',
             'ean13',
+            'ean13_s',
             ]
 
         # Extra data:    
@@ -189,7 +191,9 @@ class ResPartner(orm.Model):
                 partic.partner_code or '',
                 partic.partner_description or '',
                 partic.ean8 or '', 
+                partic.ean8_s or '', 
                 partic.ean13 or '',
+                partic.ean13_s or '',
                 
                 # Extra data:
                 partic.frame or '',
@@ -199,13 +203,6 @@ class ResPartner(orm.Model):
                 partic.text3 or '',                
                 ]
                 
-            # TODO add extra fields:
-            #extra_data = {}            
-            #for x in partic.label_field_ids:
-            #    extra_data[x.name] = x.value
-            #for f in extra_fields:
-            #    partic_row.append(extra_data.get(f, ''))    
-            
             self.write_xls_file(partic_row)    
 
         _logger.info('End export XLS file: %s' % filename)                
@@ -278,14 +275,16 @@ class ResPartner(orm.Model):
                 'partner_code': row[2].value or '',
                 'partner_description': row[3].value or '',
                 'ean8': row[4].value or '',
-                'ean13': row[5].value or '',
+                'ean8_s': row[5].value or '',
+                'ean13': row[6].value or '',
+                'ean13_s': row[7].value or '',
                 
                 # Parametrize for extra:
-                'frame': row[6].value or '',
-                'fabric_color': row[7].value or '',
-                'text1': row[8].value or '',
-                'text2': row[9].value or '',
-                'text3': row[10].value or '',
+                'frame': row[8].value or '',
+                'fabric_color': row[9].value or '',
+                'text1': row[10].value or '',
+                'text2': row[11].value or '',
+                'text3': row[12].value or '',
                 }
 
             partic_id = partic_present.get(default_code, False)
