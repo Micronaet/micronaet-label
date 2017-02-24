@@ -90,23 +90,83 @@ class MrpProduction(orm.Model):
     
     _inherit = 'mrp.production'
     
-    def merge_pdf_printer(self, cr, uid, ids, context=None):
-        '''# Loading the pyPdf Library
+    def merge_pdf_mrp_label_jobs(self, cr, uid, ids, context=None):
+        ''' Merge procedure for all same label layout files:
+        '''
         from pyPdf import PdfFileWriter, PdfFileReader
+        
+        label_pool = self.pool.get('label.label.job')
+        
+        report_pdf = {} # database of file keep format as the same
+        pdf_id = 0
+        for job in self.browse(cr, uid, ids, context=context).label_job_ids:
+            label = job.label_id
+            layout = job.label_id.layout_id
+            
+            # Database of same layut pdf report: 
+            if layout not in report_pdf:
+                report_pdf[layout] = []
+                
+            report_name = label.report_id.report_name
+            datas = {
+                'record_ids': [job.id],
+                'model': 'label.label.job',
+                'active_id': job.id,
+                'active_ids': [job.id],
+                }
+        
+            # -----------------------------------------------------------------
+            # Call report:            
+            # -----------------------------------------------------------------
+            report_service = 'report.%s' % report_name
+            service = netsvc.LocalService(report_service)            
 
-        # Creating a routine that appends files to the output file
-        def append_pdf(input,output):
-            [output.addPage(input.getPage(page_num)) for page_num in range(input.numPages)]
+            result, extension = openerp.report.render_report(
+                cr, uid, ids, report_name, datas, context)
+            #(result, extension) = service.create(cr, uid, [job.id], {
+            #        'model': 'label.label.job',
+            #        'active_id': job.id,
+            #        'active_ids': [job.id],
+            #        'data': datas,                    
+            #        }, context=context)
+            
+            if extension.upper() != 'PDF':
+                #_logger.error('ODT is not PDF for report!')
+                raise osv.except_osv(
+                    _('Converter not working'), 
+                    _('Check PDF confert, report must be in PDF not ODT!'),
+                    )
+                    
+            # Generate file:    
+            filename = '/tmp/label_job_%s_%s.%s' % (
+                job.mrp_id.name,
+                pdf_id,
+                extension,
+                )
+            report_pdf[layout].append(filename) # for merge procedure
+                
+            file_pdf = open(filename, 'w') # XXX binary?
+            file_pdf.write(result)
+            file_pdf.close()
 
-        # Creating an object where pdf pages are appended to
-        output = PdfFileWriter()
-
-        # Appending two pdf-pages from two different files
-        append_pdf(PdfFileReader(open("SamplePage1.pdf","rb")),output)
-        append_pdf(PdfFileReader(open("SamplePage2.pdf","rb")),output)
-
-        # Writing all the collected pages to a file
-        output.write(open("CombinedPages.pdf","wb"))'''
+        # ---------------------------------------------------------------------
+        # Merge PDF file in one:
+        # ---------------------------------------------------------------------
+        for layout, files in report_pdf.iteritems():
+            pdf_filename = '/tmp/print_pdf_%s_%s.pdf' % (
+                job.mrp_id.name,
+                layout.code,
+                )
+            
+            out_pdf = PdfFileWriter()
+            # For all files:
+            for f in files:
+                # Open and append page:
+                in_pdf = PdfFileReader(open(f, 'rb'))
+                [out_pdf.addPage(in_pdf.getPage(page_num)) for \
+                    page_num in range(in_pdf.numPages)]
+        
+            out_pdf.write(open(pdf_filename, 'wb'))
         return True
                 
     def generate_label_job(self, cr, uid, ids, context=None):

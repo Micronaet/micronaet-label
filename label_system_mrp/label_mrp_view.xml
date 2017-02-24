@@ -14,6 +14,7 @@
                         <newline />
                         <notebook colspan="4">
                             <page string="Label">
+                                <button name="merge_pdf_mrp_label_jobs" string="Create PDF jobs" type="object" class="oe_highlight"/>
                                 <field name="label_job_ids" nolabel="1" colspan="4" >  
                                     <tree string="Jobs" colors="red:label_id==False">
                                         <field name="sequence" string="#"/>
