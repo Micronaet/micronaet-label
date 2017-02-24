@@ -167,7 +167,8 @@ class MrpProduction(orm.Model):
         for layout, files in report_pdf.iteritems():
             pdf_filename = os.path.join(
                 out_path,
-                '%s_%s.pdf' % (
+                '%s%s_%s.pdf' % (
+                    'DEMO_' if demo_mode else '',
                     job.mrp_id.name,
                     layout.code,
                     ))
