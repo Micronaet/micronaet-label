@@ -57,8 +57,8 @@ class ProductProduct(orm.Model):
             
         _logger.warning('All DB database: %s' % (all_db, ))
         
-        if 'B' in all_db:
-            res['label_frame'] = all_db['B']
+        if 'C' in all_db:
+            res['label_frame'] = all_db['C']
             _logger.error('Cannot set frame field')
         if 'D' in all_db:
             res['label_fabric_color'] = all_db['D']
