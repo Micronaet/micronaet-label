@@ -103,6 +103,9 @@ class MrpProduction(orm.Model):
         if context is None:
             context = {}
             
+        out_path = '/home/administrator/photo/Label/pdf'
+        temp_path = '/tmp'
+        
         demo_mode = context.get('demo_mode', False)
         if demo_mode: 
             _logger.info('Demo mode for PDF generation')        
@@ -144,12 +147,14 @@ class MrpProduction(orm.Model):
                     )
                     
             # Generate file:    
-            filename = '/tmp/%ssingle_job_%s_%s.%s' % (
-                'DEMO_' if demo_mode else '',
-                pdf_id,
-                job.mrp_id.name,
-                extension,
-                )
+            filename = os.path.join(
+                temp_path, 
+                '%ssingle_job_%s_%s.%s' % (
+                    'DEMO_' if demo_mode else '',
+                    pdf_id,
+                    job.mrp_id.name,
+                    extension,
+                ))
             report_pdf[layout].append(filename) # for merge procedure
                 
             file_pdf = open(filename, 'w') # XXX binary?
@@ -160,10 +165,12 @@ class MrpProduction(orm.Model):
         # Merge PDF file in one:
         # ---------------------------------------------------------------------
         for layout, files in report_pdf.iteritems():
-            pdf_filename = '/tmp/%s_%s.pdf' % (
-                job.mrp_id.name,
-                layout.code,
-                )
+            pdf_filename = os.path.join(
+                out_path,
+                '%s_%s.pdf' % (
+                    job.mrp_id.name,
+                    layout.code,
+                    ))
             
             out_pdf = PdfFileWriter()
             # For all files:
