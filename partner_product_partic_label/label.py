@@ -746,7 +746,7 @@ class ResPartner(orm.Model):
         # Depend on check q_x_pack:
         ean13 = product.ean13 or ''
         ean8 = product.ean8 or ''
-        if q_x_pack == 1:
+        if product.q_x_pack == 1:
            ean13_s = ean13
            ean8_s = ean8
         else: # other cases

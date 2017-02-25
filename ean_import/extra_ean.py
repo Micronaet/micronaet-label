@@ -50,7 +50,7 @@ class ProductProduct(orm.Model):
         '''
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         return self.write(cr, uid, ids, {
-            'ean13': current_proxy.ean13_s,
+            'ean13': current_proxy.ean13_single,
             }, context=context)
 
     def assign_pack_ean_13(self, cr, uid, ids, context=None):
@@ -58,7 +58,7 @@ class ProductProduct(orm.Model):
         '''
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         return self.write(cr, uid, ids, {
-            'ean13': current_proxy.ean13_p,
+            'ean13': current_proxy.ean13_pack,
             }, context=context)
 
     def assign_org_ean_13(self, cr, uid, ids, context=None):
@@ -101,15 +101,15 @@ class ProductProduct(orm.Model):
             # Read data from file:
             default_code = WS.cell(row, 0).value
             ean13 = WS.cell(row, 2).value
-            ean13_s = WS.cell(row, 4).value
-            ean13_p = WS.cell(row, 5).value
+            ean13_single = WS.cell(row, 4).value
+            ean13_pack = WS.cell(row, 5).value
 
             if not default_code:
                 WS_log.write(counter, 0, 'No default code')
                 continue
             
             if default_code[:2] in ('MT', 'PO', 'SE', 'TL'):
-                ean13 = ean13_s # keep single in this case
+                ean13 = ean13_single # keep single in this case
                 WS_log.write(counter, 4, 'Usato codice singolo')   
                 
             if len(ean13) != 13:
@@ -141,8 +141,8 @@ class ProductProduct(orm.Model):
             ean13 = ean13 or ean13_current # keep current
             data = {
                 'ean13': ean13,
-                'ean13_s': ean13_s,
-                'ean13_p': ean13_p,
+                'ean13_single': ean13_single,
+                'ean13_pack': ean13_pack,
                 }
                 
             if not ean13_org and ean13 != ean13_current:
@@ -158,8 +158,8 @@ class ProductProduct(orm.Model):
         
         
     _columns = {
-        'ean13_s': fields.char('EAN 13 Single product', size=13),
-        'ean13_p': fields.char('EAN 13 Pack product', size=13),     
+        'ean13_single': fields.char('EAN 13 Single product', size=13),
+        'ean13_pack': fields.char('EAN 13 Pack product', size=13),     
         'ean13_org': fields.char('EAN 13 Org', size=13),     
         }
     
