@@ -751,8 +751,8 @@ class ResPartner(orm.Model):
            ean8_s = ean8
         else: # other cases
             # TODO:
-            ean13_s = '' # TODO product.ean13_s or ''
-            ean8_s = '' # TODO product.ean8_s or ''
+            ean13_s = product.ean13_s or ''
+            ean8_s = product.ean8_s or ''
             
         if product_partic:
             frame = frame and product_partic.frame or ''

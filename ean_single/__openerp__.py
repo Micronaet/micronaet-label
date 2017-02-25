@@ -31,6 +31,7 @@
         'base',
         'product',
         'purchase_extra_field', # XXX for q_x_pack
+        'label_system_extra_fields', # XXX EAN8
         ],
     'init_xml': [],
     'demo': [],

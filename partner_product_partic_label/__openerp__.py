@@ -33,6 +33,7 @@
         'partner_product_partic',
         'label_system_note',
         'label_system_extra_fields', # for extra fields ean8
+        'ean_single',
         ],
     'init_xml': [],
     'demo': [],
