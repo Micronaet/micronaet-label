@@ -18,11 +18,11 @@
 ###############################################################################
 
 {
-    'name': 'EAN 13 Extra',
+    'name': 'EAN 13 / 8 for single product',
     'version': '0.1',
     'category': 'Product',
     'description': '''  
-        Extra ean for single product    
+        Extra ean for single product (single = S at 13rd char)
         ''',
     'author': 'Micronaet S.r.l. - Nicola Riolini',
     'website': 'http://www.micronaet.it',
