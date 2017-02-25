@@ -746,23 +746,19 @@ class ResPartner(orm.Model):
         # Depend on check q_x_pack:
         ean13 = product.ean13 or ''
         ean8 = product.ean8 or ''
-        if product.q_x_pack == 1:
-           ean13_s = ean13
-           ean8_s = ean8
-        else: # other cases
-            # TODO:
-            ean13_s = product.ean13_s or ''
-            ean8_s = product.ean8_s or ''
+        # TODO error here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        ean13_s = product.ean13_s or ''
+        ean8_s = product.ean8_s or ''
             
         if product_partic:
-            frame = frame and product_partic.frame or ''
-            fabric_color = fabric_color and product_partic.fabric_color or ''
+            frame = product_partic.frame or frame or ''
+            fabric_color = product_partic.fabric_color or fabric_color or ''
             partner_code = product_partic.partner_code or ''
             partner_description = product_partic.partner_description or ''
-            ean13 = ean13 and product_partic.ean13 or ''
-            ean13_s = ean13_s and product_partic.ean13_s or ''
-            ean8 = ean8 and product_partic.ean8 or ''
-            ean8_s = ean8_s and product_partic.ean8_s or ''
+            ean13 = product_partic.ean13 or ean13 or ''
+            ean13_s = product_partic.ean13_s or ean13_s or ''
+            ean8 = product_partic.ean8 or ean8 or ''
+            ean8_s = product_partic.ean8_s or ean8_s or ''
             text1 = product_partic.text1
             text2 = product_partic.text2
             text3 = product_partic.text3
