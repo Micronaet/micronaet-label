@@ -30,6 +30,7 @@
     'depends': [
         'base',
         'product',
+        'purchase_extra_field', # XXX for q_x_pack
         ],
     'init_xml': [],
     'demo': [],

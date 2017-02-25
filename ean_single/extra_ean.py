@@ -43,10 +43,73 @@ class ProductProduct(orm.Model):
     """    
     _inherit = 'product.product'
     
-    # TODO use check for EAN 13 
-    # TODO procedure for load from not single element
+    def _function_get_ean_single_product(
+            self, cr, uid, ids, fields, args, context=None):
+        ''' Fields function for calculate single EAN for 8 and 13 elements
+            single depend on q_x_pack field and for 
+            char S in 13rd position
+        '''
+        _logger.warning('>> Searcing EAN for single product...')
+        res = {}
+
+        for product in self.browse(cr, uid, ids, context=context):
+            # -----------------------------------------------------------------
+            # Q x pack is yet single:
+            # -----------------------------------------------------------------
+            if product.q_x_pack == 1:
+                res[product.id] = {
+                    'ean13_s': product.ean13,
+                    'ean8_s': product.ean8,                                      
+                    }
+            # -----------------------------------------------------------------
+            # Q x pack is package:
+            # -----------------------------------------------------------------
+            else: # search code with S in 13
+                default_code = product.default_code
+                
+                # -------------------------------------------------------------
+                # Code not has single: 
+                # -------------------------------------------------------------
+                if len(default_code) > 12:
+                    res[product.id] = {
+                        'ean13_s': False,
+                        'ean8_s': False,
+                        }
+                    _logger.warning('No single EAN code >= 13 char')
+
+                # -------------------------------------------------------------
+                # Code has single: 
+                # -------------------------------------------------------------
+                else:
+                    product_ids = self.search(cr, uid, [
+                        ('default_code', '=', '%-12sS' % default_code),
+                        ], context=context)
+                    if product_ids: # XXX more than one?
+                        if len(product_ids) > 1:
+                            _logger.warning(
+                                'More single EAN code %s' % default_code)
+                        single_proxy = self.browse(
+                            cr, uid, product_ids, context=context)[0]
+                        res[product.id] = {
+                            'ean13_s': single_proxy.ean13,
+                            'ean8_s': single_proxy.ean8,
+                            }
+                    else:
+                        _logger.warning(
+                            'Single product not found %s' % default_code)
+                        res[product.id] = {
+                            'ean13_s': False,
+                            'ean8_s': False,
+                            }
+        return res
+        
     _columns = {
-        'ean13_single': fields.char('EAN 13 Single', size=13),
+        'ean13_s': fields.function(
+            _function_get_ean_single_product, method=True, type='char', 
+            string='EAN 13 single', store=False, multi=True), 
+        'ean8_s': fields.function(
+            _function_get_ean_single_product, method=True, type='char', 
+            string='EAN 8 single', store=False, multi=True),                        
         }
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
