@@ -58,8 +58,8 @@ class ProductProduct(orm.Model):
             # -----------------------------------------------------------------
             if product.q_x_pack == 1:
                 res[product.id] = {
-                    'ean13_s': product.ean13,
-                    'ean8_s': product.ean8,                                      
+                    'ean13_mono': product.ean13,
+                    'ean8_mono': product.ean8,                                      
                     }
             # -----------------------------------------------------------------
             # Q x pack is package:
@@ -72,8 +72,8 @@ class ProductProduct(orm.Model):
                 # -------------------------------------------------------------
                 if len(default_code) > 12:
                     res[product.id] = {
-                        'ean13_s': False,
-                        'ean8_s': False,
+                        'ean13_mono': False,
+                        'ean8_mono': False,
                         }
                     _logger.warning('No single EAN code >= 13 char')
 
@@ -91,23 +91,23 @@ class ProductProduct(orm.Model):
                         single_proxy = self.browse(
                             cr, uid, product_ids, context=context)[0]
                         res[product.id] = {
-                            'ean13_s': single_proxy.ean13,
-                            'ean8_s': single_proxy.ean8,
+                            'ean13_mono': single_proxy.ean13,
+                            'ean8_mono': single_proxy.ean8,
                             }
                     else:
                         _logger.warning(
                             'Single product not found %s' % default_code)
                         res[product.id] = {
-                            'ean13_s': False,
-                            'ean8_s': False,
+                            'ean13_mono': False,
+                            'ean8_mono': False,
                             }
         return res
         
     _columns = {
-        'ean13_s': fields.function(
+        'ean13_mono': fields.function(
             _function_get_ean_single_product, method=True, type='char', 
             string='EAN 13 single', store=False, multi=True), 
-        'ean8_s': fields.function(
+        'ean8_mono': fields.function(
             _function_get_ean_single_product, method=True, type='char', 
             string='EAN 8 single', store=False, multi=True),                        
         }

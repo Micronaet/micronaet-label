@@ -80,9 +80,9 @@
                                                 <field name="partner_code" />
                                                 
                                                 <field name="ean8" />
-                                                <field name="ean8_s" />
+                                                <field name="ean8_mono" />
                                                 <field name="ean13" />
-                                                <field name="ean13_s" />
+                                                <field name="ean13_mono" />
                                                 
                                                 <field name="partner_description" />     
                                             </tree>
@@ -96,9 +96,9 @@
                                                         <field name="partner_code" />
                                                         
                                                         <field name="ean8" />
-                                                        <field name="ean8_s" />
+                                                        <field name="ean8_mono" />
                                                         <field name="ean13" />
-                                                        <field name="ean13_s" />
+                                                        <field name="ean13_mono" />
                                                         
                                                         <field name="partner_description" />   
                                                         

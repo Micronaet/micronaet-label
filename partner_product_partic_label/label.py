@@ -69,9 +69,9 @@ class ResPartnerProductPartic(orm.Model):
     _columns = {
         # Customer code:
         'ean13': fields.char('EAN 13', size=13),
-        'ean13_s': fields.char('EAN 13 single', size=13),
+        'ean13_mono': fields.char('EAN 13 single', size=13),
         'ean8': fields.char('EAN 8', size=8),
-        'ean8_s': fields.char('EAN 8 single', size=8),
+        'ean8_mono': fields.char('EAN 8 single', size=8),
         'partner_pricelist': fields.float('Partner pricelist', digits=(16, 3)), 
 
         'frame': fields.char('Frame', size=30),# translate=True),
@@ -171,9 +171,9 @@ class ResPartner(orm.Model):
             'partner_code',
             'partner_description',
             'ean8',
-            'ean8_s',
+            'ean8_mono',
             'ean13',
-            'ean13_s',
+            'ean13_mono',
             ]
 
         # Extra data:    
@@ -191,9 +191,9 @@ class ResPartner(orm.Model):
                 partic.partner_code or '',
                 partic.partner_description or '',
                 partic.ean8 or '', 
-                partic.ean8_s or '', 
+                partic.ean8_mono or '', 
                 partic.ean13 or '',
-                partic.ean13_s or '',
+                partic.ean13_mono or '',
                 
                 # Extra data:
                 partic.frame or '',
@@ -275,9 +275,9 @@ class ResPartner(orm.Model):
                 'partner_code': row[2].value or '',
                 'partner_description': row[3].value or '',
                 'ean8': row[4].value or '',
-                'ean8_s': row[5].value or '',
+                'ean8_mono': row[5].value or '',
                 'ean13': row[6].value or '',
-                'ean13_s': row[7].value or '',
+                'ean13_mono': row[7].value or '',
                 
                 # Parametrize for extra:
                 'frame': row[8].value or '',
@@ -744,11 +744,12 @@ class ResPartner(orm.Model):
             separator=separator, context=context)
         
         # Depend on check q_x_pack:
+        import pdb; pdb.set_trace()
         ean13 = product.ean13 or ''
         ean8 = product.ean8 or ''
         # TODO error here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        ean13_s = product.ean13_s or ''
-        ean8_s = product.ean8_s or ''
+        ean13_mono = product.ean13_mono or ''
+        ean8_mono = product.ean8_mono or ''
             
         if product_partic:
             frame = product_partic.frame or frame or ''
@@ -756,9 +757,9 @@ class ResPartner(orm.Model):
             partner_code = product_partic.partner_code or ''
             partner_description = product_partic.partner_description or ''
             ean13 = product_partic.ean13 or ean13 or ''
-            ean13_s = product_partic.ean13_s or ean13_s or ''
+            ean13_mono = product_partic.ean13_mono or ean13_mono or ''
             ean8 = product_partic.ean8 or ean8 or ''
-            ean8_s = product_partic.ean8_s or ean8_s or ''
+            ean8_mono = product_partic.ean8_mono or ean8_mono or ''
             text1 = product_partic.text1
             text2 = product_partic.text2
             text3 = product_partic.text3
@@ -798,9 +799,9 @@ class ResPartner(orm.Model):
 
             # EAN data:
             'record_data_ean13': ean13,
-            'record_data_ean13_s': ean13_s,
+            'record_data_ean13_mono': ean13_mono,
             'record_data_ean8': ean8,
-            'record_data_ean8_s': ean8_s,
+            'record_data_ean8_mono': ean8_mono,
             # TODO single
             
             # -----------------------------------------------------------------

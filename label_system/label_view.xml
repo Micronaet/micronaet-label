@@ -28,8 +28,8 @@
                                     <group col="4" colspan="4">
                                         <field name="ean13" string="EAN13"/>
                                         <field name="ean8" string="EAN8"/>
-                                        <field name="ean13_s" string="EAN13 single"/>
-                                        <field name="ean8_s" string="EAN8 single"/>
+                                        <field name="ean13_mono" string="EAN13 single"/>
+                                        <field name="ean8_mono" string="EAN8 single"/>
                                     </group>
                                 </page>
                             </notebook>
@@ -358,14 +358,14 @@
                                             <separator string="EAN13" colspan="2"/>
                                             <field name="record_print_ean13" string="EAN 13" attrs="{'readonly': [('fast','=',False)]}"/>
                                             <field name="record_data_ean13" attrs="{'readonly': [('fast','=',False)]}"/>
-                                            <field name="record_data_ean13_s" attrs="{'readonly': [('fast','=',False)]}"/>
+                                            <field name="record_data_ean13_mono" attrs="{'readonly': [('fast','=',False)]}"/>
                                         </group>
 
                                         <group col="2" colspan="2"> 
                                             <separator string="EAN8" colspan="2"/>
                                             <field name="record_print_ean8" string="EAN 8" attrs="{'readonly': [('fast','=',False)]}"/>
                                             <field name="record_data_ean8" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
-                                            <field name="record_data_ean8_s" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                            <field name="record_data_ean8_mono" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
                                         </group>
                                     </group>
                                 </page>
