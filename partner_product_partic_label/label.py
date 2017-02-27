@@ -221,7 +221,14 @@ class ResPartner(orm.Model):
                 return mask % int(value)
             except:
                 _logger.error('Error convert value EAN: %s' % value)
-            
+                
+        def format_float(value):
+           ''' Format fload from xls file
+           '''
+           if not value:
+               return 0.0
+           return float(value)
+           
         # Pool used
         partic_pool = self.pool.get('res.partner.product.partic')
         product_pool = self.pool.get('product.product')
@@ -281,7 +288,7 @@ class ResPartner(orm.Model):
                 #'product_id': product_id
                 
                 # Field to import:    
-                'partner_pricelist': float(row[1].value),
+                'partner_pricelist': format_float(row[1].value),
                 'partner_code': row[2].value or '',
                 'partner_description': row[3].value or '',
                 'ean8': format_ean(row[4].value, 8),
@@ -336,7 +343,7 @@ class ResPartner(orm.Model):
                 
         if not res: # no address or no partic for address        
             res = partic_pool.search(cr, uid, [
-                ('partner_id', '=', address_id),
+                ('partner_id', '=', partner_id),
                 ('product_id', '=', product_id),
                 ], context=context)
         # TODO check double        
@@ -732,7 +739,8 @@ class ResPartner(orm.Model):
         # Partic update:
         # ---------------------------------------------------------------------
         separator = '\n' # for pack TODO - for article?
-        # Update record with data:    
+        # Update record with data:  
+
         product_partic = self.get_partic_partner_product_label(
             cr, uid, product.id, partner.id, 
             address.id if address else False, context=context)
@@ -758,7 +766,7 @@ class ResPartner(orm.Model):
         ean8 = product.ean8 or ''
         ean13_mono = product.ean13_mono or ''
         ean8_mono = product.ean8_mono or ''
-            
+
         if product_partic:
             frame = product_partic.frame or frame or ''
             fabric_color = product_partic.fabric_color or fabric_color or ''
@@ -771,7 +779,7 @@ class ResPartner(orm.Model):
             text1 = product_partic.text1
             text2 = product_partic.text2
             text3 = product_partic.text3
-        else: # else nothing        
+        else: # else nothing
             partner_code = ''
             partner_description = ''
             text1 = ''
