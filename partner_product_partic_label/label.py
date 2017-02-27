@@ -211,6 +211,17 @@ class ResPartner(orm.Model):
     def import_partic_xls_file(self, cr, uid, ids, context=None): 
         ''' Import in XLS for content partic for partner
         '''
+        def format_ean(value, mode=13):
+            ''' Format EAN importing from excel
+            '''
+            if not value: 
+                return ''
+            mask = '%%0%dd' % mode
+            try:
+                return mask % int(value)
+            except:
+                _logger.error('Error convert value EAN: %s' % value)
+            
         # Pool used
         partic_pool = self.pool.get('res.partner.product.partic')
         product_pool = self.pool.get('product.product')
@@ -265,7 +276,6 @@ class ResPartner(orm.Model):
                     _('Code not found'), 
                     _('Code not found in line: %s' % i),
                     )
-            
             data = {
                 'partner_id': current_proxy.id,
                 #'product_id': product_id
@@ -274,10 +284,10 @@ class ResPartner(orm.Model):
                 'partner_pricelist': float(row[1].value),
                 'partner_code': row[2].value or '',
                 'partner_description': row[3].value or '',
-                'ean8': row[4].value or '',
-                'ean8_mono': row[5].value or '',
-                'ean13': row[6].value or '',
-                'ean13_mono': row[7].value or '',
+                'ean8': format_ean(row[4].value, 8),
+                'ean8_mono': format_ean(row[5].value, 8),
+                'ean13': '%s' % format_ean(row[6].value),
+                'ean13_mono': '%s' % format_ean(row[7].value),
                 
                 # Parametrize for extra:
                 'frame': row[8].value or '',
