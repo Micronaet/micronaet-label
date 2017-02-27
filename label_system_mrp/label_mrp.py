@@ -192,20 +192,17 @@ class MrpProduction(orm.Model):
         if context is None:
             context = {}
             
-        ctx_ean = context.copy()
-        ctx_ean['find_ean_mono_value'] = True
-        
         # Pool used:
         job_pool = self.pool.get('label.label.job')
         partner_pool = self.pool.get('res.partner')
         note_pool = self.pool.get('note.note')
         
-        mrp_proxy = self.browse(cr, uid, ids, context=ctx_ean)[0]
+        mrp_proxy = self.browse(cr, uid, ids, context=context)[0]
         
         # Remove previous label:
         remove_ids = [item.id for item in mrp_proxy.label_job_ids]
         if remove_ids:
-            job_pool.unlink(cr, uid, remove_ids, context=ctx_ean)
+            job_pool.unlink(cr, uid, remove_ids, context=context)
             
         sequence = 0
         labels = ['article', 'package'] #'pallet', 'placeholder'
