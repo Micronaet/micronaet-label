@@ -218,7 +218,7 @@ class ResPartner(orm.Model):
                 return ''
             mask = '%%0%dd' % mode
             
-            value_str = str(value)
+            str_value = str(value)
             if len(str_value)-1 == mode: # no last char
                 import barcode
                 ean_class = 'ean%s' % mode
