@@ -42,22 +42,65 @@ class ProductProduct(orm.Model):
     """ Model name: ProductProduct
     """    
     _inherit = 'product.product'
-    
-    def _function_get_ean_single_product(
+
+    def get_ean_mono(self, cr, uid, default_code, context=None):
+        ''' Search ean mono for product passed
+            return (ean13 mono, ean8 mono)
+        '''
+        nothing = (False, False)
+        
+        if not default_code or len(default_code) > 12:
+            return nothing
+            
+        product_ids = self.search(cr, uid, [
+            ('default_code', '=', default_code)], context=context)
+
+        if not product_ids:
+            return nothing
+            
+        product = self.browse(cr, uid, product_ids, context=context)[0]
+        # -----------------------------------------------------------------
+        # Q x pack is yet single:
+        # -----------------------------------------------------------------
+        if product.q_x_pack == 1:
+            return (product.ean13, product.ean8) # same
+
+        # -----------------------------------------------------------------
+        # Q x pack is package:
+        # -----------------------------------------------------------------
+        else: # search code with S in 13            
+            mono_ids = self.search(cr, uid, [
+                ('default_code', '=', '%-12sS' % default_code),
+                ], context=context)
+            if mono_ids: # XXX more than one?
+                if len(mono_ids) > 1:
+                    _logger.warning(
+                        'More single EAN code %s' % default_code)
+                mono_proxy = self.browse(
+                    cr, uid, mono_ids, context=context)[0]
+                return (mono_proxy.ean13, mono_proxy.ean8)
+            else:
+                _logger.warning(
+                    'Single product not found %s' % default_code)
+                return (False, False)
+        
+    """def _function_get_ean_single_product(
             self, cr, uid, ids, fields, args, context=None):
         ''' Fields function for calculate single EAN for 8 and 13 elements
             single depend on q_x_pack field and for 
             char S in 13rd position
         '''
-        _logger.warning('>> Searcing EAN for single product...')
         if context is None:
             context = {}
         
-        if context.get('no_ean_mono_value', False):
-            return dict.fromkeys(ids, False)
+        if not context.get('find_ean_mono_value', False):
+            _logger.warning('No EAN mono in this query')
+            return dict.fromkeys(
+                ids, {'ean13_mono': False, 'ean8_mono': False})
+
+        _logger.info('>> Searching EAN for single product...')
             
         res = {}
-
         for product in self.browse(cr, uid, ids, context=context):
             # -----------------------------------------------------------------
             # Q x pack is yet single:
@@ -107,15 +150,17 @@ class ProductProduct(orm.Model):
                             'ean13_mono': False,
                             'ean8_mono': False,
                             }
-        return res
+        return res"""
         
     _columns = {
-        'ean13_mono': fields.function(
-            _function_get_ean_single_product, method=True, type='char', 
-            string='EAN 13 single', store=False, multi=True), 
-        'ean8_mono': fields.function(
-            _function_get_ean_single_product, method=True, type='char', 
-            string='EAN 8 single', store=False, multi=True),                        
+        #'ean13_mono': fields.function(
+        #    _function_get_ean_single_product, method=True, type='char', 
+        #    string='EAN 13 single', store=False, multi=True), 
+        #'ean8_mono': fields.function(
+        #    _function_get_ean_single_product, method=True, type='char', 
+        #    string='EAN 8 single', store=False, multi=True),                        
+        'ean13_mono': fields.char('EAN13 mono', size=13),
+        'ean8_mono': fields.char('EAN8 mono', size=8),
         }
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
