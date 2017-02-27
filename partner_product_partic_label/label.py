@@ -217,6 +217,13 @@ class ResPartner(orm.Model):
             if not value: 
                 return ''
             mask = '%%0%dd' % mode
+            
+            if len(value)-1 == mode: # no last char
+                import barcode
+                ean_class = 'ean' % mode
+                EAN = barcode.get_barcode_class(ean_class)
+                ean = EAN(value)
+                value = ean.get_fullcode() # override ean code                
             try:
                 return mask % int(value)
             except:
@@ -279,10 +286,9 @@ class ResPartner(orm.Model):
             # Parse line:
             default_code = row[0].value
             if not default_code:
-                raise osv.except_osv(
-                    _('Code not found'), 
-                    _('Code not found in line: %s' % i),
-                    )
+                _logger.error('Code not found in line: %s' % i))
+                continue
+               
             data = {
                 'partner_id': current_proxy.id,
                 #'product_id': product_id
