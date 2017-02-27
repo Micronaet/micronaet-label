@@ -286,7 +286,7 @@ class ResPartner(orm.Model):
             # Parse line:
             default_code = row[0].value
             if not default_code:
-                _logger.error('Code not found in line: %s' % i))
+                _logger.error('Code not found in line: %s' % i)
                 continue
                
             data = {
