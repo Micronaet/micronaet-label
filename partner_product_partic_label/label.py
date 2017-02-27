@@ -744,10 +744,8 @@ class ResPartner(orm.Model):
             separator=separator, context=context)
         
         # Depend on check q_x_pack:
-        import pdb; pdb.set_trace()
         ean13 = product.ean13 or ''
         ean8 = product.ean8 or ''
-        # TODO error here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         ean13_mono = product.ean13_mono or ''
         ean8_mono = product.ean8_mono or ''
             
