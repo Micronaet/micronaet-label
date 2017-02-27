@@ -220,7 +220,7 @@ class ResPartner(orm.Model):
             
             if len(str(value))-1 == mode: # no last char
                 import barcode
-                ean_class = 'ean' % mode
+                ean_class = 'ean%s' % mode
                 EAN = barcode.get_barcode_class(ean_class)
                 ean = EAN(value)
                 value = ean.get_fullcode() # override ean code                
