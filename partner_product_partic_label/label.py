@@ -214,11 +214,11 @@ class ResPartner(orm.Model):
         def format_ean(value, mode=13):
             ''' Format EAN importing from excel
             '''
-            if not value: 
+            if not value:
                 return ''
             mask = '%%0%dd' % mode
             
-            if len(value)-1 == mode: # no last char
+            if len(str(value))-1 == mode: # no last char
                 import barcode
                 ean_class = 'ean' % mode
                 EAN = barcode.get_barcode_class(ean_class)
