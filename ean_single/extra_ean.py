@@ -50,6 +50,12 @@ class ProductProduct(orm.Model):
             char S in 13rd position
         '''
         _logger.warning('>> Searcing EAN for single product...')
+        if context is None:
+            context = {}
+        
+        if context.get('no_ean_mono_value', False):
+            return dict.fromkeys(ids, False)
+            
         res = {}
 
         for product in self.browse(cr, uid, ids, context=context):
@@ -65,12 +71,12 @@ class ProductProduct(orm.Model):
             # Q x pack is package:
             # -----------------------------------------------------------------
             else: # search code with S in 13
-                default_code = product.default_code
+                default_code = product.default_code                    
                 
                 # -------------------------------------------------------------
                 # Code not has single: 
                 # -------------------------------------------------------------
-                if len(default_code) > 12:
+                if not default_code or len(default_code) > 12:
                     res[product.id] = {
                         'ean13_mono': False,
                         'ean8_mono': False,
