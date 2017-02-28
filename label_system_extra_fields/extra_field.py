@@ -95,7 +95,6 @@ class ProductProduct(orm.Model):
             return res
             
         #_logger.warning('All DB database: %s' % (all_db, )) 
-        import pdb; pdb.set_trace()       
         if 'C' in all_db:
             res['label_frame'] = all_db['C']
         else:
