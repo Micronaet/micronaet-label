@@ -82,87 +82,13 @@ class ProductProduct(orm.Model):
         _logger.warning(
             'Single product not found %s' % default_code)
         return (False, False)
-        
-    """def _function_get_ean_single_product(
-            self, cr, uid, ids, fields, args, context=None):
-        ''' Fields function for calculate single EAN for 8 and 13 elements
-            single depend on q_x_pack field and for 
-            char S in 13rd position
-        '''
-        if context is None:
-            context = {}
-        
-        if not context.get('find_ean_mono_value', False):
-            _logger.warning('No EAN mono in this query')
-            return dict.fromkeys(
-                ids, {'ean13_mono': False, 'ean8_mono': False})
-
-        _logger.info('>> Searching EAN for single product...')
-            
-        res = {}
-        for product in self.browse(cr, uid, ids, context=context):
-            # -----------------------------------------------------------------
-            # Q x pack is yet single:
-            # -----------------------------------------------------------------
-            if product.q_x_pack == 1:
-                res[product.id] = {
-                    'ean13_mono': product.ean13,
-                    'ean8_mono': product.ean8,                                      
-                    }
-            # -----------------------------------------------------------------
-            # Q x pack is package:
-            # -----------------------------------------------------------------
-            else: # search code with S in 13
-                default_code = product.default_code                    
                 
-                # -------------------------------------------------------------
-                # Code not has single: 
-                # -------------------------------------------------------------
-                if not default_code or len(default_code) > 12:
-                    res[product.id] = {
-                        'ean13_mono': False,
-                        'ean8_mono': False,
-                        }
-                    _logger.warning('No single EAN code >= 13 char')
-
-                # -------------------------------------------------------------
-                # Code has single: 
-                # -------------------------------------------------------------
-                else:
-                    product_ids = self.search(cr, uid, [
-                        ('default_code', '=', '%-12sS' % default_code),
-                        ], context=context)
-                    if product_ids: # XXX more than one?
-                        if len(product_ids) > 1:
-                            _logger.warning(
-                                'More single EAN code %s' % default_code)
-                        single_proxy = self.browse(
-                            cr, uid, product_ids, context=context)[0]
-                        res[product.id] = {
-                            'ean13_mono': single_proxy.ean13,
-                            'ean8_mono': single_proxy.ean8,
-                            }
-                    else:
-                        _logger.warning(
-                            'Single product not found %s' % default_code)
-                        res[product.id] = {
-                            'ean13_mono': False,
-                            'ean8_mono': False,
-                            }
-        return res"""
-        
     _columns = {
-        #'ean13_mono': fields.function(
-        #    _function_get_ean_single_product, method=True, type='char', 
-        #    string='EAN 13 single', store=False, multi=True), 
-        #'ean8_mono': fields.function(
-        #    _function_get_ean_single_product, method=True, type='char', 
-        #    string='EAN 8 single', store=False, multi=True),                        
         'ean13_mono': fields.char('EAN13 mono', size=13, 
-            help='If present force search of element with S in 13a position'
+            help='Force EAN mono instead search of element with S [13]'
             ),
         'ean8_mono': fields.char('EAN8 mono', size=8,
-            help='If present force search of element with S in 13a position'
+            help='Force EAN mono instead search of element with S [13]'
             ),
         }
     
