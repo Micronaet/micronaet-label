@@ -49,6 +49,7 @@
     'data': [
         #'security/ir.model.access.csv',    
         'label_mrp_view.xml',
+        'report/check_report.xml',
         ],
     'active': False,
     'installable': True,

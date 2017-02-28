@@ -284,8 +284,15 @@ class MrpProduction(orm.Model):
     def label_check_report(self, cr, uid, ids, context=None):
         ''' Report for check error label
         '''
-        # TODO
-        return True
+        datas = {}
+        report_name = 'check_label_mrp_report'
+
+        return {
+            'type': 'ir.actions.report.xml',
+            'report_name': report_name, 
+            'datas': datas,
+            'context': context,
+            }
         
     _columns = {
         'label_job_ids': fields.one2many(
