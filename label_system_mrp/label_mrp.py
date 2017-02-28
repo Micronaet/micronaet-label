@@ -44,6 +44,31 @@ class LabelLabelJob(orm.Model):
     
     _inherit = 'label.label.job'
 
+    def open_product_label_data(self, cr, uid, ids, context=None):
+        ''' Open product for label
+        '''
+        assert len(ids) == 1, 'Works only with one record a time'
+        
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        model_pool = self.pool.get('ir.model.data')
+        view_id = model_pool.get_object_reference(cr, uid, 
+            'label_system', 'view_product_product_label_data_form')[1]
+    
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Product label data'),
+            'view_type': 'form',
+            'view_mode': 'form,tree',
+            'res_id': current_proxy.product_id.id,
+            'res_model': 'product.product',
+            'view_id': view_id, # False
+            'views': [(view_id, 'form'), (False, 'tree')],
+            'domain': [],
+            'context': context,
+            'target': 'current', # 'new'
+            'nodestroy': False,
+            }
+
     # -------------------------------------------------------------------------
     # Utility:
     # -------------------------------------------------------------------------

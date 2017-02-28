@@ -30,6 +30,7 @@
                                         <button name="open_partner_address_label_setup" string="Open partner address label setup" type="object" icon="gtk-media-next" attrs="{'invisible': [('address_id','=',False)]}"/>
                                         <field name="partner_id" />
                                         <field name="address_id" invisible="1"/>
+                                        <button name="open_product_label_data" string="Open product label data" type="object" icon="gtk-goto-last"/>
                                         <field name="line_id" />
                                         <field name="record_data_q_x_pack" string="Q. x pack"/>                                
                                         <field name="record_data_counter" string="Total"/>                                
