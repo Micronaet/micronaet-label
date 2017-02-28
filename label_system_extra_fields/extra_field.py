@@ -64,7 +64,7 @@ class ProductProduct(orm.Model):
         
         if 'D' in all_db:
             res['label_fabric_color'] = all_db['D']
-        else_
+        else:
             res['label_fabric_color'] = ''
             _logger.error('Cannot set color field')
         return res
