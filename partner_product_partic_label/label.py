@@ -771,8 +771,12 @@ class ResPartner(orm.Model):
         # Depend on check q_x_pack:
         ean13 = product.ean13 or ''
         ean8 = product.ean8 or ''
+        # Check mono label:
         (ean13_mono, ean8_mono) = product_pool.get_ean_mono(  
             cr, uid, product.default_code, context=context)
+        # Priority to force in anagraphic
+        ean13_mono = product.ean13_mono or ean13_mono
+        ean8_mono = product.ean8_mono or ean8_mono
         
         if product_partic:
             frame = product_partic.frame or frame or ''

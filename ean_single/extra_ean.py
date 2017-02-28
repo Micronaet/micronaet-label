@@ -158,8 +158,12 @@ class ProductProduct(orm.Model):
         #'ean8_mono': fields.function(
         #    _function_get_ean_single_product, method=True, type='char', 
         #    string='EAN 8 single', store=False, multi=True),                        
-        'ean13_mono': fields.char('EAN13 mono', size=13),
-        'ean8_mono': fields.char('EAN8 mono', size=8),
+        'ean13_mono': fields.char('EAN13 mono', size=13, 
+            help='If present force search of element with S in 13a position'
+            ),
+        'ean8_mono': fields.char('EAN8 mono', size=8,
+            help='If present force search of element with S in 13a position'
+            ),
         }
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
