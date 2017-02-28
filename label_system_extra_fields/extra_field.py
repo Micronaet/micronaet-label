@@ -38,13 +38,52 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+class MrpProduction(orm.Model):   
+    """ Force product only in production
+    """
+    _inherit = 'mrp.production'
+    
+    # -------------------------------------------------------------------------    
+    # Utility:
+    # -------------------------------------------------------------------------
+    def force_product_extra_label_field(self, cr, uid, ids, context=None):
+        ''' Update extra fields product
+        '''
+        if context is None:
+            context = {}
+            
+        # Pool used:
+        product_pool = self.pool.get('product.product')
+        
+        product_ids =  []
+        for line in self.browse(cr, uid, ids, context=context)[
+                0].order_line_ids:
+            product_id = line.product_id.id
+            if line.product_id.structure_id and line.product_id.default_code:
+                if product_id not in product_ids:
+                    product_ids.append(product_id)
+            else:
+                _logger.error(
+                    'Product no structure/code %s' % line.product_id.name)
+        
+        ctx = context.copy()
+        ctx['update_only_field'] = ('label_frame', 'label_fabric_color')
+        ctx['log_file'] = '/home/administrator/photo/Label/log/speech.csv'
+
+        for product in product_pool.browse(
+                cr, uid, product_ids, context=context):
+            product_pool.generate_name_from_code(
+                cr, uid, [product.id], context=ctx)
+            _logger.info('Update label field: %s' % product.default_code)
+        return True
+    
 class ProductProduct(orm.Model):
     """ Model name: Add extra fields to product
     """    
     _inherit = 'product.product'
     
-    # -------------------------------------------------------------------------    
-    # Utility:
+    # -------------------------------------------------------------------------
+    # Override:    
     # -------------------------------------------------------------------------
     def get_all_fields_to_update(self, all_db=None):
         ''' Override function for update other fields:

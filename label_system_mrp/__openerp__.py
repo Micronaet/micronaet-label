@@ -38,6 +38,7 @@
         'label_system_note',
         'partner_product_partic_label',
         'label_system',
+        'label_system_extra_fields',
         
         # MRP:
         'mrp',

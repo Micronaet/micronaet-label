@@ -16,6 +16,7 @@
                             <page string="Label">
                                 <button name="merge_pdf_mrp_label_jobs" string="Create PDF jobs" type="object" class="oe_highlight"/>
                                 <button name="merge_pdf_mrp_label_jobs_demo" string="Create PDF demo mode" type="object" />
+                                <button name="force_product_extra_label_field" string="Regenerate description" type="object" />
                                 <field name="label_job_ids" nolabel="1" colspan="4" >  
                                     <tree string="Jobs" colors="red:label_id==False">
                                         <field name="sequence" string="#"/>

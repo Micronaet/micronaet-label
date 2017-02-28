@@ -30,6 +30,7 @@
     'license': 'AGPL-3',
     'depends': [
         'base',
+        'mrp',
         'product_speech_code',
         ],
     'init_xml': [],
