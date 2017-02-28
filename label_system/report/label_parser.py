@@ -47,6 +47,7 @@ class Parser(report_sxw.rml_parse):
         super(Parser, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'get_report_label': self.get_report_label,
+            'get_report_placeholder': self.get_report_placeholder,
             'load': self.load,
             # TODO load_image function for extra image        
         })
@@ -177,5 +178,43 @@ class Parser(report_sxw.rml_parse):
             #    )
         
         return job_pool.browse(cr, uid, item_ids, context=context)
+            
+    def get_report_placeholder(self, data=None):
+        ''' Master function for generate label elements
+            data:
+                report_data: test, fast, production are the current value
+        '''
+        # TODO assert 1?
+        if data is None:
+            data = {}
+
+        # Standard:
+        cr = self.cr
+        uid = self.uid
+        context = {}
+        
+        # Pool used:
+        job_pool = self.pool.get('label.label.job')
+        
+        item_ids = data.get('record_ids', [])
+        if not item_ids:
+            _logger.error('No data for fast print')
+        
+        job_proxy = job_pool.browse(cr, uid, item_ids, context=context)[0]
+        line = job_proxy.line_id
+
+        if line:
+            res = ((
+                line.product_id.default_code or '???',
+                line.order_id.partner_id.name or '',
+                line.order_id.destination_partner_id.name or '',
+                line.order_id.name or '',
+                job_proxy.record_data_counter or '',
+                job_proxy.record_data_line or '',
+                job_proxy.record_data_period or '',                
+                ), )
+        else:
+            res = (('', '', '', '', '', '', ''), )
+        return res
             
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
