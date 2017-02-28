@@ -55,13 +55,17 @@ class ProductProduct(orm.Model):
             _logger.warning('No all_db for generate extra fields')
             return res
             
-        _logger.warning('All DB database: %s' % (all_db, ))
-        
+        #_logger.warning('All DB database: %s' % (all_db, ))        
         if 'C' in all_db:
             res['label_frame'] = all_db['C']
+        else:
             _logger.error('Cannot set frame field')
+            res['label_frame'] = ''
+        
         if 'D' in all_db:
             res['label_fabric_color'] = all_db['D']
+        else_
+            res['label_fabric_color'] = ''
             _logger.error('Cannot set color field')
         return res
         
