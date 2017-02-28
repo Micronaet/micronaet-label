@@ -47,7 +47,7 @@ class ProductProduct(orm.Model):
         ''' Search ean mono for product passed
             return (ean13 mono, ean8 mono)
         '''
-        nothing = (False, False)
+        nothing = ('', '')
         
         if not default_code or len(default_code) > 12:
             return nothing
@@ -63,26 +63,25 @@ class ProductProduct(orm.Model):
         # Q x pack is yet single:
         # -----------------------------------------------------------------
         if product.q_x_pack == 1:
-            return (product.ean13, product.ean8) # same
+            return (product.ean13, product.ean8) # same ean
 
         # -----------------------------------------------------------------
         # Q x pack is package:
         # -----------------------------------------------------------------
-        else: # search code with S in 13            
-            mono_ids = self.search(cr, uid, [
-                ('default_code', '=', '%-12sS' % default_code),
-                ], context=context)
-            if mono_ids: # XXX more than one?
-                if len(mono_ids) > 1:
-                    _logger.warning(
-                        'More single EAN code %s' % default_code)
-                mono_proxy = self.browse(
-                    cr, uid, mono_ids, context=context)[0]
-                return (mono_proxy.ean13, mono_proxy.ean8)
-            else:
+        mono_ids = self.search(cr, uid, [
+            ('default_code', '=', '%-12sS' % default_code),
+            ], context=context)
+        if mono_ids: # XXX more than one?
+            if len(mono_ids) > 1:
                 _logger.warning(
-                    'Single product not found %s' % default_code)
-                return (False, False)
+                    'More single EAN code %s' % default_code)
+            mono_proxy = self.browse(
+                cr, uid, mono_ids, context=context)[0]
+            return (mono_proxy.ean13, mono_proxy.ean8)
+
+        _logger.warning(
+            'Single product not found %s' % default_code)
+        return (False, False)
         
     """def _function_get_ean_single_product(
             self, cr, uid, ids, fields, args, context=None):
