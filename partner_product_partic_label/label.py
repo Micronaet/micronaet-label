@@ -838,9 +838,13 @@ class ResPartner(orm.Model):
             'record_data_line': line_code,
             #'record_data_period': '%s%s' % (
             #    mrp.date_planned[2:4], mrp.date_planned[5:7]),
-            'record_data_period': datetime.strptime(
-                mrp.date_planned[:10], 
-                DEFAULT_SERVER_DATE_FORMAT).isocalendar()[1],
+            # TODO format YY WW
+            'record_data_period': '%s%02d' % (
+                mrp.date_planned[:4],
+                datetime.strptime(
+                    mrp.date_planned[:10]), 
+                    DEFAULT_SERVER_DATE_FORMAT,
+                    ).isocalendar()[1],
             'record_data_lot': mrp.name.replace('MO', '').lstrip('0'),
             
             # -----------------------------------------------------------------
