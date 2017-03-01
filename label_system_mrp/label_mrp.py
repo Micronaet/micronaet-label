@@ -148,7 +148,7 @@ class MrpProduction(orm.Model):
         # TODO sort by sequence?
 
         placeholder = {}        
-        old_code = {'article': False, 'package': False}
+        break_level = {'article': False, 'package': False}
         old_id = {'article': False, 'package': False}
         label_total = {'article': 0, 'package': 0}
         
@@ -156,17 +156,18 @@ class MrpProduction(orm.Model):
         for job in jobs:
             job_type = job.type   
             
-            if job_type not in old_code: 
+            if job_type not in break_level: 
                 _logger.error('No correct type of label')
                          
             current_code = job.product_id.default_code
-            if old_code[job_type] == current_code:
+            level = (current_code, )
+            if break_level[job_type] == level:
                 label_total[job_type] += job.record_data_counter                
                 old_id[job_type] = job.id # update for keep last
             else: # change
                 placeholder[old_id[job_type]] = label_total[job_type]
                 label_total[job_type] = job.record_data_counter
-                old_code[job_type] = current_code
+                break_level[job_type] = level
                 old_id[job_type] = job.id
                 
         if jobs: # Write last
