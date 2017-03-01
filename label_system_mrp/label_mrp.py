@@ -231,8 +231,15 @@ class MrpProduction(orm.Model):
             
         sequence = 0
         labels = ['article', 'package'] #'pallet', 'placeholder'
-            
-        for line in mrp_proxy.order_line_ids:
+        
+        sorted_order_line = sorted(
+            mrp_proxy.order_line_ids,
+            key= lambda x: (
+                x.order_id.partner_id.has_custom_label or \
+                x.order_id.destination_partner_id.has_custom_label,
+                x.mrp_sequence),
+            )
+        for line in sorted_order_line:
             for label in labels:
                 sequence += 1
                 
