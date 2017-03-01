@@ -159,8 +159,15 @@ class MrpProduction(orm.Model):
             if job_type not in break_level: 
                 _logger.error('No correct type of label')
                          
+            # Break level type (3 cases):
             current_code = job.product_id.default_code
-            level = (current_code, )
+            if job.has_address_custom:
+                level = (current_code, 'address', job.address_id)
+            elif job.has_partner_custom:
+                level = (current_code, 'partner', job.partner_id)
+            else:
+                level = (current_code, 'code')
+                
             if break_level[job_type] == level:
                 label_total[job_type] += job.record_data_counter                
                 old_id[job_type] = job.id # update for keep last
@@ -278,7 +285,11 @@ class MrpProduction(orm.Model):
             key= lambda x: (
                 x.order_id.partner_id.has_custom_label or \
                     x.order_id.destination_partner_id.has_custom_label,
-                x.mrp_sequence),
+                x.product_id.default_code,
+                x.order_id.partner_id.name,
+                x.order_id.destination_partner_id.name or False,    
+                x.mrp_sequence,
+                ),
             )
         for line in sorted_order_line:
             for label in labels:
