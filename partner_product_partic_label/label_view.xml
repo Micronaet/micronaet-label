@@ -63,7 +63,8 @@
 	                            <field name="category_id" widget="many2many_tags" placeholder="Tags..." />
                             </div>
                             <field name="label_image" widget="image" nolabel="1" attrs="{'invisible': [('is_address','=',True)]}"/>
-                            <notebook colspan="4">
+                            <field name="has_custom_label" />
+                            <notebook colspan="4" attrs="{'invisible': [('has_custom_label','=',False)]}">
                                 <page string="Product partic">
                                     <group col="4" colspan="4"> 
                                         <separator string="Product partic.:" colspan="4"/>

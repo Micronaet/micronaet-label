@@ -540,6 +540,8 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         # Check and label string from address or partner setup:
         record.update({            
+            'has_custom_label': fields.boolean('Has custom label'),
+            
             # -----------------------------------------------------------------
             # String label:
             # -----------------------------------------------------------------
