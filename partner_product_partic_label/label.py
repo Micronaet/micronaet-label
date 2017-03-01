@@ -545,8 +545,8 @@ class ResPartner(orm.Model):
             # -----------------------------------------------------------------
             # Extra data:
             # -----------------------------------------------------------------
-            'record_partner_custom': partner.has_custom or False,
-            'record_address_custom': address.has_custom or False,
+            'record_partner_custom': partner.has_custom_label or False,
+            'record_address_custom': address.has_custom_label or False,
         
             # -----------------------------------------------------------------
             # String label:
@@ -756,9 +756,12 @@ class ResPartner(orm.Model):
         separator = '\n' # for pack TODO - for article?
         # Update record with data:  
 
-        product_partic = self.get_partic_partner_product_label(
-            cr, uid, product.id, partner.id, 
-            address.id if address else False, context=context)
+        if partner.has_custom_label or address.has_custom_label:
+            product_partic = self.get_partic_partner_product_label(
+                cr, uid, product.id, partner.id, 
+                address.id if address else False, context=context)
+        else:
+            product_partic = False
             
         # Force partner product description:
 

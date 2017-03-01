@@ -129,6 +129,7 @@ class NoteNote(orm.Model):
         # ----------------
         # Address present:
         # ----------------
+        # TODO choose label partner and address depend on has_custom_label
         if address:
             # 3A. Search product with address
             label_id = self.search_label_presence(cr, uid, [
