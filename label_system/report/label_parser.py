@@ -47,11 +47,22 @@ class Parser(report_sxw.rml_parse):
         super(Parser, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'get_report_label': self.get_report_label,
-            'get_report_placeholder': self.get_report_placeholder,
+            'get_placeholder': self.get_placeholder,
+            #'get_report_placeholder': self.get_report_placeholder,
             'load': self.load,
             # TODO load_image function for extra image        
         })
 
+    def get_placeholder(self, data, field=False):
+        ''' Get placeholder if present
+        '''
+        ph = data.get('placeholder_data', False)
+        if not ph:
+            return False
+        if not field:
+            return True # ph present
+        return data['placeholder_data'].get(field, '')
+        
     # Method for local context
     def load(self, record, field, mode='data', check_show=True, lang=False, 
             counter=-1):
@@ -179,7 +190,7 @@ class Parser(report_sxw.rml_parse):
         
         return job_pool.browse(cr, uid, item_ids, context=context)
             
-    def get_report_placeholder(self, data=None):
+    """def get_report_placeholder(self, data=None):
         ''' Master function for generate label elements
             data:
                 report_data: test, fast, production are the current value
@@ -215,6 +226,6 @@ class Parser(report_sxw.rml_parse):
                 ), )
         else:
             res = (('', '', '', '', '', '', ''), )
-        return res
+        return res"""
             
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
