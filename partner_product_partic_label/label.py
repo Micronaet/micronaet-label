@@ -540,8 +540,6 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         # Check and label string from address or partner setup:
         record.update({            
-            'has_custom_label': fields.boolean('Has custom label'),
-            
             # -----------------------------------------------------------------
             # String label:
             # -----------------------------------------------------------------
@@ -881,6 +879,9 @@ class ResPartner(orm.Model):
         return record        
 
     _columns = { 
+        'has_custom_label': fields.boolean('Has custom label'),
+            
+    
         'label_partic_file': fields.char('Partic import file', size=80,
             help='Used for import export data in partner form'),
                 
