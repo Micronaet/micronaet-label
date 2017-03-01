@@ -115,39 +115,13 @@ class MrpProduction(orm.Model):
     
     _inherit = 'mrp.production'
     
-    def merge_pdf_mrp_label_jobs_demo(self, cr, uid, ids, context=None):
-        ''' 1 x label job in demo mode
+    # -------------------------------------------------------------------------
+    # Utility:
+    # -------------------------------------------------------------------------
+    def get_placeholder_label(self, cr, uid, jobs, context=None):
+        ''' Create placeholder database for print element or label
         '''
-        ctx = context.copy()
-        ctx['demo_mode'] = True
-        return self.merge_pdf_mrp_label_jobs(cr, uid, ids, context=ctx)
-        
-    def merge_pdf_mrp_label_jobs(self, cr, uid, ids, context=None):
-        ''' Merge procedure for all same label layout files:
-        '''        
-        if context is None:
-            context = {}
-            
-        out_path = '/home/administrator/photo/Label/pdf'
-        temp_path = '/tmp'
-        
-        demo_mode = context.get('demo_mode', False)
-        if demo_mode: 
-            _logger.info('Demo mode for PDF generation')        
-        else:
-            _logger.info('Normal mode for PDF generation')        
-        
-        label_pool = self.pool.get('label.label.job')
-        report_pdf = {} # database of file keep format as the same
-        pdf_id = 0
-        
-        # ---------------------------------------------------------------------
-        # Get placeholder informations:
-        # ---------------------------------------------------------------------
-        jobs = self.browse(cr, uid, ids, context=context).label_job_ids
-        # TODO sort by sequence?
-
-        placeholder = {}        
+        placeholder = {}
         break_level = {'article': False, 'package': False}
         old_id = {'article': False, 'package': False}
         label_total = {'article': 0, 'package': 0}
@@ -190,6 +164,41 @@ class MrpProduction(orm.Model):
                     label_total[job_type],
                     last_level,
                     )
+        return placeholder        
+    
+    def merge_pdf_mrp_label_jobs_demo(self, cr, uid, ids, context=None):
+        ''' 1 x label job in demo mode
+        '''
+        ctx = context.copy()
+        ctx['demo_mode'] = True
+        return self.merge_pdf_mrp_label_jobs(cr, uid, ids, context=ctx)
+        
+    def merge_pdf_mrp_label_jobs(self, cr, uid, ids, context=None):
+        ''' Merge procedure for all same label layout files:
+        '''        
+        if context is None:
+            context = {}
+            
+        out_path = '/home/administrator/photo/Label/pdf'
+        temp_path = '/tmp'
+        
+        demo_mode = context.get('demo_mode', False)
+        if demo_mode: 
+            _logger.info('Demo mode for PDF generation')        
+        else:
+            _logger.info('Normal mode for PDF generation')        
+        
+        label_pool = self.pool.get('label.label.job')
+        report_pdf = {} # database of file keep format as the same
+        pdf_id = 0
+        
+        # ---------------------------------------------------------------------
+        # Get placeholder informations:
+        # ---------------------------------------------------------------------
+        jobs = self.browse(cr, uid, ids, context=context).label_job_ids
+        # TODO sort by sequence?
+        placeholder = self.get_placeholder_label(
+            cr, uid, jobs, context=context)
 
         for job in jobs:
             pdf_id += 1 
