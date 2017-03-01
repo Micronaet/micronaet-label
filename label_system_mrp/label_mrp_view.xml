@@ -18,7 +18,7 @@
                                 <button name="merge_pdf_mrp_label_jobs_demo" string="Create PDF demo mode" type="object" />
                                 <button name="force_product_extra_label_field" string="Regenerate description" type="object" />
                                 <field name="label_job_ids" nolabel="1" colspan="4" >  
-                                    <tree string="Jobs" colors="red:label_id==False">
+                                    <tree string="Jobs" colors="red:label_id==False;blue:has_address_custom == True or has_partner_custom == True">
                                         <field name="sequence" string="#"/>
                                         <field name="label_id" />
                                         <!--field name="report_id" /-->
@@ -35,6 +35,8 @@
                                         <field name="record_data_q_x_pack" string="Q. x pack"/>                                
                                         <field name="record_data_counter" string="Total"/>                                
                                         <button name="print_fast_label" string="Print" type="object" icon="gtk-print" />
+                                        <field name="has_partner_custom" invisible="1"/>
+                                        <field name="has_address_custom" invisible="1"/>
                                     </tree>
                                 </field>
                             </page>

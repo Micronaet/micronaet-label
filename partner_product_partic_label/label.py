@@ -545,8 +545,8 @@ class ResPartner(orm.Model):
             # -----------------------------------------------------------------
             # Extra data:
             # -----------------------------------------------------------------
-            'record_partner_custom': partner.has_custom_label or False,
-            'record_address_custom': address.has_custom_label or False,
+            'has_partner_custom': partner.has_custom_label or False,
+            'has_address_custom': address.has_custom_label or False,
         
             # -----------------------------------------------------------------
             # String label:

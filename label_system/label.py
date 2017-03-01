@@ -405,9 +405,9 @@ class LabelLabelJob(orm.Model):
         'fast': fields.boolean('Fast label', 
             help='Job that is never cleaned, used sometimes for print direct'),
         
-        'has_partner_custom':fields.boolean('Partner custom',
+        'has_partner_custom': fields.boolean('Partner custom',
             help='Has partner custom data or label'),
-        'has_address_custom':fields.boolean('Address custom',
+        'has_address_custom': fields.boolean('Address custom',
             help='Has address custom data or label'),
 
         # Layout reference:
