@@ -840,7 +840,7 @@ class ResPartner(orm.Model):
             #    mrp.date_planned[2:4], mrp.date_planned[5:7]),
             # TODO format YY WW
             'record_data_period': '%s%02d' % (
-                mrp.date_planned[:4],
+                mrp.date_planned[2:4],
                 datetime.strptime(
                     mrp.date_planned[:10]), 
                     DEFAULT_SERVER_DATE_FORMAT,
