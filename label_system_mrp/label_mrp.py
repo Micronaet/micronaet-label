@@ -151,6 +151,7 @@ class MrpProduction(orm.Model):
         break_level = {'article': False, 'package': False}
         old_id = {'article': False, 'package': False}
         label_total = {'article': 0, 'package': 0}
+        last_level = False
         
         job_type = False
         for job in jobs:
@@ -162,9 +163,11 @@ class MrpProduction(orm.Model):
             # Break level type (3 cases):
             current_code = job.product_id.default_code
             if job.has_address_custom:
-                level = (current_code, 'address', job.address_id)
+                level = (
+                    current_code, 'address', job.partner_id, job.address_id)
             elif job.has_partner_custom:
-                level = (current_code, 'partner', job.partner_id)
+                level = (
+                    current_code, 'partner', job.partner_id, False)
             else:
                 level = (current_code, 'code')
                 
@@ -172,14 +175,21 @@ class MrpProduction(orm.Model):
                 label_total[job_type] += job.record_data_counter                
                 old_id[job_type] = job.id # update for keep last
             else: # change
-                placeholder[old_id[job_type]] = label_total[job_type]
+                placeholder[old_id[job_type]] = (
+                    label_total[job_type],
+                    last_level, # save also break level
+                    )
                 label_total[job_type] = job.record_data_counter
                 break_level[job_type] = level
+                last_level = level
                 old_id[job_type] = job.id
                 
-        if jobs: # Write last
-            placeholder[old_id['article']] = label_total['article']
-            placeholder[old_id['package']] = label_total['package']
+        if jobs: # Write last record:
+            for job_type in ('article', 'package'):
+                placeholder[old_id[job_type]] = (
+                    label_total[job_type],
+                    last_level,
+                    )
 
         for job in jobs:
             pdf_id += 1 
@@ -198,13 +208,20 @@ class MrpProduction(orm.Model):
                 'active_ids': [job.id],
                 'demo_mode': demo_mode, # XXX set as demo mode (1x)
                 }
-            if job.id in placeholder:
+            if job.id in placeholder:            
+                (quantity, level) = placeholder[job.id]
                 datas['placeholder_data'] = {
                     'code': job.product_id.default_code,
-                    'quantity': placeholder[job.id],
+                    'quantity': quantity,
                     'line': job.record_data_line,
                     'period': job.record_data_period,
                     }
+                # Extend for address partner break level    
+                if level[1] != 'code': # partner / address break level
+                    datas['placeholder_data'].update({
+                        'partner': level[2].name or '',
+                        'address': level[3].name if level[3] else '',
+                        })
         
             # -----------------------------------------------------------------
             # Call report:            
@@ -280,6 +297,9 @@ class MrpProduction(orm.Model):
         sequence = 0
         labels = ['article', 'package'] #'pallet', 'placeholder'
         
+        # ---------------------------------------------------------------------
+        # Sort sale order line:
+        # ---------------------------------------------------------------------
         sorted_order_line = sorted(
             mrp_proxy.order_line_ids,
             key= lambda x: (
@@ -291,6 +311,7 @@ class MrpProduction(orm.Model):
                 x.mrp_sequence,
                 ),
             )
+
         for line in sorted_order_line:
             for label in labels:
                 sequence += 1
