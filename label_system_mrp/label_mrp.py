@@ -140,7 +140,40 @@ class MrpProduction(orm.Model):
         label_pool = self.pool.get('label.label.job')
         report_pdf = {} # database of file keep format as the same
         pdf_id = 0
-        for job in self.browse(cr, uid, ids, context=context).label_job_ids:
+        
+        # ---------------------------------------------------------------------
+        # Get placeholder informations:
+        # ---------------------------------------------------------------------
+        jobs = self.browse(cr, uid, ids, context=context).label_job_ids
+        # TODO sort by sequence?
+
+        placeholder = {}        
+        old_code = {'article': False, 'package': False}
+        old_id = {'article': False, 'package': False}
+        label_total = {'article': 0, 'package': 0}
+        
+        job_type = False
+        for job in jobs:
+            job_type = job.type   
+            
+            if job_type not in old_code: 
+                _logger.error('No correct type of label')
+                         
+            current_code = job.product_id.default_code
+            if old_code[job_type] == current_code:
+                label_total[job_type] += job.record_data_counter                
+                old_id[job_type] = job.id # update for keep last
+            else: # change
+                placeholder[old_id[job_type]] = label_total[job_type]
+                label_total[job_type] = job.record_data_counter
+                old_code[job_type] = current_code
+                old_id[job_type] = job.id
+                
+        if jobs: # Write last
+            placeholder[old_id['article']] = label_total['article']
+            placeholder[old_id['package']] = label_total['package']
+
+        for job in jobs:
             pdf_id += 1 
             label = job.label_id
             layout = job.label_id.layout_id
@@ -157,6 +190,13 @@ class MrpProduction(orm.Model):
                 'active_ids': [job.id],
                 'demo_mode': demo_mode, # XXX set as demo mode (1x)
                 }
+            if job.id in placeholder:
+                datas['placeholder_data'] = {
+                    'code': job.product_id.default_code,
+                    'quantity': placeholder[job.id],
+                    'line': job.record_data_line,
+                    'period': job.record_data_period,
+                    }
         
             # -----------------------------------------------------------------
             # Call report:            

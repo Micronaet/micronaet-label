@@ -35,8 +35,8 @@
                                         <field name="record_data_q_x_pack" string="Q. x pack"/>                                
                                         <field name="record_data_counter" string="Total"/>                                
                                         <button name="print_fast_label" string="Print" type="object" icon="gtk-print" />
-                                        <field name="has_partner_custom" string="P"/>
-                                        <field name="has_address_custom" string="A"/>
+                                        <field name="has_partner_custom" string="P" invisible="1"/>
+                                        <field name="has_address_custom" string="A" invisible="1"/>
                                     </tree>
                                 </field>
                             </page>
