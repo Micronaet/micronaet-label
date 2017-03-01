@@ -344,15 +344,18 @@ class ResPartner(orm.Model):
         res = False
         if address_id:
             res = partic_pool.search(cr, uid, [
+                ('partner_id.has_custom_label', '=', True),
                 ('partner_id', '=', address_id),
                 ('product_id', '=', product_id),
                 ], context=context)
                 
         if not res: # no address or no partic for address        
             res = partic_pool.search(cr, uid, [
+                ('partner_id.has_custom_label', '=', True),
                 ('partner_id', '=', partner_id),
                 ('product_id', '=', product_id),
                 ], context=context)
+                
         # TODO check double        
         if res:
             return partic_pool.browse(cr, uid, res, context=context)[0]
@@ -412,16 +415,15 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------            
         def get_label(company, partner, address, field):
             ''' Check field from address, partner, company return first found
-            '''
-            if address:
-                res = address.__getattribute__(field) or \
-                    partner.__getattribute__(field) or \
-                    company.partner_id.__getattribute__(field) or ''
-            else:    
-                res = partner.__getattribute__(field) or\
-                    company.partner_id.__getattribute__(field) or ''            
-            if not res:
-                # Not an error (TODO raise?):
+            '''       
+            res = '' 
+            if address and address.has_custom_label: # address
+                res = address.__getattribute__(field) or ''
+            if not res and partner.has_custom_label: # partner
+                res = partner.__getattribute__(field) or ''
+            if not res: # company
+                res = company.partner_id.__getattribute__(field) or ''
+            if not res: # not res (Not an error TODO raise?):
                 _logger.warning('Warning %s not found string value!' % field)            
             return res
 
@@ -429,13 +431,13 @@ class ResPartner(orm.Model):
             ''' Check field from address, partner, company return state value
                 as True or False
             '''
-            if address:
-                res = address.__getattribute__(field) or \
-                    partner.__getattribute__(field) or \
-                    company.partner_id.__getattribute__(field) or ''
-            else:    
-                res = partner.__getattribute__(field) or\
-                    company.partner_id.__getattribute__(field) or ''            
+            res = ''
+            if address and address.has_custom_label: # address
+                res = address.__getattribute__(field) or ''
+            if not res and partner.has_custom_label: # partner
+                res = partner.__getattribute__(field) or ''
+            if not res: # company
+                res = company.partner_id.__getattribute__(field) or ''
             if warning and not res:
                 _logger.warning('Field %s not set up as show or hide!' % field) 
 
@@ -539,7 +541,13 @@ class ResPartner(orm.Model):
         # Check parameter in partner address form:
         # ---------------------------------------------------------------------
         # Check and label string from address or partner setup:
-        record.update({            
+        record.update({
+            # -----------------------------------------------------------------
+            # Extra data:
+            # -----------------------------------------------------------------
+            'record_partner_custom': partner.has_custom or False,
+            'record_address_custom': address.has_custom or False,
+        
             # -----------------------------------------------------------------
             # String label:
             # -----------------------------------------------------------------
@@ -880,8 +888,7 @@ class ResPartner(orm.Model):
 
     _columns = { 
         'has_custom_label': fields.boolean('Has custom label'),
-            
-    
+       
         'label_partic_file': fields.char('Partic import file', size=80,
             help='Used for import export data in partner form'),
                 
