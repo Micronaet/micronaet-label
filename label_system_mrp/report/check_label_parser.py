@@ -34,8 +34,48 @@ _logger = logging.getLogger(__name__)
 
 class Parser(report_sxw.rml_parse):    
     def __init__(self, cr, uid, name, context):
+        ''' Init parser script
+        '''
         super(Parser, self).__init__(cr, uid, name, context)
         self.localcontext.update({
-        })
+            'get_label_list': self.get_label_list,
+            })
+            
+    def get_label_list(self, o, data=None):
+        ''' List of all labels for reporting
+        '''
+        # Readabiliy
+        cr = self.cr
+        uid = self.uid
+        context = {}
+
+        res = []
+        
+        mrp_pool = self.pool.get('mrp.production')
+        label_pool = self.pool.get('label.label.job')
+        jobs = o.label_job_ids
+        placeholder = mrp_pool.get_placeholder_label(
+            cr, uid, jobs, context=context)
+            
+        for job in jobs:
+            if job.id in placeholder:            
+                (quantity, level) = placeholder[job.id]
+
+                # Extend for address partner break level                
+                if level[1] == 'code': 
+                    partner = ''
+                    address = ''
+                else: # partner / address break level
+                    partner = level[2].name or ''
+                    address = level[3].name if level[3] else ''
+                    
+                res.append((
+                    job, # job data
+                    partner, # customization
+                    address, # customization
+                    #level, # label level
+                    quantity, # q.
+                    ))
+        return res 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
