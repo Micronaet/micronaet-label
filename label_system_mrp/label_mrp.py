@@ -370,6 +370,19 @@ class MrpProduction(orm.Model):
                 job_pool.create(cr, uid, record_data, context=context)
         return True
     
+    def label_form_report(self, cr, uid, ids, context=None):
+        ''' Open label form report
+        '''
+        datas = {}
+        report_name = 'label_form_mrp_report'
+
+        return {
+            'type': 'ir.actions.report.xml',
+            'report_name': report_name, 
+            'datas': datas,
+            'context': context,
+            }
+    
     def label_check_report(self, cr, uid, ids, context=None):
         ''' Report for check error label
         '''

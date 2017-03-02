@@ -22,6 +22,27 @@
             <field eval="True" name="isobject"/>
             <field eval="True" name="replace"/>
         </ir_set>
+        <record id="aeroo_label_form_mrp_report_id" model="ir.actions.report.xml">
+            <field name="name">Distinta etichette</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">mrp.production</field>
+            <field name="report_name">label_form_mrp_report</field>
+            <field name="report_type">aeroo</field>
+            <field name="in_format">oo-odt</field>
+            <field name="parser_loc">label_system_mrp/report/check_label_parser.py</field>
+            <field name="report_rml">label_system_mrp/report/label_form.odt</field>
+            <field name="parser_state">loc</field>
+            <field name="tml_source">file</field>
+        </record>
+        <ir_set>
+            <field eval="'action'" name="key"/>
+            <field eval="'client_print_multi'" name="key2"/>
+            <field eval="['mrp.production']" name="models"/>
+            <field name="name">action_label_form_mrp_report</field>
+            <field eval="'ir.actions.report.xml,'+str(aeroo_label_form_mrp_report_id)" name="value"/>
+            <field eval="True" name="isobject"/>
+            <field eval="True" name="replace"/>
+        </ir_set>
 
     </data>
 </openerp>
