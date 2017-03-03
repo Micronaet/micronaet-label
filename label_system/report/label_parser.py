@@ -65,7 +65,7 @@ class Parser(report_sxw.rml_parse):
         
     # Method for local context
     def load(self, record, field, mode='data', check_show=True, lang=False, 
-            counter=-1):
+            counter=-1, position=0):
         ''' Abstract function for load data in report
         
             record: browse pointer to job element with all record data in it
@@ -94,6 +94,9 @@ class Parser(report_sxw.rml_parse):
             lang: if present return field in data translation for language
             
             counter: used for counter_pack_total data if present
+            
+            position: if setted in sting mode split vaue with | and take
+                position element
         '''
         empty = ''
 
@@ -163,7 +166,15 @@ class Parser(report_sxw.rml_parse):
                   
         # Field (normale data)          
         else:
-            return record.__getattribute__(field_name)
+            # String use | separator for split article|pack|pallet
+            if mode == 'string':
+                string = record.__getattribute__(field_name).split('|')
+                if position >= len(string):
+                    _logger.info('Position > len split string')
+                    position = 0
+                return string[position] or ''
+            else:   
+                return record.__getattribute__(field_name)
 
     def get_report_label(self, data=None):
         ''' Master function for generate label elements
