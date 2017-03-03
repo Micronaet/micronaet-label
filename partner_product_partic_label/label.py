@@ -762,6 +762,15 @@ class ResPartner(orm.Model):
                 address.id if address else False, context=context)
         else:
             product_partic = False
+
+        # Company partner parent (linked for get secondary code)        
+        if company.partic_partner_code_id:
+            # Now used only for partner extra code if not present
+            company_product_partic = self.get_partic_partner_product_label(
+                cr, uid, company.partic_partner_code_id.id, False, 
+                context=context)
+        else:
+            company_product_partic = False
             
         # Force partner product description:
 
@@ -806,7 +815,12 @@ class ResPartner(orm.Model):
             partner_description = ''
             text1 = ''
             text2 = ''
-            text3 = ''        
+            text3 = ''
+                    
+        # Force if not present partner_code
+        if company_product_partic:
+            partner_code = \ 
+                partner_code or company_product_partic.partner_code or ''
             
         record.update({
             # -----------------------------------------------------------------
@@ -891,6 +905,9 @@ class ResPartner(orm.Model):
 
     _columns = { 
         'has_custom_label': fields.boolean('Has custom label'),
+        'partic_partner_code_id': fields.many2one(
+            'res.partner', 'Partner partic code',
+            help='Partner linked for get customer product code in label')
        
         'label_partic_file': fields.char('Partic import file', size=80,
             help='Used for import export data in partner form'),

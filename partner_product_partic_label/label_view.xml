@@ -63,6 +63,7 @@
 	                            </h1>
 	                            <field name="parent_id" placeholder="Company..." domain="[('is_company', '=', True)]" context="{'default_is_company': True}" attrs="{'invisible': ['&amp;',('is_company','=', True),('is_address','=',False)], 'required': [('is_address','=',True)]}" on_change="onchange_address(use_parent_address, parent_id)" />
 	                            <field name="category_id" widget="many2many_tags" placeholder="Tags..." />
+	                            <field name="partic_partner_code_id" />
                             </div>
                             <field name="label_image" widget="image" nolabel="1" attrs="{'invisible': [('is_address','=',True)]}"/>
                             <notebook colspan="4" attrs="{'invisible': [('has_custom_label','=',False)]}">
