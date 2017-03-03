@@ -753,7 +753,7 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         # Partic update:
         # ---------------------------------------------------------------------
-        separator = '\n' # for pack TODO - for article?
+        separator = '-' #'\n' # for pack TODO - for article?
         # Update record with data:  
 
         if partner.has_custom_label or address.has_custom_label:
