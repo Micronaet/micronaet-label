@@ -282,12 +282,10 @@ class MrpProduction(orm.Model):
                     if page.getContents():
                         out_pdf.addPage(page)
                     else:
+                        _logger.warning('\n' * 50)
                         _logger.warning('Remove blank page!')
-                        import pdb; pdb.set_trace()
-                    
-                #[out_pdf.addPage(in_pdf.getPage(page_num)) for \
-                #    page_num in range(in_pdf.numPages)]
-        
+                        _logger.warning('\n' * 50)
+
             out_pdf.write(open(pdf_filename, 'wb'))
         return True
                 
