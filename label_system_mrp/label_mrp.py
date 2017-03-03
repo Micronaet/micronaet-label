@@ -277,8 +277,16 @@ class MrpProduction(orm.Model):
             for f in files:
                 # Open and append page:
                 in_pdf = PdfFileReader(open(f, 'rb'))
-                [out_pdf.addPage(in_pdf.getPage(page_num)) for \
-                    page_num in range(in_pdf.numPages)]
+                for page_num in range(in_pdf.numPages):
+                    page = in_pdf.getPage(page_num)
+                    if page.getContents():
+                        out_pdf.addPage(page)
+                    else:
+                        _logger.warning('Remove blank page!')
+                        import pdb; pdb.set_trace()
+                    
+                #[out_pdf.addPage(in_pdf.getPage(page_num)) for \
+                #    page_num in range(in_pdf.numPages)]
         
             out_pdf.write(open(pdf_filename, 'wb'))
         return True
@@ -288,6 +296,7 @@ class MrpProduction(orm.Model):
         '''
         assert len(ids) == 1, 'Works only with one record a time'
         
+        _logger.info('Generate job from production:')
         if context is None:
             context = {}
             
@@ -298,7 +307,12 @@ class MrpProduction(orm.Model):
         
         mrp_proxy = self.browse(cr, uid, ids, context=context)[0]
         
+        # Force generation of label  name:
+        _logger.info('Regenerate frame and color name')
+        self.force_product_extra_label_field(cr, uid, ids, context=context)
+        
         # Remove previous label:
+        _logger.info('Remove previous job')
         remove_ids = [item.id for item in mrp_proxy.label_job_ids]
         if remove_ids:
             job_pool.unlink(cr, uid, remove_ids, context=context)
@@ -309,6 +323,7 @@ class MrpProduction(orm.Model):
         # ---------------------------------------------------------------------
         # Sort sale order line:
         # ---------------------------------------------------------------------
+        _logger.info('Sort and regenerate new')
         sorted_order_line = sorted(
             mrp_proxy.order_line_ids,
             key= lambda x: (
@@ -368,6 +383,7 @@ class MrpProduction(orm.Model):
                     #'comment_error' # TODO
                     })
                 job_pool.create(cr, uid, record_data, context=context)
+        _logger.info('End job creation')
         return True
     
     def label_form_report(self, cr, uid, ids, context=None):
