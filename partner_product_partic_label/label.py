@@ -819,7 +819,7 @@ class ResPartner(orm.Model):
                     
         # Force if not present partner_code
         if company_product_partic:
-            partner_code = \ 
+            partner_code = \
                 partner_code or company_product_partic.partner_code or ''
             
         record.update({
@@ -907,7 +907,7 @@ class ResPartner(orm.Model):
         'has_custom_label': fields.boolean('Has custom label'),
         'partic_partner_code_id': fields.many2one(
             'res.partner', 'Partner partic code',
-            help='Partner linked for get customer product code in label')
+            help='Partner linked for get customer product code in label'),
        
         'label_partic_file': fields.char('Partic import file', size=80,
             help='Used for import export data in partner form'),
