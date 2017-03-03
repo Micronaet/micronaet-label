@@ -49,10 +49,12 @@ class Parser(report_sxw.rml_parse):
         uid = self.uid
         context = {}
 
-        res = []
-        
+        # Pool used:
         mrp_pool = self.pool.get('mrp.production')
         label_pool = self.pool.get('label.label.job')
+
+        res = []
+        
         jobs = o.label_job_ids
         placeholder = mrp_pool.get_placeholder_label(
             cr, uid, jobs, context=context)

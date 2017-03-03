@@ -125,14 +125,15 @@ class MrpProduction(orm.Model):
         break_level = {'article': False, 'package': False}
         old_id = {'article': False, 'package': False}
         label_total = {'article': 0, 'package': 0}
-        last_level = False
-        
+        last_level = {'article': False, 'package': False}
+
         job_type = False
         for job in jobs:
             job_type = job.type   
             
             if job_type not in break_level: 
                 _logger.error('No correct type of label')
+                continue # end?
                          
             # Break level type (3 cases):
             current_code = job.product_id.default_code
@@ -142,27 +143,37 @@ class MrpProduction(orm.Model):
             elif job.has_partner_custom:
                 level = (
                     current_code, 'partner', job.partner_id, False)
-            else:
-                level = (current_code, 'code')
-                
-            if break_level[job_type] == level:
+            else: # normal stock label
+                level = (current_code, 'code', False, False)
+            
+            # -----------------------------------------------------------------
+            # Check 3 states:
+            # -----------------------------------------------------------------                
+            # No break level:
+            if break_level[job_type] and break_level[job_type] == level:
                 label_total[job_type] += job.record_data_counter                
                 old_id[job_type] = job.id # update for keep last
-            else: # change
-                placeholder[old_id[job_type]] = (
-                    label_total[job_type],
-                    last_level, # save also break level
-                    )
+                
+            else:
+                # Break level:
+                if break_level[job_type]: # only for break not first loop
+                    placeholder[old_id[job_type]] = (
+                        label_total[job_type],
+                        last_level[job_type], # save also break level
+                        )             
+                        
+                # Common part fist loop and break level:
                 label_total[job_type] = job.record_data_counter
                 break_level[job_type] = level
-                last_level = level
+                last_level[job_type] = level
                 old_id[job_type] = job.id
-                
-        if jobs: # Write last record:
-            for job_type in ('article', 'package'):
+                    
+        for job_type in break_level:  
+            # Write last record:                          
+            if break_level[job_type]: 
                 placeholder[old_id[job_type]] = (
                     label_total[job_type],
-                    last_level,
+                    last_level[job_type],
                     )
         return placeholder        
     
