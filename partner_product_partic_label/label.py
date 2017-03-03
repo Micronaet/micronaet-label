@@ -764,10 +764,11 @@ class ResPartner(orm.Model):
             product_partic = False
 
         # Company partner parent (linked for get secondary code)        
-        if company.partic_partner_code_id:
+        if company.partner_id.partic_partner_code_id:
             # Now used only for partner extra code if not present
             company_product_partic = self.get_partic_partner_product_label(
-                cr, uid, company.partic_partner_code_id.id, False, 
+                cr, uid, product.id, 
+                company.partner_id.partic_partner_code_id.id, False, 
                 context=context)
         else:
             company_product_partic = False

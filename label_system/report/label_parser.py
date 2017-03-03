@@ -154,11 +154,12 @@ class Parser(report_sxw.rml_parse):
         
         # Field not present:        
         elif field_name not in record._columns:
-            #_logger.error('Field not present: %s' % field_name)
-            raise osv.except_osv(
-                _('Program error'), 
-                _('Field not present: %s' % field_name),
-                )      
+            _logger.error('Field not present: %s' % field_name)
+            # TODO for partner_code raise error but not present!
+            #raise osv.except_osv(
+            #    ('Program error'), 
+            #    ('Field not present: %s' % field_name),
+            #    )      
                   
         # Field (normale data)          
         else:
