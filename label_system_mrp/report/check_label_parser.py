@@ -39,8 +39,22 @@ class Parser(report_sxw.rml_parse):
         super(Parser, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'get_label_list': self.get_label_list,
+            'get_field_lang': self.get_field_lang,
             })
-            
+    
+    def get_field_lang(self, item_id, field, lang='en_US'):
+        ''' return field in italian and job in english
+        '''        
+        # Readability:
+        cr = self.cr
+        uid = self.uid
+        context = {'lang': lang, }
+       
+        # Pool used:
+        product_pool = self.pool.get('product.product')        
+        item_proxy = product_pool.browse(cr, uid, item_id, context=context)
+        return item_proxy.__getattribute__(field)
+
     def get_label_list(self, o, data=None):
         ''' List of all labels for reporting
         '''
