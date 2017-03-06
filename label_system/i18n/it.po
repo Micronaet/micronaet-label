@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-17 11:18+0000\n"
-"PO-Revision-Date: 2016-10-17 13:32+0100\n"
+"POT-Creation-Date: 2017-03-04 13:58+0000\n"
+"PO-Revision-Date: 2017-03-04 15:12+0100\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -29,14 +29,17 @@ msgid "Article"
 msgstr "Articolo"
 
 #. module: label_system
-#: field:label.label,code:0 field:label.layout,code:0
+#: field:label.label,code:0
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.layout,code:0
+#: view:product.product:label_system.view_product_product_label_data_form
 msgid "Code"
 msgstr "Codice"
 
 #. module: label_system
-#: view:label.label.job:label_system.view_label_label_job_form
-msgid "Code:"
-msgstr "Codice:"
+#: field:label.label.job,record_data_code:0
+msgid "Company code"
+msgstr "Codice aziendale"
 
 #. module: label_system
 #: model:ir.ui.menu,name:label_system.menu_label_label_configuration
@@ -61,14 +64,9 @@ msgid "Continue format"
 msgstr "Formato continuo"
 
 #. module: label_system
-#: field:label.label.job,record_counter:0
+#: field:label.label.job,record_data_counter:0
 msgid "Counter"
 msgstr "Contatore"
-
-#. module: label_system
-#: field:label.label.job,record_counter_pack_total:0
-msgid "Counter pack total"
-msgstr "Conteggio pacchi totali"
 
 #. module: label_system
 #: field:label.label,create_date:0 field:label.label.report,create_date:0
@@ -92,30 +90,33 @@ msgid "Created on"
 msgstr "Creato il "
 
 #. module: label_system
-#: field:label.label.job,record_customer_code:0
-msgid "Customer code"
-msgstr "Codice cliente"
-
-#. module: label_system
-#: field:label.label.job,record_customer_name:0
-msgid "Customer product name"
-msgstr "Nome prodotto cliente"
-
-#. module: label_system
 #: field:label.label.job,demo:0
 msgid "Demo"
 msgstr "Demo"
 
 #. module: label_system
 #: field:label.label,description:0
+#: view:label.label.job:label_system.view_label_label_job_form
+#: view:product.product:label_system.view_product_product_label_data_form
 msgid "Description"
 msgstr "Descrizione"
 
 #. module: label_system
 #: view:label.label:label_system.view_label_label_form
-#: view:label.label.job:label_system.view_label_label_job_form
 msgid "Description:"
 msgstr "Descrizione:"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_data_destination_code:0
+msgid "Destination code"
+msgstr "Codice destinazione"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_data_dimension:0
+msgid "Dimension"
+msgstr "Dimensione"
 
 #. module: label_system
 #: view:label.label:label_system.view_label_label_form
@@ -144,14 +145,45 @@ msgid "Draft state"
 msgstr "Stato bozza"
 
 #. module: label_system
-#: field:label.label.job,record_ean13:0
+#: view:label.label.job:label_system.view_label_label_job_form
+msgid "EAN"
+msgstr "EAN"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
 msgid "EAN 13"
 msgstr "EAN 13"
 
 #. module: label_system
-#: field:label.label.job,record_ean8:0
+#: view:label.label.job:label_system.view_label_label_job_form
 msgid "EAN 8"
 msgstr "EAN 8"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_data_ean13:0
+#: view:product.product:label_system.view_product_product_label_data_form
+msgid "EAN13"
+msgstr "EAN13"
+
+#. module: label_system
+#: field:label.label.job,record_data_ean13_mono:0
+#: view:product.product:label_system.view_product_product_label_data_form
+msgid "EAN13 single"
+msgstr "EAN13 singolo"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_data_ean8:0
+#: view:product.product:label_system.view_product_product_label_data_form
+msgid "EAN8"
+msgstr "EAN8"
+
+#. module: label_system
+#: field:label.label.job,record_data_ean8_mono:0
+#: view:product.product:label_system.view_product_product_label_data_form
+msgid "EAN8 single"
+msgstr "EAN8 singolo"
 
 #. module: label_system
 #: view:label.label:label_system.view_label_label_form
@@ -160,15 +192,15 @@ msgid "Enable"
 msgstr "Abilita"
 
 #. module: label_system
-#: code:addons/label_system/label.py:239
-#, python-format
-msgid "Error print"
-msgstr "Errore stampa"
-
-#. module: label_system
 #: view:label.label:label_system.view_label_label_form
 msgid "Extra info"
-msgstr "Extra info"
+msgstr "Info extra"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_data_fabric:0
+msgid "Fabric"
+msgstr "Tessuto"
 
 #. module: label_system
 #: view:label.label:label_system.view_label_label_form
@@ -191,12 +223,6 @@ msgid "Fast label:"
 msgstr "Etichetta veloce:"
 
 #. module: label_system
-#: code:addons/label_system/report/label_parser.py:116
-#, python-format
-msgid "Fast print"
-msgstr "Stampa veloce"
-
-#. module: label_system
 #: field:label.label,filename:0
 msgid "Filename"
 msgstr "Nome file"
@@ -207,14 +233,17 @@ msgid "For fixed text, data element will be loaded as setup"
 msgstr "Per testo fisso, gli elementi di dati saranno caricati come da setup"
 
 #. module: label_system
-#: help:label.label.job,record_counter_pack_total:0
+#: help:label.label.job,record_print_counter_pack_total:0
 msgid "For print in label: 1/25, 2/25... (reset every product)"
-msgstr "Per stampare nell'etichetta: 1/25, 2/25... (azzerato ogni prodotto)"
+msgstr ""
+"Per stampare nelle etichette la progressione: 1/25, 2/25... (si azzera ad "
+"ogni cambio prodotto)"
 
 #. module: label_system
-#: field:label.label.job,record_q_x_pack:0
-msgid "Force q. x pack"
-msgstr "Forza q. per scatola"
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_data_frame:0
+msgid "Frame"
+msgstr "Telaio"
 
 #. module: label_system
 #: view:label.label.job:label_system.view_label_label_job_form
@@ -242,6 +271,16 @@ msgstr "Altezza etichetta in mm."
 #: field:label.label.report,id:0 field:label.layout,id:0
 msgid "ID"
 msgstr "ID"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+msgid "Image"
+msgstr "Immagine"
+
+#. module: label_system
+#: help:res.partner,label_image:0
+msgid "Image logo used for label print"
+msgstr "Immagine logo utilizzate per stampa etichette"
 
 #. module: label_system
 #: field:label.label.report,job_ids:0
@@ -289,6 +328,16 @@ msgid "Label Manager"
 msgstr "Gestore etichette"
 
 #. module: label_system
+#: field:label.label.job,record_string_q_x_pack:0
+msgid "Label Q. x pack"
+msgstr "Etichetta q. x. scatola"
+
+#. module: label_system
+#: field:label.label.job,record_string_q_x_pallet:0
+msgid "Label Q. x pallet"
+msgstr "Etichetta Q. x bancale"
+
+#. module: label_system
 #: model:ir.model,name:label_system.model_label_label_report
 msgid "Label Report Job"
 msgstr "Stampa lavoro etichetta"
@@ -304,15 +353,55 @@ msgid "Label code"
 msgstr "Codice etichetta"
 
 #. module: label_system
+#: field:label.label.job,record_string_code:0
+msgid "Label company code"
+msgstr "Codice aziendale etichetta"
+
+#. module: label_system
+#: field:label.label.job,record_string_description:0
+msgid "Label company description"
+msgstr "Descrizione aziendale etichetta"
+
+#. module: label_system
+#: field:label.label.job,record_string_counter_pack_total:0
+msgid "Label counter pack"
+msgstr "Conteggio prodotti etichette"
+
+#. module: label_system
+#: field:label.label.job,record_string_destination_code:0
+msgid "Label destination code"
+msgstr "Codice destinazione etichetta"
+
+#. module: label_system
+#: field:label.label.job,record_string_dimension:0
+msgid "Label dimension"
+msgstr "Dimensione etichetta"
+
+#. module: label_system
 #: model:ir.actions.act_window,name:label_system.action_label_label_disabled
 #: model:ir.ui.menu,name:label_system.menu_label_label_inactive
 msgid "Label disabled"
 msgstr "Disabilita etichetta"
 
 #. module: label_system
+#: field:label.label.job,record_string_fabric:0
+msgid "Label fabric"
+msgstr "Tessuto per etichetta"
+
+#. module: label_system
 #: field:label.layout,name:0
 msgid "Label format"
 msgstr "Formato etichetta"
+
+#. module: label_system
+#: field:label.label.job,record_string_frame:0
+msgid "Label frame"
+msgstr "Telaio per etichetta"
+
+#. module: label_system
+#: field:res.partner,label_image:0
+msgid "Label image"
+msgstr "Immagine per etichetta"
 
 #. module: label_system
 #: model:ir.model,name:label_system.model_label_label_job
@@ -332,9 +421,54 @@ msgid "Label layout"
 msgstr "Layout etichetta"
 
 #. module: label_system
+#: field:label.label.job,record_string_lot:0
+msgid "Label lot"
+msgstr "Lotto etichetta"
+
+#. module: label_system
 #: model:ir.ui.menu,name:label_system.menu_label_label_root
 msgid "Label management"
 msgstr "Gestione etichetta"
+
+#. module: label_system
+#: field:label.label.job,record_string_order_date:0
+msgid "Label order date"
+msgstr "Data ordine etichetta"
+
+#. module: label_system
+#: field:label.label.job,record_string_order_ref:0
+msgid "Label order ref"
+msgstr "Rif. ordine etichetta"
+
+#. module: label_system
+#: field:label.label.job,record_string_parcel:0
+msgid "Label parcel"
+msgstr "Colli etichetta"
+
+#. module: label_system
+#: field:label.label.job,record_string_code_partner:0
+msgid "Label partner code"
+msgstr "Codice cliente etichetta"
+
+#. module: label_system
+#: field:label.label.job,record_string_description_partner:0
+msgid "Label partner description"
+msgstr "Descrizione cliente etichetta"
+
+#. module: label_system
+#: field:label.label.job,record_string_period:0
+msgid "Label period"
+msgstr "Periodo etichetta"
+
+#. module: label_system
+#: field:label.label.job,record_string_price:0
+msgid "Label price"
+msgstr "Prezzo etichetta"
+
+#. module: label_system
+#: field:label.label.job,record_string_line:0
+msgid "Label production line"
+msgstr "Linea di produzione etichetta"
 
 #. module: label_system
 #: model:ir.actions.act_window,name:label_system.action_label_label_report
@@ -347,6 +481,21 @@ msgstr "Report etichetta"
 #: model:ir.ui.menu,name:label_system.menu_label_label_draft
 msgid "Label to confirm"
 msgstr "Etichette da confermare"
+
+#. module: label_system
+#: field:label.label.job,record_string_volume:0
+msgid "Label volume"
+msgstr "Volume etichetta"
+
+#. module: label_system
+#: field:label.label.job,record_string_weight_lord:0
+msgid "Label weight lord"
+msgstr "Peso lordo etichetta"
+
+#. module: label_system
+#: field:label.label.job,record_string_weight_net:0
+msgid "Label weight net"
+msgstr "Peso netto etichetta"
 
 #. module: label_system
 #: view:label.label:label_system.view_label_label_search
@@ -388,7 +537,7 @@ msgid "Left interspace in mm."
 msgstr "Interspazio a sinistra in mm."
 
 #. module: label_system
-#: field:label.label.job,record_line:0
+#: view:label.label.job:label_system.view_label_label_job_form
 msgid "Line"
 msgstr "Linea"
 
@@ -399,25 +548,14 @@ msgstr "Dati collegati"
 
 #. module: label_system
 #: view:label.label.job:label_system.view_label_label_job_form
-msgid "Logo"
-msgstr "Logo"
+#: field:label.label.job,record_data_lot:0
+msgid "Lot"
+msgstr "Lotto"
 
 #. module: label_system
 #: field:label.label.report,name:0
 msgid "Name"
 msgstr "Nome"
-
-#. module: label_system
-#: code:addons/label_system/label.py:240
-#, python-format
-msgid "No DEMO label on label jobs"
-msgstr "Nessuna etichetta DEMO trovata nelle etichette stampabili"
-
-#. module: label_system
-#: code:addons/label_system/report/label_parser.py:117
-#, python-format
-msgid "No data for fast print"
-msgstr "Nessun dato per stampa veloce"
 
 #. module: label_system
 #: field:label.label,note:0 field:label.layout,note:0
@@ -431,20 +569,31 @@ msgid "Note:"
 msgstr "Note:"
 
 #. module: label_system
-#: help:label.label.job,record_counter:0
+#: help:label.label.job,record_data_counter:0
 msgid "Number of label printed"
 msgstr "Numero di etichette stampate"
 
 #. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+msgid "Numeric"
+msgstr "Numerico"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
 #: view:label.label.job:label_system.view_label_label_job_search
 #: field:label.label.job,order_id:0
 msgid "Order"
 msgstr "Ordine"
 
 #. module: label_system
-#: field:label.label.job,record_order_date:0
+#: field:label.label.job,record_data_order_date:0
 msgid "Order date"
 msgstr "Data ordine"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+msgid "Order date."
+msgstr "Data ordine."
 
 #. module: label_system
 #: field:label.label.job,line_id:0
@@ -452,8 +601,13 @@ msgid "Order line"
 msgstr "Riga ordine"
 
 #. module: label_system
-#: field:label.label.job,record_order_ref:0
+#: field:label.label.job,record_data_order_ref:0
 msgid "Order ref"
+msgstr "Rif. ordine"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+msgid "Order ref."
 msgstr "Rif. ordine"
 
 #. module: label_system
@@ -467,10 +621,10 @@ msgid "Pallet"
 msgstr "Bancale"
 
 #. module: label_system
-#: code:addons/label_system/label.py:103
-#, python-format
-msgid "Parameter error"
-msgstr "Errore parametro"
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_data_parcel:0
+msgid "Parcel"
+msgstr "Colli"
 
 #. module: label_system
 #: model:ir.model,name:label_system.model_res_partner
@@ -479,7 +633,19 @@ msgstr "Errore parametro"
 #: view:label.label.job:label_system.view_label_label_job_search
 #: field:label.label.job,partner_id:0
 msgid "Partner"
-msgstr "Partner"
+msgstr "Cliente"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_data_code_partner:0
+msgid "Partner code"
+msgstr "Codice cliente"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_data_description_partner:0
+msgid "Partner description"
+msgstr "Descrizione cliente"
 
 #. module: label_system
 #: help:res.partner,label_code:0
@@ -487,19 +653,8 @@ msgid "Partner label code, used for auto import partner"
 msgstr "Codice etichetta partner, utilizzato per auto importazione partner"
 
 #. module: label_system
-#: code:addons/label_system/label.py:93
-#, python-format
-msgid "Path are only datastore or import not %s"
-msgstr "Il percorso è solo datastore o import no: %s"
-
-#. module: label_system
-#: code:addons/label_system/label.py:92
-#, python-format
-msgid "Path error!"
-msgstr "Errore percorso!"
-
-#. module: label_system
-#: field:label.label.job,record_period:0
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_data_period:0
 msgid "Period"
 msgstr "Periodo"
 
@@ -507,6 +662,22 @@ msgstr "Periodo"
 #: selection:label.label,type:0 selection:label.label.job,type:0
 msgid "Placeholder"
 msgstr "Segnaposto"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_data_price:0
+msgid "Price"
+msgstr "Prezzo"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+msgid "Price UOM"
+msgstr "Valuta prezzo"
+
+#. module: label_system
+#: field:label.label.job,record_data_price_uom:0
+msgid "Price uom"
+msgstr "Valuta prezzo"
 
 #. module: label_system
 #: model:ir.ui.menu,name:label_system.menu_label_label_report_root
@@ -518,36 +689,173 @@ msgid "Print"
 msgstr "Stampa"
 
 #. module: label_system
+#: field:label.label.job,record_print_ean13:0
+msgid "Print EAN13"
+msgstr "Stampa EAN13"
+
+#. module: label_system
+#: field:label.label.job,record_print_ean8:0
+msgid "Print EAN8"
+msgstr "Stampa EAN8"
+
+#. module: label_system
+#: field:label.label.job,record_print_q_x_pack:0
+msgid "Print Q. x pack"
+msgstr "Stampa Q. x scatola"
+
+#. module: label_system
+#: field:label.label.job,record_print_q_x_pallet:0
+msgid "Print Q. x pallet"
+msgstr "Stampa Q. x bancale"
+
+#. module: label_system
+#: field:label.label.job,record_print_code:0
+msgid "Print company code"
+msgstr "Stampa codice aziendale"
+
+#. module: label_system
+#: field:label.label.job,record_print_description:0
+msgid "Print company description"
+msgstr "Stampa descrizione aziendale"
+
+#. module: label_system
 #: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_print_company_logo:0
+msgid "Print company logo"
+msgstr "Stampa logo aziendale"
+
+#. module: label_system
+#: field:label.label.job,record_print_counter_pack_total:0
+msgid "Print counter pack"
+msgstr "Stampa contatore pezzi"
+
+#. module: label_system
+#: field:label.label.job,record_print_destination_code:0
+msgid "Print destination code"
+msgstr "Stampa codice destinazione"
+
+#. module: label_system
+#: field:label.label.job,record_print_dimension:0
+msgid "Print dimension"
+msgstr "Stampa dimensione"
+
+#. module: label_system
+#: field:label.label.job,record_print_fabric:0
+msgid "Print fabric"
+msgstr "Stampa tessuto"
+
+#. module: label_system
+#: field:label.label.job,record_print_frame:0
+msgid "Print frame"
+msgstr "Stampa telaio"
+
+#. module: label_system
+#: field:label.label.job,record_print_linedrawing:0
+msgid "Print line drawing"
+msgstr "Stampa line-drawing"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+msgid "Print linedrawing"
+msgstr "Stampa linedrawing"
+
+#. module: label_system
+#: field:label.label.job,record_print_lot:0
+msgid "Print lot"
+msgstr "Stampa lotto"
+
+#. module: label_system
+#: field:label.label.job,record_print_order_date:0
+msgid "Print order date"
+msgstr "Stampa data ordine"
+
+#. module: label_system
+#: field:label.label.job,record_print_order_ref:0
+msgid "Print order ref"
+msgstr "Stampa rif. ordine"
+
+#. module: label_system
+#: field:label.label.job,record_print_parcel:0
+msgid "Print parcel"
+msgstr "Stampa colli"
+
+#. module: label_system
+#: field:label.label.job,record_print_code_partner:0
+msgid "Print partner code"
+msgstr "Stampa codice cliente"
+
+#. module: label_system
+#: field:label.label.job,record_print_description_partner:0
+msgid "Print partner description"
+msgstr "Stampa descrizione cliente"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_print_partner_logo:0
+msgid "Print partner logo"
+msgstr "Stampa logo cliente"
+
+#. module: label_system
+#: field:label.label.job,record_print_period:0
+msgid "Print period"
+msgstr "Stampa periodo"
+
+#. module: label_system
+#: field:label.label.job,record_print_price:0
+msgid "Print price"
+msgstr "Stampa prezzo"
+
+#. module: label_system
+#: field:label.label.job,record_print_price_uom:0
+msgid "Print price uom"
+msgstr "Stampa valuta prezzo"
+
+#. module: label_system
+#: field:label.label.job,record_print_line:0
+msgid "Print production line"
+msgstr "Stampa linea produzione"
+
+#. module: label_system
+#: field:label.label.job,record_print_volume:0
+msgid "Print volume"
+msgstr "Stampa volume"
+
+#. module: label_system
+#: field:label.label.job,record_print_weight_lord:0
+msgid "Print weight lord"
+msgstr "Stampa peso lordo"
+
+#. module: label_system
+#: field:label.label.job,record_print_weight_net:0
+msgid "Print weight net"
+msgstr "Stampa peso netto"
+
+#. module: label_system
 #: view:label.label.job:label_system.view_label_label_job_search
 #: field:label.label.job,product_id:0
 msgid "Product"
 msgstr "Prodotto"
 
 #. module: label_system
-#: field:label.label.job,record_code:0
-msgid "Product code"
-msgstr "Codice prodotto"
+#: view:label.label.job:label_system.view_label_label_job_form
+msgid "Product anagrafic"
+msgstr "Anagrafica prodotto"
 
 #. module: label_system
-#: field:label.label.job,record_color:0
-msgid "Product color"
-msgstr "Colore prodotto"
+#: model:ir.actions.act_window,name:label_system.action_product_product_label_data
+#: model:ir.ui.menu,name:label_system.menu_product_product_label_data
+msgid "Product data label"
+msgstr "Dati prodotto etichetta"
 
 #. module: label_system
-#: field:label.label.job,record_fabric:0
-msgid "Product fabric"
-msgstr "Tessuto prodotto"
+#: view:product.product:label_system.view_product_product_label_data_form
+msgid "Product label"
+msgstr "Etichetta prodotto"
 
 #. module: label_system
-#: field:label.label.job,record_frame:0
-msgid "Product frame"
-msgstr "Telaio prodotto"
-
-#. module: label_system
-#: field:label.label.job,record_name:0
-msgid "Product name"
-msgstr "Nome prodotto"
+#: view:product.product:label_system.view_product_product_label_data_tree
+msgid "Product lavel"
+msgstr "Etichetta prodotto"
 
 #. module: label_system
 #: view:label.label.job:label_system.view_label_label_job_form
@@ -557,14 +865,27 @@ msgid "Production"
 msgstr "Produzione"
 
 #. module: label_system
-#: help:label.label.job,record_line:0
+#: field:label.label.job,record_data_line:0
 msgid "Production line"
-msgstr "Linea produzione"
+msgstr "Linea di produzione"
 
 #. module: label_system
-#: help:label.label.job,record_period:0
+#: help:label.label.job,record_data_period:0
+#: help:label.label.job,record_print_period:0
 msgid "Production period YYMM  format es.: 1601"
-msgstr "Periodo produzione YYMM  formato es.: 1601"
+msgstr "Periodo di produzione YYWW formato es. Anno 16 settimana 14: 1614"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_data_q_x_pack:0
+msgid "Q. x pack"
+msgstr "Q. x imballo"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_data_q_x_pallet:0
+msgid "Q. x pallet"
+msgstr "Q. x bancale"
 
 #. module: label_system
 #: view:label.label.report:label_system.view_label_label_report_form
@@ -605,33 +926,27 @@ msgid "Set MRP"
 msgstr "Imposta etichetta MRP"
 
 #. module: label_system
-#: code:addons/label_system/label.py:104
-#, python-format
-msgid "Setup init parameter: %s"
-msgstr "Imposta paramerto iniziale: %s"
-
-#. module: label_system
 #: field:label.label,state:0
 msgid "State"
 msgstr "Stato"
 
 #. module: label_system
 #: view:label.label.job:label_system.view_label_label_job_form
-msgid "Static text"
-msgstr "Testo statico"
+msgid "Static"
+msgstr "Statico"
 
 #. module: label_system
-#: field:label.label.job,record_static_text1:0
+#: field:label.label.job,record_data_text1:0
 msgid "Static text 1"
 msgstr "Testo statico 1"
 
 #. module: label_system
-#: field:label.label.job,record_static_text2:0
+#: field:label.label.job,record_data_text2:0
 msgid "Static text 2"
 msgstr "Testo statico 2"
 
 #. module: label_system
-#: field:label.label.job,record_static_text3:0
+#: field:label.label.job,record_data_text3:0
 msgid "Static text 3"
 msgstr "Testo statico 3"
 
@@ -645,6 +960,26 @@ msgstr "Stato"
 #: view:label.label:label_system.view_label_label_tree
 msgid "Test label"
 msgstr "Etichetta di test"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+msgid "Text"
+msgstr "Testo"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+msgid "Text 1"
+msgstr "Testo 1"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+msgid "Text 2"
+msgstr "Testo 2"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+msgid "Text 3"
+msgstr "Testo 3"
 
 #. module: label_system
 #: help:label.layout,top:0
@@ -673,6 +1008,29 @@ msgid "Type of label"
 msgstr "Tipo etichetta"
 
 #. module: label_system
+#: view:product.product:label_system.view_product_product_label_data_form
+msgid "Value"
+msgstr "Valore"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_data_volume:0
+msgid "Volume"
+msgstr "Volume"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_data_weight_lord:0
+msgid "Weight lord"
+msgstr "Peso lordo"
+
+#. module: label_system
+#: view:label.label.job:label_system.view_label_label_job_form
+#: field:label.label.job,record_data_weight_net:0
+msgid "Weight net"
+msgstr "Peso netto"
+
+#. module: label_system
 #: field:label.layout,width:0
 msgid "Width"
 msgstr "Larghezza"
@@ -681,6 +1039,11 @@ msgstr "Larghezza"
 #: help:label.layout,width:0
 msgid "Width of label in mm."
 msgstr "Larghezza etichetta in mm."
+
+#. module: label_system
+#: field:label.label.job,record_data_description:0
+msgid "company description"
+msgstr "descrizione aziendale"
 
 #. module: label_system
 #: view:label.label.job:label_system.view_label_label_job_search
