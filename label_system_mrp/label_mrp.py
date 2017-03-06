@@ -253,7 +253,8 @@ class MrpProduction(orm.Model):
                 #_logger.error('ODT is not PDF for report!')
                 raise osv.except_osv(
                     _('Converter not working'), 
-                    _('Check PDF confert, report must be in PDF not ODT!'),
+                    _('Check PDF convert, report must PDF not ODT: %s' % (
+                        extension)),
                     )
                     
             # Generate file:    
