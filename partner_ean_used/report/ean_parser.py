@@ -39,7 +39,6 @@ class Parser(report_sxw.rml_parse):
     def get_partner_ean(self, o):
         ''' Search document for this partner and collect product ean
         '''
-        res = {}
         cr = self.cr
         uid = self.uid
         context = {}
@@ -64,4 +63,5 @@ class Parser(report_sxw.rml_parse):
             cr, uid, move_ids, context=context)])
         product_ids = tuple(set(product_ids))
         
-        return product_pool.browse(cr, uid, product_ids, context=context)
+        res = product_pool.browse(cr, uid, product_ids, context=context)
+        return sorted(res, key=lambda x: (x.default_code, x.name))
