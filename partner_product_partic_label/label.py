@@ -214,6 +214,7 @@ class ResPartner(orm.Model):
         def format_ean(value, mode=13):
             ''' Format EAN importing from excel
             '''
+            import pdb; pdb.set_trace()
             if not value:
                 return ''
             mask = '%%0%dd' % mode
