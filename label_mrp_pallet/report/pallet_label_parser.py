@@ -40,5 +40,56 @@ class Parser(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(Parser, self).__init__(cr, uid, name, context)
         self.localcontext.update({            
+            'get_report_single_label': self.get_report_single_label,
             })
+            
+    def get_report_single_label(self, o):
+        ''' Prepare report pallet for element
+        '''
+        import pdb; pdb.set_trace()
+        res = {}
+        for line in sorted(o.order_line_ids, key=lambda x: x.sequence):
+            # -----------------------------------------------------------------
+            # Has pallet label:
+            # -----------------------------------------------------------------
+            if not line.partner_id.has_pallet_label:
+                continue
+            product = line.product_id
+            
+            # -----------------------------------------------------------------
+            # Get q per pallet:
+            # -----------------------------------------------------------------
+            # Data used in quotation:
+            try:
+                item_per_pallet = int(product.item_per_pallet)
+            except:
+                item_per_pallet = 0
+            # Data used for label:
+            q_x_pallet = product.q_x_pallet or item_per_pallet
+            
+            # -----------------------------------------------------------------
+            # Partner address 
+            # -----------------------------------------------------------------
+            key = item.partner_id, item.address_id, item.product_id
+
+            if key not in res:
+                res[key] = [q_x_pallet, item.product_qty]
+        pallet = []
+        for key in res:
+            q_x_pallet, total = res[key]
+            loop = total \ q_x_pallet
+            if total % q_x_pallet != 0:
+                loop += 1
+            remain = total
+            for i in range(0, loop):
+                remain -= q_x_pallet
+                pallet.append((
+                    key, 
+                    remain if remain < p_x_pallet else q_x_pallet,
+                    ))
+        return pallet   
+                
+        
+            
+        return 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
