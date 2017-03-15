@@ -65,6 +65,7 @@ class Parser(report_sxw.rml_parse):
                 item_per_pallet = int(product.item_per_pallet)
             except:
                 item_per_pallet = 0
+            
             # Data used for label:
             q_x_pallet = product.q_x_pallet or item_per_pallet or \
                 default_q_x_pallet
@@ -89,7 +90,12 @@ class Parser(report_sxw.rml_parse):
 
         pallet = []
 
-        for key in res:
+        for key in sorted(res, key=lambda x: (
+                x[0].name, 
+                x[1].name if x[1] else '', 
+                x[2].default_code,
+                )):
+                
             q_x_pallet, total = res[key]
             loop = int(total / q_x_pallet)
             if int(total) % q_x_pallet != 0:
