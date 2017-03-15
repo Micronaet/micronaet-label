@@ -22,6 +22,7 @@
                                 <page string="Value">
                                     <group col="4" colspan="4">
                                         <field name="q_x_pack" />
+                                        <field name="q_x_pallet" />
                                     </group>
                                 </page>
                                 <page string="Code">

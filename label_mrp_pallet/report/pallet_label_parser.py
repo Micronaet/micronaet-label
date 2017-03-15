@@ -26,6 +26,7 @@ import sys
 import logging
 from openerp.report import report_sxw
 from openerp.report.report_sxw import rml_parse
+from openerp.osv import fields, osv, expression, orm
 from datetime import datetime, timedelta
 from openerp.tools.translate import _
 from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT, 
@@ -46,15 +47,14 @@ class Parser(report_sxw.rml_parse):
     def get_report_single_label(self, o):
         ''' Prepare report pallet for element
         '''
-        import pdb; pdb.set_trace()
         res = {}
-        for line in sorted(o.order_line_ids, key=lambda x: x.sequence):
+        for item in sorted(o.order_line_ids, key=lambda x: x.sequence):
             # -----------------------------------------------------------------
             # Has pallet label:
             # -----------------------------------------------------------------
-            if not line.partner_id.has_pallet_label:
+            if not item.partner_id.has_pallet_label:
                 continue
-            product = line.product_id
+            product = item.product_id
             
             # -----------------------------------------------------------------
             # Get q per pallet:
@@ -66,30 +66,45 @@ class Parser(report_sxw.rml_parse):
                 item_per_pallet = 0
             # Data used for label:
             q_x_pallet = product.q_x_pallet or item_per_pallet
+            if not q_x_pallet:
+                raise osv.except_osv(
+                    _('Q x pallet 0'), 
+                    _('No q x pallet in %s' % product.default_code),
+                    )
             
             # -----------------------------------------------------------------
             # Partner address 
             # -----------------------------------------------------------------
-            key = item.partner_id, item.address_id, item.product_id
+            key = (
+                item.partner_id, 
+                item.order_id.destination_partner_id, 
+                item.product_id,
+                item.order_id,
+                )
 
             if key not in res:
-                res[key] = [q_x_pallet, item.product_qty]
+                res[key] = [q_x_pallet, item.product_uom_qty]
+
         pallet = []
+
         for key in res:
             q_x_pallet, total = res[key]
-            loop = total \ q_x_pallet
-            if total % q_x_pallet != 0:
+            loop = int(total / q_x_pallet)
+            if int(total) % q_x_pallet != 0:
                 loop += 1
             remain = total
             for i in range(0, loop):
                 remain -= q_x_pallet
+                order_ref = key[3].client_order_ref.split('|')
+                if len(order_ref) == 2:
+                    order_ref = order_ref[-1]
+                else:
+                    order_ref = ''
                 pallet.append((
                     key, 
-                    remain if remain < p_x_pallet else q_x_pallet,
+                    remain if remain > 0 and remain < q_x_pallet else \
+                        q_x_pallet,
+                    order_ref
                     ))
-        return pallet   
-                
-        
-            
-        return 
+        return pallet
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
