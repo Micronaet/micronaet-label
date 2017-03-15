@@ -8,7 +8,10 @@
             <field name="arch" type="xml">
                 <xpath expr="//page[@string='Label']" position="after">
                     <page string="Pallet">
-                        <button name="%(action_link_pallet_creation)d" string="Assign pallet" type="action" />
+                        <group colspan="4" col="4">
+                            <field name="default_q_x_pallet" />
+                            <button name="%(action_link_pallet_creation)d" string="Assign pallet" type="action" />
+                        </group>
                         <field name="pallet_ids" nolabel="1" colspan="4">                            
                             <tree string="Pallet">
                                 <field name="code" />

@@ -83,6 +83,7 @@ class MrpProduction(orm.Model):
     _inherit = 'mrp.production'
     
     _columns = {
+        'default_q_x_pallet': fields.integer('Default q x pallet'),
         'pallet_ids': fields.one2many('label.pallet', 'mrp_id', 'Pallet'),
         }
 

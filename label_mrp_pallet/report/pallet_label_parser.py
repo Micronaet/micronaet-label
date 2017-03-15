@@ -48,6 +48,7 @@ class Parser(report_sxw.rml_parse):
         ''' Prepare report pallet for element
         '''
         res = {}
+        default_q_x_pallet = o.default_q_x_pallet
         for item in sorted(o.order_line_ids, key=lambda x: x.sequence):
             # -----------------------------------------------------------------
             # Has pallet label:
@@ -65,7 +66,8 @@ class Parser(report_sxw.rml_parse):
             except:
                 item_per_pallet = 0
             # Data used for label:
-            q_x_pallet = product.q_x_pallet or item_per_pallet
+            q_x_pallet = product.q_x_pallet or item_per_pallet or \
+                default_q_x_pallet
             if not q_x_pallet:
                 raise osv.except_osv(
                     _('Q x pallet 0'), 
