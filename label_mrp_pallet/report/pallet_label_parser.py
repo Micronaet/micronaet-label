@@ -100,9 +100,9 @@ class Parser(report_sxw.rml_parse):
             loop = int(total / q_x_pallet)
             if int(total) % q_x_pallet != 0:
                 loop += 1
-            remain = total
+            #remain = total
             for i in range(0, loop):
-                remain -= q_x_pallet
+                #remain -= q_x_pallet
                 order_ref = key[3].client_order_ref.split('|')
                 if len(order_ref) == 2:
                     order_ref = order_ref[-1]
@@ -110,8 +110,8 @@ class Parser(report_sxw.rml_parse):
                     order_ref = ''
                 pallet.append((
                     key, 
-                    remain if remain > 0 and remain < q_x_pallet else \
-                        q_x_pallet,
+                    0, #remain if remain > 0 and remain < q_x_pallet else \
+                    #    q_x_pallet,
                     order_ref
                     ))
         return pallet
