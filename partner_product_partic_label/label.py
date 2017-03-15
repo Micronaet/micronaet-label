@@ -906,6 +906,8 @@ class ResPartner(orm.Model):
 
     _columns = { 
         'has_custom_label': fields.boolean('Has custom label'),
+        'has_pallet_label': fields.boolean('Has pallet label'),
+        
         'partic_partner_code_id': fields.many2one(
             'res.partner', 'Partner partic code',
             help='Partner linked for get customer product code in label'),

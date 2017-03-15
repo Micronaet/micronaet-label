@@ -54,8 +54,6 @@
 		                            <label for="is_company" string="Is company?"/>
 		                            <field name="is_address" />
 		                            <label for="is_address" string="Is address?"/>				                                           
-                                    <field name="has_custom_label" />
-                                    <label for="has_custom_label" />
                                     )                                                    
 	                            </div>
 	                            <h1>
@@ -66,6 +64,10 @@
 	                            <field name="category_id" widget="many2many_tags" placeholder="Tags..." />
                             </div>
                             <field name="label_image" widget="image" nolabel="1" attrs="{'invisible': [('is_address','=',True)]}"/>
+                            <group colspan="4">
+                                <field name="has_custom_label" />
+                                <field name="has_pallet_label" />
+                            </group>
                             <notebook colspan="4" attrs="{'invisible': [('has_custom_label','=',False)]}">
                                 <page string="Product partic">
                                     <group col="4" colspan="4"> 
