@@ -246,8 +246,14 @@ class MrpProduction(orm.Model):
             # -----------------------------------------------------------------
             # Call report:            
             # -----------------------------------------------------------------
-            result, extension = openerp.report.render_report(
-                cr, uid, [job.id], report_name, datas, context)
+            try:
+                result, extension = openerp.report.render_report(
+                    cr, uid, [job.id], report_name, datas, context)
+            except:
+                _logger.error('Error generation report: %s' % (
+                    job.product_id.default_code,
+                    ))
+                continue
             
             if extension.upper() != 'PDF':
                 #_logger.error('ODT is not PDF for report!')
