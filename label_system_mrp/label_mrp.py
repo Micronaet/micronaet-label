@@ -191,9 +191,14 @@ class MrpProduction(orm.Model):
             context = {}
             
         mrp = self.browse(cr, uid, ids, context=context)[0]
+        
         out_path = '/home/administrator/photo/Label/pdf'
         temp_path = os.path.join(out_path, mrp.name) # '/tmp'
         os.system('mkdir -p %s' % temp_path) # Create temp folder
+        
+        print_command = r'c:\Program files ()\pdf.exe /t %s %s' 
+        batch_file = os.path.join(out_path, 'print_%s.bat' % mrp.name)
+        batch_f = open(batch_file, 'w')
         
         demo_mode = context.get('demo_mode', False)
         if demo_mode: 
@@ -295,6 +300,10 @@ class MrpProduction(orm.Model):
             out_pdf = PdfFileWriter()
             # For all files:
             for f in files:
+                # Create batch print command_
+                batch_f.write(
+                    '%s\r\n' % (print_command % (f, 'printer')))
+
                 # Open and append page:
                 in_pdf = PdfFileReader(open(f, 'rb'))
                 for page_num in range(in_pdf.numPages):
@@ -307,6 +316,7 @@ class MrpProduction(orm.Model):
                         _logger.warning('\n' * 50)
 
             out_pdf.write(open(pdf_filename, 'wb'))
+        batch_f.close()
         return True
                 
     def generate_label_job(self, cr, uid, ids, context=None):
