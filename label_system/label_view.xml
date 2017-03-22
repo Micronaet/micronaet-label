@@ -75,6 +75,10 @@
                             <field name="code"/>
                             <field name="name" />
 
+                            <field name="printer_id" />
+                            <newline/>
+                                                        
+                            <separator string="Dimension:" colspan="4"/>
                             <field name="width" />
                             <field name="height" />
                             
@@ -539,7 +543,42 @@
             <field name="context">{}</field>
             <field name="domain">[]</field>
         </record>
-        
+ 
+        <!--label.printer-->       
+        <record model="ir.ui.view" id="view_label_printer_form">
+            <field name="name">label.printer.form</field>
+            <field name="model">label.printer</field>
+            <field name="arch" type="xml">
+                <form string="Printer" version="7.0">        
+                    <sheet>
+                        <group col="4" colspan="4">
+                            <field name="name" />
+                            <field name="spooler_name" />
+                        </group>
+                    </sheet>        
+                </form>
+            </field>
+        </record> 
+        <record model="ir.ui.view" id="view_label_printer_tree">
+            <field name="name">label.printer.tree</field>
+            <field name="model">label.printer</field>
+            <field name="arch" type="xml">
+                <tree string="Printer" version="7.0">        
+                    <field name="name" />
+                    <field name="spooler_name" />
+                </tree>
+            </field>
+        </record> 
+        <record model="ir.actions.act_window" id="action_label_printer_form">
+            <field name="name">Printer</field>
+            <field name="res_model">label.printer</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_label_printer_tree"/>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+        </record>
+       
         <menuitem 
             parent="base.menu_base_partner" 
             id="menu_label_label_root"
@@ -610,6 +649,11 @@
                     action="action_label_layout"
                     sequence="10" 
                     />
+                <menuitem 
+                    parent="menu_label_label_configuration" 
+                    id="menu_label_printer_form_tree" 
+                    action="action_label_printer_form"/>
+                
     </data>
 </openerp>
 

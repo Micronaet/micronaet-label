@@ -3,4 +3,5 @@ access_label_label_user,label.label,model_label_label,base.group_user,1,1,1,1
 access_label_label_job_user,label.label.job,model_label_label_job,base.group_user,1,1,1,1
 access_label_label_report_user,label.label.report,model_label_label_report,base.group_user,1,1,1,1
 access_label_layout_user,label.layout,model_label_layout,base.group_user,1,1,1,1
+access_label_printer_user,label.printer,model_label_printer,base.group_user,1,1,1,1
 

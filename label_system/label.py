@@ -45,7 +45,34 @@ label_type = [
     ('placeholder', 'Placeholder'),
     ]
        
+class ResUsers(orm.Model):
+    """ Model name: ResUsers
+    """
+    
+    _inherit = 'res.users'
+
+    _columns = {
+        'print_label_command': fields.char('Print command', size=100),
+        'print_label_root': fields.char('Print root', size=100),
+        }
+        
+    _defaults = {
+        'print_label_command': lambda *x: ''
+        }
+    
 # TODO manage printer for direct report with CUPS?
+class LabelPrinters(orm.Model):
+    """ Model name: Label printers
+    """
+
+    _name = 'label.printer'
+    _description = 'Label printer'
+
+    _columns = {    
+        'name': fields.char('Label format', size=64, required=True),
+        'spooler_name': fields.char('Spooler name', size=80, required=True), 
+        }    
+
 class LabelLabel(orm.Model):
     """ Model name: Label master object
     """
@@ -69,7 +96,11 @@ class LabelLabel(orm.Model):
         'left': fields.float('Height', help='Left interspace in mm.'),        
 
         # Numer of label:
-        'total': fields.integer('Total', help='Total label per row'),        
+        'total': fields.integer('Total', help='Total label per row'),
+        
+        # Printer:
+        'printer_id': fields.many2one(
+            'label.printer', 'Printer', required=True),
         }    
 
 class LabelLabel(orm.Model):
