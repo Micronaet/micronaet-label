@@ -193,7 +193,7 @@ class MrpProduction(orm.Model):
         mrp = self.browse(cr, uid, ids, context=context)[0]
         out_path = '/home/administrator/photo/Label/pdf'
         temp_path = os.path.join(out_path, mrp.name) # '/tmp'
-        os.system('mkdir -p %s' temp_path) # Create temp folder
+        os.system('mkdir -p %s' % temp_path) # Create temp folder
         
         demo_mode = context.get('demo_mode', False)
         if demo_mode: 
