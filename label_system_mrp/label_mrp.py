@@ -191,14 +191,17 @@ class MrpProduction(orm.Model):
             context = {}
             
         mrp = self.browse(cr, uid, ids, context=context)[0]
+        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
         
         out_path = '/home/administrator/photo/Label/pdf'
         temp_path = os.path.join(out_path, mrp.name) # '/tmp'
         os.system('mkdir -p %s' % temp_path) # Create temp folder
         
-        print_command = r'c:\Program files ()\pdf.exe /t %s %s' 
+        print_command = '%s %%s %%s' % user.print_label_command
+        label_root = user.print_label_root or ''
         batch_file = os.path.join(out_path, 'print_%s.bat' % mrp.name)
         batch_f = open(batch_file, 'w')
+        
         
         demo_mode = context.get('demo_mode', False)
         if demo_mode: 
@@ -271,15 +274,19 @@ class MrpProduction(orm.Model):
                     )
                     
             # Generate file:    
+            f_pdf = '%ssingle_job_%s_%s.%s' % (
+                'DEMO_' if demo_mode else '',
+                pdf_id,
+                job.mrp_id.name,
+                extension,
+                )   
             filename = os.path.join(
                 temp_path, 
-                '%ssingle_job_%s_%s.%s' % (
-                    'DEMO_' if demo_mode else '',
-                    pdf_id,
-                    job.mrp_id.name,
-                    extension,
-                ))
-            report_pdf[layout].append(filename) # for merge procedure
+                f_pdf,
+                )
+                
+            report_pdf[layout].append(
+                (filename, single_pdf_name)) # for merge procedure
                 
             file_pdf = open(filename, 'w') # XXX binary?
             file_pdf.write(result)
@@ -299,10 +306,13 @@ class MrpProduction(orm.Model):
             
             out_pdf = PdfFileWriter()
             # For all files:
-            for f in files:
+            for (f, f_pdf) in files:
                 # Create batch print command_
-                batch_f.write(
-                    '%s\r\n' % (print_command % (f, 'printer')))
+                batch_f.write('%s\r\n' % (
+                    print_command % (
+                        '"%s"' % label_root, f_pdf, 
+                        layout.printer_id.spooler_name,
+                        )))
 
                 # Open and append page:
                 in_pdf = PdfFileReader(open(f, 'rb'))
