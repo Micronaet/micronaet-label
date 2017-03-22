@@ -190,12 +190,14 @@ class MrpProduction(orm.Model):
         if context is None:
             context = {}
             
+        mrp = self.browse(cr, uid, ids, context=context)[0]
         out_path = '/home/administrator/photo/Label/pdf'
-        temp_path = '/tmp'
+        temp_path = os.path.join(out_path, mrp.name) # '/tmp'
+        os.system('mkdir -p %s' temp_path) # Create temp folder
         
         demo_mode = context.get('demo_mode', False)
         if demo_mode: 
-            _logger.info('Demo mode for PDF generation')        
+            _logger.info('Demo mode for PDF generation') 
         else:
             _logger.info('Normal mode for PDF generation')        
         
@@ -205,8 +207,9 @@ class MrpProduction(orm.Model):
         
         # ---------------------------------------------------------------------
         # Get placeholder informations:
-        # ---------------------------------------------------------------------
-        jobs = self.browse(cr, uid, ids, context=context).label_job_ids
+        # ---------------------------------------------------------------------        
+        jobs = mrp.label_job_ids 
+        #self.browse(cr, uid, ids, context=context).label_job_ids        
         # TODO sort by sequence?
         placeholder = self.get_placeholder_label(
             cr, uid, jobs, context=context)
