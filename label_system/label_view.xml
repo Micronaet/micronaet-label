@@ -579,6 +579,42 @@
             <field name="context">{}</field>
             <field name="domain">[]</field>
         </record>
+        <!--res.users-->       
+        <record model="ir.ui.view" id="view_res_users_form">
+            <field name="name">res.users.form</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <form string="User" version="7.0">        
+                    <sheet>
+                        <group col="4" colspan="4">
+                            <field name="name" readonly="1"/>
+                            <field name="print_label_command" />
+                            <field name="print_label_root" />
+                        </group>
+                    </sheet>        
+                </form>
+            </field>
+        </record> 
+        <record model="ir.ui.view" id="view_res_users_tree">
+            <field name="name">res.users.form</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <tree string="User" version="7.0">        
+                    <field name="name" readonly="1"/>
+                    <field name="print_label_command" />
+                    <field name="print_label_root" />
+                </tree>
+            </field>
+        </record> 
+        <record model="ir.actions.act_window" id="action_user_setup_form">
+            <field name="name">User printer</field>
+            <field name="res_model">res.users</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_res_users_tree"/>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+        </record>
        
         <menuitem 
             parent="base.menu_base_partner" 
@@ -654,6 +690,11 @@
                     parent="menu_label_label_configuration" 
                     id="menu_label_printer_form_tree" 
                     action="action_label_printer_form"/>
+                <menuitem 
+                    parent="menu_label_label_configuration" 
+                    id="menu_user_setup_configuration" 
+                    action="action_user_setup_form"/>
+                
                 
     </data>
 </openerp>

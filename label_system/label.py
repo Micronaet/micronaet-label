@@ -47,8 +47,7 @@ label_type = [
        
 class ResUsers(orm.Model):
     """ Model name: ResUsers
-    """
-    
+    """    
     _inherit = 'res.users'
 
     _columns = {
@@ -56,9 +55,11 @@ class ResUsers(orm.Model):
         'print_label_root': fields.char('Print root', size=100),
         }
         
-    _defaults = {
-        'print_label_command': lambda *x: ''
-        }
+    #_defaults = {
+    #    'print_label_command': lambda *x: 
+    #        r'"c:\program files (x86)\Foxit PhantomPDF\FoxitPhantomPDF.exe" /t',
+    #    'print_label_root': lambda *x: r'l:\', 
+    #    }
     
 # TODO manage printer for direct report with CUPS?
 class LabelPrinters(orm.Model):
