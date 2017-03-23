@@ -584,7 +584,7 @@
             <field name="name">res.users.form</field>
             <field name="model">res.users</field>
             <field name="priority" evel="40"/>
-s            <field name="arch" type="xml">
+            <field name="arch" type="xml">
                 <form string="User" version="7.0">        
                     <sheet>
                         <group col="4" colspan="4">
