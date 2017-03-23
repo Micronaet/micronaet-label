@@ -300,6 +300,7 @@ class MrpProduction(orm.Model):
         for layout, files in report_pdf.iteritems():            
             # Open batch file for this format:
             batch_f = open(batch_file % (layout.code or layout.name), 'w')        
+            os.chmod(batch_file, 0o777)
             batch_f.write(
                 '@echo Stampa etichette stampante: %s\r\n@pause\r\n' % layout.code)
             
@@ -346,7 +347,6 @@ class MrpProduction(orm.Model):
                         _logger.warning('\n' * 50)
 
             batch_f.close()
-            os.system('chmod 777 %s' % batch_file)
             out_pdf.write(open(pdf_filename, 'wb'))
         return True
                 
