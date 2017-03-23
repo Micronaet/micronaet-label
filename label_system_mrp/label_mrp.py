@@ -299,7 +299,7 @@ class MrpProduction(orm.Model):
         # ---------------------------------------------------------------------
         for layout, files in report_pdf.iteritems():            
             # Open batch file for this format:
-            bath_name = batch_file % (layout.code or layout.name)
+            batch_name = batch_file % (layout.code or layout.name)
             batch_f = open(batch_name, 'w')        
             os.chmod(batch_name, 0o777)
             batch_f.write(
