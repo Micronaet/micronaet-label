@@ -301,7 +301,7 @@ class MrpProduction(orm.Model):
             # Open batch file for this format:
             batch_f = open(batch_file % (layout.code or layout.name), 'w')        
             batch_f.write(
-                '@echo Stampa etichette stampante: %s\r\n\r\n' % layout.code)
+                '@echo Stampa etichette stampante: %s\r\n@pause\r\n' % layout.code)
             
             
             pdf_filename = os.path.join(
