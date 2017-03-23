@@ -57,6 +57,10 @@ class ResUsers(orm.Model):
             'Print pause', help='Insert batch pause'),
         }
     
+    _defaults = {
+        'print_with_pause': lambda *x: True,
+        }    
+    
 # TODO manage printer for direct report with CUPS?
 class LabelPrinters(orm.Model):
     """ Model name: Label printers
