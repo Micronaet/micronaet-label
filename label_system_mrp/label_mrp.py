@@ -200,7 +200,7 @@ class MrpProduction(orm.Model):
         # Batch parameter:
         pause_command = 'pause'
         
-        print_command_mask = '%s %%s %%s' % user.print_label_command
+        print_command_mask = '%s "%%s" "%%s"' % user.print_label_command
         label_root = user.print_label_root or ''        
         
         batch_file = os.path.join(out_path, 'print_%%s_%s.bat' % mrp.name)
@@ -326,7 +326,7 @@ class MrpProduction(orm.Model):
                     )
                     
                 # Write in bacth file:
-                batch_f.write('@%s\r\n@"%s"\r\n@"%s"\r\n\r\n' % (
+                batch_f.write('@%s\r\n@%s\r\n@%s\r\n\r\n' % (
                     echo_command, 
                     print_command,
                     pause_command,    
