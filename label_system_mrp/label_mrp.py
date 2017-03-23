@@ -198,7 +198,7 @@ class MrpProduction(orm.Model):
         os.system('mkdir -p %s' % temp_path) # Create temp folder
         
         # Batch parameter:
-        pause_command = '\r\npause'
+        pause_command = 'pause'
         
         print_command_mask = '%s %%s %%s' % user.print_label_command
         label_root = user.print_label_root or ''        
@@ -299,7 +299,11 @@ class MrpProduction(orm.Model):
         # ---------------------------------------------------------------------
         for layout, files in report_pdf.iteritems():            
             # Open batch file for this format:
-            batch_f = open(batch_file % layout, 'w')        
+            batch_f = open(batch_file % (layout.code or layout.name), 'w')        
+            batch_f.write(
+                '@echo Stampa etichette stampante: %s' % layout.code)
+            
+            
             
             pdf_filename = os.path.join(
                 out_path,
@@ -323,7 +327,7 @@ class MrpProduction(orm.Model):
                     )
                     
                 # Write in bacth file:
-                batch_f.write('@%s@%s@%s\r\n' % (
+                batch_f.write('@%s\r\n@%s\r\n@%s\r\n\r\n' % (
                     echo_command, 
                     print_command,
                     pause_command,    
