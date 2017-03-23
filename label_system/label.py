@@ -53,13 +53,9 @@ class ResUsers(orm.Model):
     _columns = {
         'print_label_command': fields.char('Print command', size=100),
         'print_label_root': fields.char('Print root', size=100),
+        'print_with_pause': fields.boolean(
+            'Print pause', help='Insert batch pause'),
         }
-        
-    #_defaults = {
-    #    'print_label_command': lambda *x: 
-    #        r'"c:\program files (x86)\Foxit PhantomPDF\FoxitPhantomPDF.exe" /t',
-    #    'print_label_root': lambda *x: r'l:\', 
-    #    }
     
 # TODO manage printer for direct report with CUPS?
 class LabelPrinters(orm.Model):

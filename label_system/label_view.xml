@@ -589,6 +589,7 @@
                     <sheet>
                         <group col="4" colspan="4">
                             <field name="name" readonly="1"/>
+                            <field name="print_with_pause" />
                             <field name="print_label_command" />
                             <field name="print_label_root" />
                         </group>
@@ -602,6 +603,7 @@
             <field name="priority" eval="40"/>
             <field name="arch" type="xml">
                 <tree string="User" version="7.0">        
+                    <field name="print_with_pause" />
                     <field name="name" readonly="1"/>
                     <field name="print_label_command" />
                     <field name="print_label_root" />
