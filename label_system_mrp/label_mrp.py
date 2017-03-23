@@ -318,7 +318,7 @@ class MrpProduction(orm.Model):
                 # Generate commend:
                 echo_comand = 'echo Print job: %s' % f_pdf
                 print_command = print_command % (
-                    '"%s"' % label_root, f_pdf, 
+                    '"%s%s"' % label_root, f_pdf, 
                     layout.printer_id.spooler_name,
                     )
                     
