@@ -203,7 +203,7 @@ class MrpProduction(orm.Model):
         print_command_mask = '%s %%s %%s' % user.print_label_command
         label_root = user.print_label_root or ''        
         
-        batch_file = os.path.join(out_path, 'print%%s_%s.bat' % mrp.name)
+        batch_file = os.path.join(out_path, 'print_%%s_%s.bat' % mrp.name)
         
         demo_mode = context.get('demo_mode', False)
         if demo_mode: 
@@ -304,7 +304,6 @@ class MrpProduction(orm.Model):
                 '@echo Stampa etichette stampante: %s' % layout.code)
             
             
-            
             pdf_filename = os.path.join(
                 out_path,
                 '%s%s_%s.pdf' % (
@@ -322,12 +321,12 @@ class MrpProduction(orm.Model):
                 # Generate commend:
                 echo_command = 'echo Print job: %s' % f_pdf
                 print_command = print_command_mask % (
-                    '"%s%s"' % (label_root, f_pdf),
+                    '%s%s' % (label_root, f_pdf),
                     layout.printer_id.spooler_name,
                     )
                     
                 # Write in bacth file:
-                batch_f.write('@%s\r\n@%s\r\n@%s\r\n\r\n' % (
+                batch_f.write('@%s\r\n@"%s"\r\n@"%s"\r\n\r\n' % (
                     echo_command, 
                     print_command,
                     pause_command,    
