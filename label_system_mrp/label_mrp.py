@@ -288,7 +288,7 @@ class MrpProduction(orm.Model):
                 )
                 
             report_pdf[layout].append(
-                (filename, single_pdf_name)) # for merge procedure
+                (filename, f_pdf)) # for merge procedure
                 
             file_pdf = open(filename, 'w') # XXX binary?
             file_pdf.write(result)
