@@ -198,8 +198,8 @@ class MrpProduction(orm.Model):
         os.system('mkdir -p %s' % temp_path) # Create temp folder
         
         # Batch parameter:
-        pause_command = 'pause'
-        
+        pause_command = 'pause\r\n' if user.print_with_pause else ''
+
         print_command_mask = '%s "%%s" "%%s"' % user.print_label_command
         label_root = user.print_label_root or ''        
         
@@ -328,7 +328,7 @@ class MrpProduction(orm.Model):
                     )
                     
                 # Write in bacth file:
-                batch_f.write('@%s\r\n@%s\r\n@%s\r\n\r\n' % (
+                batch_f.write('@%s\r\n@%s\r\n@%s\r\n' % (
                     echo_command, 
                     print_command,
                     pause_command,    
