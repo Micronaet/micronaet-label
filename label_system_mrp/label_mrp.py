@@ -297,7 +297,6 @@ class MrpProduction(orm.Model):
         # ---------------------------------------------------------------------
         # Merge PDF file in one:
         # ---------------------------------------------------------------------
-        import pdb; pdb.set_trace()
         for layout, files in report_pdf.iteritems():            
             # Open batch file for this format:
             batch_f = open(batch_file % layout, 'w')        
