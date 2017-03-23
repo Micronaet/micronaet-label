@@ -197,11 +197,13 @@ class MrpProduction(orm.Model):
         temp_path = os.path.join(out_path, mrp.name) # '/tmp'
         os.system('mkdir -p %s' % temp_path) # Create temp folder
         
-        print_command = '%s %%s %%s' % user.print_label_command
-        label_root = user.print_label_root or ''
-        batch_file = os.path.join(out_path, 'print_%s.bat' % mrp.name)
-        batch_f = open(batch_file, 'w')
+        # Batch parameter:
+        pause_command = '\r\npause'
         
+        print_command = '%s %%s %%s' % user.print_label_command
+        label_root = user.print_label_root or ''        
+        
+        batch_file = os.path.join(out_path, 'print%%s_%s.bat' % mrp.name)
         
         demo_mode = context.get('demo_mode', False)
         if demo_mode: 
@@ -221,7 +223,7 @@ class MrpProduction(orm.Model):
         # TODO sort by sequence?
         placeholder = self.get_placeholder_label(
             cr, uid, jobs, context=context)
-
+        
         for job in jobs:
             pdf_id += 1 
             label = job.label_id
@@ -295,7 +297,11 @@ class MrpProduction(orm.Model):
         # ---------------------------------------------------------------------
         # Merge PDF file in one:
         # ---------------------------------------------------------------------
-        for layout, files in report_pdf.iteritems():
+        import pdb; pdb.set_trace()
+        for layout, files in report_pdf.iteritems():            
+            # Open batch file for this format:
+            batch_f = open(batch_file % layout, 'w')        
+            
             pdf_filename = os.path.join(
                 out_path,
                 '%s%s_%s.pdf' % (
@@ -306,15 +312,27 @@ class MrpProduction(orm.Model):
             
             out_pdf = PdfFileWriter()
             # For all files:
-            for (f, f_pdf) in files:
-                # Create batch print command_
-                batch_f.write('%s\r\n' % (
-                    print_command % (
-                        '"%s"' % label_root, f_pdf, 
-                        layout.printer_id.spooler_name,
-                        )))
+            for (f, f_pdf) in files:            
+                # -------------------------------------------------------------
+                # Batch command:
+                # -------------------------------------------------------------
+                # Generate commend:
+                echo_comand = 'echo Print job: %s' % f_pdf
+                print_command = print_command % (
+                    '"%s"' % label_root, f_pdf, 
+                    layout.printer_id.spooler_name,
+                    )
+                    
+                # Write in bacth file:
+                batch_f.write('@%s@%s@%s\r\n' % (
+                    echo_command, 
+                    print_command,
+                    pause_command,    
+                    ))
 
+                # -------------------------------------------------------------
                 # Open and append page:
+                # -------------------------------------------------------------
                 in_pdf = PdfFileReader(open(f, 'rb'))
                 for page_num in range(in_pdf.numPages):
                     page = in_pdf.getPage(page_num)
@@ -325,8 +343,8 @@ class MrpProduction(orm.Model):
                         _logger.warning('Remove blank page!')
                         _logger.warning('\n' * 50)
 
+            batch_f.close()
             out_pdf.write(open(pdf_filename, 'wb'))
-        batch_f.close()
         return True
                 
     def generate_label_job(self, cr, uid, ids, context=None):
