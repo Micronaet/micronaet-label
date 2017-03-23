@@ -299,8 +299,9 @@ class MrpProduction(orm.Model):
         # ---------------------------------------------------------------------
         for layout, files in report_pdf.iteritems():            
             # Open batch file for this format:
-            batch_f = open(batch_file % (layout.code or layout.name), 'w')        
-            os.chmod(batch_file, 0o777)
+            bath_name = batch_file % (layout.code or layout.name)
+            batch_f = open(batch_name, 'w')        
+            os.chmod(batch_name, 0o777)
             batch_f.write(
                 '@echo Stampa etichette stampante: %s\r\n@pause\r\n' % layout.code)
             
