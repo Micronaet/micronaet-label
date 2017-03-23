@@ -200,7 +200,7 @@ class MrpProduction(orm.Model):
         # Batch parameter:
         pause_command = '\r\npause'
         
-        print_command = '%s %%s %%s' % user.print_label_command
+        print_command_mask = '%s %%s %%s' % user.print_label_command
         label_root = user.print_label_root or ''        
         
         batch_file = os.path.join(out_path, 'print%%s_%s.bat' % mrp.name)
@@ -316,9 +316,8 @@ class MrpProduction(orm.Model):
                 # Batch command:
                 # -------------------------------------------------------------
                 # Generate commend:
-                import pdb; pdb.set_trace()
                 echo_command = 'echo Print job: %s' % f_pdf
-                print_command = print_command % (
+                print_command = print_command_mask % (
                     '"%s%s"' % (label_root, f_pdf),
                     layout.printer_id.spooler_name,
                     )
