@@ -346,6 +346,7 @@ class MrpProduction(orm.Model):
                         _logger.warning('\n' * 50)
 
             batch_f.close()
+            os.system('chmod 777 %s' % batch_file)
             out_pdf.write(open(pdf_filename, 'wb'))
         return True
                 
