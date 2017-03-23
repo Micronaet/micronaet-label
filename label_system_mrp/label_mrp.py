@@ -301,7 +301,7 @@ class MrpProduction(orm.Model):
             # Open batch file for this format:
             batch_f = open(batch_file % (layout.code or layout.name), 'w')        
             batch_f.write(
-                '@echo Stampa etichette stampante: %s' % layout.code)
+                '@echo Stampa etichette stampante: %s\r\n\r\n' % layout.code)
             
             
             pdf_filename = os.path.join(
@@ -319,7 +319,7 @@ class MrpProduction(orm.Model):
                 # Batch command:
                 # -------------------------------------------------------------
                 # Generate commend:
-                echo_command = 'echo Print job: %s\r\n\r\n' % f_pdf
+                echo_command = 'echo Print job: %s' % f_pdf
                 print_command = print_command_mask % (
                     '%s%s' % (label_root, f_pdf),
                     layout.printer_id.spooler_name,
