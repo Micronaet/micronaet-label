@@ -583,7 +583,7 @@
         <record model="ir.ui.view" id="view_res_users_form">
             <field name="name">res.users.form</field>
             <field name="model">res.users</field>
-            <field name="priority" evel="40"/>
+            <field name="priority" eval="40"/>
             <field name="arch" type="xml">
                 <form string="User" version="7.0">        
                     <sheet>
@@ -599,7 +599,7 @@
         <record model="ir.ui.view" id="view_res_users_tree">
             <field name="name">res.users.form</field>
             <field name="model">res.users</field>
-            <field name="priority" evel="40"/>
+            <field name="priority" eval="40"/>
             <field name="arch" type="xml">
                 <tree string="User" version="7.0">        
                     <field name="name" readonly="1"/>
