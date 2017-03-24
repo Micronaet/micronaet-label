@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-       <record model="ir.ui.view" id="view_product_product_ean_import_form">
+       <!--<record model="ir.ui.view" id="view_product_product_ean_import_form">
            <field name="name">product.product.ean.import.form</field>
            <field name="model">product.product</field>
            <field name="inherit_id" ref="product.product_normal_form_view"/>
@@ -16,7 +16,7 @@
                    </group>
                </field>
            </field>
-       </record>
+       </record>-->
     </data>
 </openerp>
 
