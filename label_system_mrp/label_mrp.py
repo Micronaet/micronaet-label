@@ -257,7 +257,7 @@ class MrpProduction(orm.Model):
                         })
         
             # -----------------------------------------------------------------
-            # Call report:            
+            # Call report:
             # -----------------------------------------------------------------
             try:
                 result, extension = openerp.report.render_report(
