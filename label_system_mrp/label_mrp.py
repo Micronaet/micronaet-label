@@ -315,13 +315,16 @@ class MrpProduction(orm.Model):
                     ))
             
             out_pdf = PdfFileWriter()
+            
             # For all files:
+            i = 0
             for (f, f_pdf) in files:            
                 # -------------------------------------------------------------
                 # Batch command:
                 # -------------------------------------------------------------
-                # Generate commend:
-                echo_command = 'echo Print job: %s' % f_pdf
+                # Generate command:
+                i += 1
+                echo_command = 'echo %s. Print job: %s' % (i, f_pdf)
                 print_command = print_command_mask % (
                     r'%s%s\%s' % (label_root, mrp.name, f_pdf),
                     layout.printer_id.spooler_name,
