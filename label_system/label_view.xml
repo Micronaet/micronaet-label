@@ -592,6 +592,13 @@
                             <field name="print_with_pause" />
                             <field name="print_label_command" />
                             <field name="print_label_root" />
+                            <separator string="Command for layout" colspan="4"/>
+                            <field name="layout_ids" colspan="4" nolabel="1">
+                                <tree string="Command for layout" editable="bottom">
+                                    <field name="layout_id"  />
+                                    <field name="print_label_command" />
+                                </tree>
+                            </field>
                         </group>
                     </sheet>        
                 </form>

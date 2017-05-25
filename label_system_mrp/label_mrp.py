@@ -200,9 +200,16 @@ class MrpProduction(orm.Model):
         # Batch parameter:
         pause_command = '@pause\r\n' if user.print_with_pause else ''
 
-        print_command_mask = '%s "%%s" "%%s"' % user.print_label_command
-        label_root = user.print_label_root or ''        
+        # Default command:
+        print_command_mask = '%s "%s" "%s"' #% user.print_label_command
+        print_label_command = user.print_label_command
         
+        # Custom command depend on layout:
+        layout_ids = {}
+        for custom in user.layout_ids:
+            layout_ids[custom.layout_id.id] = custom.print_label_command
+            
+        label_root = user.print_label_root or ''        
         batch_file = os.path.join(out_path, 'print_%%s_%s.bat' % mrp.name)
         
         demo_mode = context.get('demo_mode', False)
@@ -297,6 +304,7 @@ class MrpProduction(orm.Model):
         # ---------------------------------------------------------------------
         # Merge PDF file in one:
         # ---------------------------------------------------------------------
+        import pdb; pdb.set_trace()
         for layout, files in report_pdf.iteritems():            
             # Open batch file for this format:
             batch_name = batch_file % (layout.code or layout.name)
@@ -325,7 +333,13 @@ class MrpProduction(orm.Model):
                 # Generate command:
                 i += 1
                 echo_command = 'echo %s. Print job: %s' % (i, f_pdf)
+                if layout.id in layout_ids: # custom layout command
+                    exe_command = layout_ids[layout.id]
+                else:
+                    exe_command = print_label_command
+
                 print_command = print_command_mask % (
+                    exe_command,
                     r'%s%s\%s' % (label_root, mrp.name, f_pdf),
                     layout.printer_id.spooler_name,
                     )

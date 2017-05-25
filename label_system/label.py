@@ -45,22 +45,6 @@ label_type = [
     ('placeholder', 'Placeholder'),
     ]
        
-class ResUsers(orm.Model):
-    """ Model name: ResUsers
-    """    
-    _inherit = 'res.users'
-
-    _columns = {
-        'print_label_command': fields.char('Print command', size=100),
-        'print_label_root': fields.char('Print root', size=100),
-        'print_with_pause': fields.boolean(
-            'Print pause', help='Insert batch pause'),
-        }
-    
-    _defaults = {
-        'print_with_pause': lambda *x: True,
-        }    
-    
 # TODO manage printer for direct report with CUPS?
 class LabelPrinters(orm.Model):
     """ Model name: Label printers
@@ -687,5 +671,39 @@ class ResPartnerLabel(orm.Model):
         'label_image': fields.binary('Label image', 
             help='Image logo used for label print'),
         }
+
+class LabelLayoutUser(orm.Model):
+    """ Model name: LabelLayoutUser
+    """    
+    _name = 'label.layout.user'
+    _description = 'User layout'
+    _rec_name = 'print_label_command'
+    _order = 'print_label_command'
+    
+    _columns = {
+        'print_label_command': fields.char(
+            'Print command', size=100, required=True),
+        'user_id': fields.many2one('res.users', 'User'),
+        'layout_id': fields.many2one(
+            'label.layout', 'Layout', required=True),
+        }
+
+class ResUsers(orm.Model):
+    """ Model name: ResUsers
+    """    
+    _inherit = 'res.users'
+
+    _columns = {
+        'print_label_command': fields.char('Print default command', size=100),
+        'print_label_root': fields.char('Print root', size=100),
+        'print_with_pause': fields.boolean(
+            'Print pause', help='Insert batch pause'),
+        'layout_ids': fields.one2many(
+            'label.layout.user', 'user_id', 'Command for layout'),
+        }
+    
+    _defaults = {
+        'print_with_pause': lambda *x: True,
+        }    
        
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
