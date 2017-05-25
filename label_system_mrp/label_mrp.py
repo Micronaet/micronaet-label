@@ -304,7 +304,6 @@ class MrpProduction(orm.Model):
         # ---------------------------------------------------------------------
         # Merge PDF file in one:
         # ---------------------------------------------------------------------
-        import pdb; pdb.set_trace()
         for layout, files in report_pdf.iteritems():            
             # Open batch file for this format:
             batch_name = batch_file % (layout.code or layout.name)
@@ -312,7 +311,6 @@ class MrpProduction(orm.Model):
             os.chmod(batch_name, 0o777)
             batch_f.write(
                 '@echo Stampa etichette stampante: %s\r\n@pause\r\n' % layout.code)
-            
             
             pdf_filename = os.path.join(
                 out_path,
