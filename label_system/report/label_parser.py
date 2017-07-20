@@ -50,9 +50,28 @@ class Parser(report_sxw.rml_parse):
             'get_placeholder': self.get_placeholder,
             #'get_report_placeholder': self.get_report_placeholder,
             'load': self.load,
+            'date_reformat': self.date_reformat,
             # TODO load_image function for extra image        
         })
 
+    def date_reformat(self, date_iso, date_format='it'):
+        ''' Return ISO date in format
+            date_format: 
+                'it': 'GG/MM/AAAA'
+                # TODO 
+        '''
+        if not date_iso:
+            return ''
+        if date_format.lower() == 'it': 
+            return '%s/%s/%s' % (
+                date_iso[:4],
+                date_iso[5:7],
+                date_iso[8:10],
+                )
+        else:
+            _logger.error('No format passed or managed %s!' % date_format)
+            return date_iso
+                
     def get_placeholder(self, data, field=False):
         ''' Get placeholder if present
         '''
