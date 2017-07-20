@@ -614,7 +614,7 @@ class LabelLabelJob(orm.Model):
         'record_data_lot': fields.char('Lot', size=15),
         
         # Order:
-        'record_data_order_ref': fields.char('Order ref', size=20), # customer
+        'record_data_order_ref': fields.char('Order ref', size=40), # customer
         'record_data_order_date': fields.char('Order date', size=10),
         'record_data_order_deadline': fields.char('Order deadline', size=10),
         'record_data_destination_code': fields.char(

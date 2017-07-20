@@ -850,7 +850,7 @@ class ResPartner(orm.Model):
             'record_data_q_x_pallet': product.q_x_pallet or '',
             'record_data_dimension': '%sx%sx%s' % (
                 product.height, product.width, product.length) if (
-                    product.height and product.width and product.lenght) else\
+                    product.height and product.width and product.length) else\
                         '',
             'record_data_volume': product.volume,
             'record_data_weight_net': product.weight_net,
