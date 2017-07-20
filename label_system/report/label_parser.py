@@ -54,19 +54,30 @@ class Parser(report_sxw.rml_parse):
             # TODO load_image function for extra image        
         })
 
-    def date_reformat(self, date_iso, date_format='it'):
+    def date_reformat(self, date_iso, date_format='it', separator='/'):
         ''' Return ISO date in format
             date_format: 
-                'it': 'GG/MM/AAAA'
+                'it': 'GG/MM/AA'
+                'IT': 'GG/MM/AA'
                 # TODO 
         '''
         if not date_iso:
             return ''
-        if date_format.lower() == 'it': 
-            return '%s/%s/%s' % (
-                date_iso[:4],
+        if date_format == 'it': 
+            return '%s%s%s%s%s' % (
                 date_iso[5:7],
+                separator,
                 date_iso[8:10],
+                separator,
+                date_iso[2:4],
+                )
+        if date_format == 'IT': 
+            return '%s%s%s%s%s' % (
+                date_iso[5:7],
+                separator,
+                date_iso[8:10],
+                separator,
+                date_iso[:4],
                 )
         else:
             _logger.error('No format passed or managed %s!' % date_format)
