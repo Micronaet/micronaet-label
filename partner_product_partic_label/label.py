@@ -468,6 +468,7 @@ class ResPartner(orm.Model):
             address = line.order_id.destination_partner_id
             order = line.order_id
             mrp = line.mrp_id
+            deadline = line.date_deadline or order.date_deadline or ''
 
             # Create record of m2o                
             record = {
@@ -485,6 +486,7 @@ class ResPartner(orm.Model):
             address_id = parameter.get('address_id', False)
             order_id = parameter.get('order_id', False)
             mrp_id = parameter.get('mrp_id', False)
+            deadline = order_id.order_deadline or ''
             
             # Check mandatory ID (else no data for label)
             if product_id:
@@ -541,7 +543,7 @@ class ResPartner(orm.Model):
         # Check parameter in partner address form:
         # ---------------------------------------------------------------------
         # Check and label string from address or partner setup:
-        record.update({
+        record.update({            
             # -----------------------------------------------------------------
             # Extra data:
             # -----------------------------------------------------------------
@@ -617,6 +619,9 @@ class ResPartner(orm.Model):
             'record_string_order_date': get_label(
                 company, partner, address, 
                 'label_string_order_date'), 
+            'record_string_order_deadline': get_label(
+                company, partner, address, 
+                'label_string_order_deadline'), 
             'record_string_destination_code': get_label(
                 company, partner, address, 
                 'label_string_destination_code'), 
@@ -706,6 +711,9 @@ class ResPartner(orm.Model):
             'record_print_order_date': get_state_value(
                 company, partner, address, 
                 'label_print_order_date'),
+            'record_print_order_deadline': get_state_value(
+                company, partner, address, 
+                'label_print_order_deadline'),
             'record_print_destination_code': get_state_value(
                 company, partner, address, 
                 'label_print_destination_code'),
@@ -878,6 +886,7 @@ class ResPartner(orm.Model):
             # -----------------------------------------------------------------
             'record_data_order_ref': order.client_order_ref or '', #label_order
             'record_data_order_date': order.date_order[:10],
+            'record_data_order_deadline': deadline, # 2 case (at begin of proc)
             'record_data_destination_code': order.destination_partner_id.ref\
                 if order.destination_partner_id else '',
                 
@@ -907,6 +916,7 @@ class ResPartner(orm.Model):
     _columns = { 
         'has_custom_label': fields.boolean('Has custom label'),
         'has_pallet_label': fields.boolean('Has pallet label'),
+        # TODO add here partner ref!
         
         'partic_partner_code_id': fields.many2one(
             'res.partner', 'Partner partic code',
@@ -986,6 +996,8 @@ class ResPartner(orm.Model):
             size=40, translate=True), # customer
         'label_string_order_date': fields.char('String order date', 
             size=40, translate=True),
+        'label_string_order_deadline': fields.char('String order deadline', 
+            size=40, translate=True),
         'label_string_destination_code': fields.char(
             'String destination code', 
             size=40, translate=True),
@@ -1057,6 +1069,8 @@ class ResPartner(orm.Model):
             'Print order ref'), # customer
         'label_print_order_date': fields.selection(get_tri_state, 
             'Print order date'),
+        'label_print_order_deadline': fields.selection(get_tri_state, 
+            'Print order deadline'),
         'label_print_destination_code': fields.selection(get_tri_state,             
             'Print destination code'),
             

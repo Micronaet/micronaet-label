@@ -511,6 +511,8 @@ class LabelLabelJob(orm.Model):
             size=40, translate=True), # customer
         'record_string_order_date': fields.char('Label order date', 
             size=40, translate=True),
+        'record_string_order_deadline': fields.char('Label order deadline', 
+            size=40, translate=True),
         'record_string_destination_code': fields.char(
             'Label destination code', 
             size=40, translate=True),
@@ -560,6 +562,7 @@ class LabelLabelJob(orm.Model):
         # Order:
         'record_print_order_ref': fields.boolean('Print order ref'), # customer
         'record_print_order_date': fields.boolean('Print order date'),
+        'record_print_order_deadline': fields.boolean('Print order deadline'),
         'record_print_destination_code': fields.boolean(
             'Print destination code'),
             
@@ -613,6 +616,7 @@ class LabelLabelJob(orm.Model):
         # Order:
         'record_data_order_ref': fields.char('Order ref', size=20), # customer
         'record_data_order_date': fields.char('Order date', size=10),
+        'record_data_order_deadline': fields.char('Order deadline', size=10),
         'record_data_destination_code': fields.char(
             'Destination code', size=10),
             

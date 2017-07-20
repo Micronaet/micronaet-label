@@ -202,8 +202,10 @@
                                                 <group col="6" colspan="4"> 
                                                     <field name="label_print_line" />
                                                     <field name="label_string_line" nolabel="1" placeholder="String..."/>
+                                                    
                                                     <field name="label_print_period" />
                                                     <field name="label_string_period" nolabel="1" placeholder="String..."/>                                                    
+                                                    
                                                     <field name="label_print_lot" />
                                                     <field name="label_string_lot" nolabel="1" placeholder="String..."/>
                                                 </group>
@@ -212,8 +214,13 @@
                                                 <group col="6" colspan="4"> 
                                                     <field name="label_print_order_ref" />
                                                     <field name="label_string_order_ref" nolabel="1" placeholder="String..."/>
+                                                    
                                                     <field name="label_print_order_date" />                                                    
                                                     <field name="label_string_order_date" nolabel="1" placeholder="String..."/>
+                                                    
+                                                    <field name="label_print_order_deadline" />                                                    
+                                                    <field name="label_string_order_deadline" nolabel="1" placeholder="String..."/>
+                                                    
                                                     <field name="label_print_destination_code" />
                                                     <field name="label_string_destination_code" nolabel="1" placeholder="String..."/>
                                                 </group>

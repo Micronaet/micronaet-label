@@ -398,9 +398,13 @@
                                         <field name="record_string_order_ref" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
                                         <field name="record_data_order_ref" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
 
-                                        <field name="record_print_order_date" string="Order date." attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_print_order_date" string="Order date" attrs="{'readonly': [('fast','=',False)]}"/>
                                         <field name="record_string_order_date" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
                                         <field name="record_data_order_date" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+
+                                        <field name="record_print_order_deadline" string="Order deadline" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_string_order_deadline" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_order_deadline" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
 
                                         <field name="record_print_destination_code" string="Destination code" attrs="{'readonly': [('fast','=',False)]}"/>
                                         <field name="record_string_destination_code" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
