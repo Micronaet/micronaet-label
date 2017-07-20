@@ -580,8 +580,8 @@ class LabelLabelJob(orm.Model):
         # Data field:
         # -----------
         # Anagrafic text:
-        'record_data_code': fields.char('Company code', size=20),
-        'record_data_code_partner': fields.char('Partner code', size=20),
+        'record_data_code': fields.char('Company code', size=30),
+        'record_data_code_partner': fields.char('Partner code', size=30),
         'record_data_description': fields.char(
             'company description', size=60),
         'record_data_description_partner': fields.char(
@@ -593,7 +593,7 @@ class LabelLabelJob(orm.Model):
         # TODO change float
         'record_data_q_x_pack': fields.char('Q. x pack', size=10),
         'record_data_q_x_pallet': fields.char('Q. x pallet', size=10),
-        'record_data_dimension': fields.char('Dimension', size=35),
+        'record_data_dimension': fields.char('Dimension', size=45),
         'record_data_volume': fields.char('Volume', size=10),
         'record_data_weight_net': fields.char('Weight net', size=10),
         'record_data_weight_lord': fields.char('Weight lord', size=10),
@@ -614,11 +614,11 @@ class LabelLabelJob(orm.Model):
         'record_data_lot': fields.char('Lot', size=15),
         
         # Order:
-        'record_data_order_ref': fields.char('Order ref', size=40), # customer
+        'record_data_order_ref': fields.char('Order ref', size=50), # customer
         'record_data_order_date': fields.char('Order date', size=10),
         'record_data_order_deadline': fields.char('Order deadline', size=10),
         'record_data_destination_code': fields.char(
-            'Destination code', size=10),
+            'Destination code', size=20),
             
         # Image:
         # XXX Note: used related elements
