@@ -180,8 +180,7 @@ class Parser(report_sxw.rml_parse):
             elif field == 'partner_logo':
                 return record.partner_id.label_image
             elif field == 'linedrawing':
-                #return '' # TODO manage linedrawing
-                return record.product_id.linedrawing
+                return record.product_id.wireframe
             else:
                 return ''
         
