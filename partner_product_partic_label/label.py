@@ -887,8 +887,9 @@ class ResPartner(orm.Model):
             'record_data_order_ref': order.client_order_ref or '', #label_order
             'record_data_order_date': order.date_order[:10],
             'record_data_order_deadline': deadline, # 2 case (at begin of proc)
-            'record_data_destination_code': order.destination_partner_id.ref\
-                if order.destination_partner_id else '',
+            'record_data_destination_code': 
+                order.destination_partner_id.label_destination_code\
+                    if order.destination_partner_id else '', # XXX only address
                 
             # -----------------------------------------------------------------
             #                               IMAGES:
@@ -914,6 +915,12 @@ class ResPartner(orm.Model):
         return record        
 
     _columns = { 
+        # Data for label:
+        'label_destination_code': fields.char(
+            'Label destination code', size=30, 
+            help='Partner destination code, used for print in label'),
+
+        # Parameters:
         'has_custom_label': fields.boolean('Has custom label'),
         'has_pallet_label': fields.boolean('Has pallet label'),
         # TODO add here partner ref!
