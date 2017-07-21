@@ -33,6 +33,11 @@
                                         <field name="ean8_mono" string="EAN8 single"/>
                                     </group>
                                 </page>
+                                <page string="Description">
+                                    <group col="4" colspan="4">
+                                        <field name="wireframe" widget="image" readonly="1" />
+                                    </group>
+                                </page>
                             </notebook>
                         </group>
                     </sheet>        

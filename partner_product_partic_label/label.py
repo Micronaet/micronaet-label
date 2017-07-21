@@ -538,7 +538,7 @@ class ResPartner(orm.Model):
                 }
 
         company = partner.company_id # Common reference
-                
+
         # ---------------------------------------------------------------------
         # Check parameter in partner address form:
         # ---------------------------------------------------------------------

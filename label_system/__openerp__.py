@@ -42,6 +42,7 @@
         'ean_single',
         
         'label_system_extra_fields', # extra fields used
+        'product_wireframe_image', # Linedrawing
         ],
     'init_xml': [],
     'demo': [],
