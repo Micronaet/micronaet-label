@@ -33,9 +33,9 @@
                                         <field name="ean8_mono" string="EAN8 single"/>
                                     </group>
                                 </page>
-                                <page string="Description">
+                                <page string="Linedrawing">
                                     <group col="4" colspan="4">
-                                        <field name="wireframe" widget="image" readonly="1" />
+                                        <field name="wireframe" widget="image" readonly="1" nolabel="1"/>
                                     </group>
                                 </page>
                             </notebook>
