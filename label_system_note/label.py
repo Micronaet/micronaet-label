@@ -82,9 +82,10 @@ class NoteNote(orm.Model):
         if label_ids:
             if len(label_ids) > 1:
                 _logger.error('More than one label!') # do nothing
-            return self.browse(
-                cr, uid, label_ids, context=context)[0].label_id.id
-        return False
+            note_proxy = self.browse(
+                cr, uid, label_ids, context=context)[0]
+            return note_proxy.label_id.id, note_proxy.print_moltiplicator or 1
+        return False, 1
 
     def get_label_from_order_line(self, cr, uid, line, category, context=None):
         ''' Read line and explode other data, search label and return better
@@ -112,19 +113,19 @@ class NoteNote(orm.Model):
         # Order and line:
         # ---------------
         # 1. Search sale order line label
-        label_id = self.search_label_presence(cr, uid, [
+        label_id, print_moltiplicator = self.search_label_presence(cr, uid, [
             ('line_id', '=', line.id),
             ], category, context=None)
         if label_id:
-            return label_id
+            return label_id, print_moltiplicator
 
         # 2. Search order label
-        label_id = self.search_label_presence(cr, uid, [
+        label_id, print_moltiplicator = self.search_label_presence(cr, uid, [
             ('order_id', '=', order.id),
             ('line_id', '=', False), # no line particularity
             ], category, context=context)
         if label_id:
-            return label_id
+            return label_id, print_moltiplicator
 
         # ----------------
         # Address present:
@@ -132,30 +133,32 @@ class NoteNote(orm.Model):
         # TODO choose label partner and address depend on has_custom_label
         if address:
             # 3A. Search product with address
-            label_id = self.search_label_presence(cr, uid, [
-                ('product_id', '=', product.id),
-                ('address_id', '=', address.id),
-                ('order_id', '=', False),
-                ('line_id', '=', False),            
-                ], category, context=context)
+            label_id, print_moltiplicator = self.search_label_presence(
+                cr, uid, [
+                    ('product_id', '=', product.id),
+                    ('address_id', '=', address.id),
+                    ('order_id', '=', False),
+                    ('line_id', '=', False),            
+                    ], category, context=context)
             if label_id:
-                return label_id
+                return label_id, print_moltiplicator
 
             # 3B. Search address
-            label_id = self.search_label_presence(cr, uid, [
-                ('address_id', '=', address.id),
-                ('product_id', '=', False),
-                ('order_id', '=', False),
-                ('line_id', '=', False),            
-                ], category, context=context)
+            label_id, print_moltiplicator = self.search_label_presence(
+                cr, uid, [
+                    ('address_id', '=', address.id),
+                    ('product_id', '=', False),
+                    ('order_id', '=', False),
+                    ('line_id', '=', False),            
+                    ], category, context=context)
             if label_id:
-                return label_id
+                return label_id, print_moltiplicator
 
         # ---------------
         # Partner search:
         # ---------------
         # 4A. Search product with partner
-        label_id = self.search_label_presence(cr, uid, [
+        label_id, print_moltiplicator = self.search_label_presence(cr, uid, [
             ('product_id', '=', product.id),
             ('partner_id', '=', partner.id),
             ('address_id', '=', False),
@@ -163,10 +166,10 @@ class NoteNote(orm.Model):
             ('line_id', '=', False),            
             ], category, context=context)
         if label_id:
-            return label_id
+            return label_id, print_moltiplicator
 
         # 4B. Search partner
-        label_id = self.search_label_presence(cr, uid, [
+        label_id, print_moltiplicator = self.search_label_presence(cr, uid, [
             ('partner_id', '=', partner.id),
             ('product_id', '=', False),
             ('address_id', '=', False),
@@ -174,13 +177,13 @@ class NoteNote(orm.Model):
             ('line_id', '=', False),            
             ], category, context=context)
         if label_id:
-            return label_id
+            return label_id, print_moltiplicator
 
         # ---------------
         # Product search:
         # ---------------
         # 5. Search product label: XXX more priority from partner default!
-        label_id = self.search_label_presence(cr, uid, [
+        label_id, print_moltiplicator = self.search_label_presence(cr, uid, [
             ('product_id', '=', product.id),
             ('partner_id', '=', False),
             ('address_id', '=', False),
@@ -188,7 +191,7 @@ class NoteNote(orm.Model):
             ('line_id', '=', False),            
             ], category, context=context)
         if label_id:
-            return label_id
+            return label_id, print_moltiplicator
         
         # ---------------
         # Company search:
@@ -196,7 +199,7 @@ class NoteNote(orm.Model):
         # XXX Note: no partner address elements!
         company_id = partner.company_id.partner_id.id   
         # 6A. Search company label with product:
-        label_id = self.search_label_presence(cr, uid, [
+        label_id, print_moltiplicator = self.search_label_presence(cr, uid, [
             ('product_id', '=', product.id),
             ('partner_id', '=', company_id),
             ('address_id', '=', False),
@@ -204,10 +207,10 @@ class NoteNote(orm.Model):
             ('line_id', '=', False),            
             ], category, context=context)
         if label_id:
-            return label_id
+            return label_id, print_moltiplicator
 
         # 6B. Search company label with product:
-        label_id = self.search_label_presence(cr, uid, [
+        label_id, print_moltiplicator = self.search_label_presence(cr, uid, [
             ('product_id', '=', False),
             ('partner_id', '=', company_id),
             ('address_id', '=', False),
@@ -215,10 +218,10 @@ class NoteNote(orm.Model):
             ('line_id', '=', False),            
             ], category, context=context)
         if label_id:
-            return label_id
+            return label_id, print_moltiplicator
 
         _logger.error('No label found!')
-        return False # raise error    
+        return False, False # raise error    
         
     _columns = {
         'print_label': fields.boolean('Label note'),

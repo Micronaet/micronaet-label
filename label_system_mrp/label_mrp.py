@@ -419,8 +419,10 @@ class MrpProduction(orm.Model):
                 # Search 3 label depend on note system management:
                 # -------------------------------------------------------------
                 # TODO generate label_id with system note management!
-                label_id = note_pool.get_label_from_order_line(
-                    cr, uid, line, label, context=context)
+                label_id, print_moltiplicator = \
+                    note_pool.get_label_from_order_line(
+                        cr, uid, line, label, context=context)
+                
                 report_id = False # TODO
                 
                 # -------------------------------------------------------------
@@ -439,6 +441,7 @@ class MrpProduction(orm.Model):
                     else:    
                         record_data_counter = line.product_uom_qty
                         # XXX Note: q_x_pack Remain false in job
+                record_data_counter *= print_moltiplicator # moltiplicator 
                 
                 # -------------------------------------------------------------
                 # Create Job:            
@@ -453,7 +456,7 @@ class MrpProduction(orm.Model):
                     'fast': False,
                     
                     'record_data_counter': record_data_counter,
-
+                    'print_moltiplicator': print_moltiplicator or 1,
                     #'error': # TODO
                     #'comment_error' # TODO
                     })

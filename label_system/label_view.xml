@@ -277,6 +277,7 @@
                             <field name="report_id" readonly="1" attrs="{'readonly': [('fast','=',False)]}"/>
                             <field name="lang_id" widget="selection" attrs="{'readonly': [('fast','=',False)]}"/>
                             <field name="layout_id" widget="selection" attrs="{'readonly': [('fast','=',False)]}"/>
+                            <field name="print_moltiplicator" attrs="{'readonly': [('fast','=',False)]}" />
                             <field name="record_print_counter_pack_total" attrs="{'readonly': [('fast','=',False)]}"/>
                             
                             <notebook colspan="4">

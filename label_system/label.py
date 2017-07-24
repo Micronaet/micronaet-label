@@ -420,6 +420,7 @@ class LabelLabelJob(orm.Model):
         'demo': fields.boolean('Demo'), 
         'fast': fields.boolean('Fast label', 
             help='Job that is never cleaned, used sometimes for print direct'),
+        'print_moltiplicator': fields.integer('Print multiplicator'),
         
         'has_partner_custom': fields.boolean('Partner custom',
             help='Has partner custom data or label'),
