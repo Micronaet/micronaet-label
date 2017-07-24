@@ -63,7 +63,7 @@
 	                            <field name="partic_partner_code_id" context="{'form_view_ref': 'partner_product_partic_label.view_res_partner_label_form'}"/>
 	                            <field name="category_id" widget="many2many_tags" placeholder="Tags..." />
                             </div>
-                            <field name="label_image" widget="image" nolabel="1" attrs="{'invisible': [('is_address','=',True)]}"/>
+                            <field name="label_image" widget="image" nolabel="1" /><!--attrs="{'invisible': [('is_address','=',True)]}"-->
                             <group colspan="6" col="6">
                                 <field name="has_custom_label" />
                                 <field name="has_pallet_label" />

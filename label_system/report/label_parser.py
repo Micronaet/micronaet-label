@@ -178,7 +178,11 @@ class Parser(report_sxw.rml_parse):
             if field == 'company_logo':
                 return record.partner_id.company_id.partner_id.label_image
             elif field == 'partner_logo':
-                return record.partner_id.label_image
+                try: # First address logo:
+                    image_logo = record.address_id.label_image
+                except:     
+                    image_logo = False               
+                return image_logo or record.partner_id.label_image
             elif field == 'linedrawing':
                 return record.product_id.wireframe
             else:
