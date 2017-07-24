@@ -611,6 +611,9 @@ class ResPartner(orm.Model):
             'record_string_lot': get_label(
                 company, partner, address, 
                 'label_string_lot'),
+            'record_string_mrp_date': get_label(
+                company, partner, address, 
+                'label_string_mrp_date'),
                 
             # Order:
             'record_string_order_ref': get_label(
@@ -703,6 +706,9 @@ class ResPartner(orm.Model):
             'record_print_lot': get_state_value(
                 company, partner, address, 
                 'label_print_lot'), 
+            'record_print_mrp_date': get_state_value(
+                company, partner, address, 
+                'label_print_mrp_date'), 
             
             # Order:
             'record_print_order_ref': get_state_value(
@@ -880,6 +886,7 @@ class ResPartner(orm.Model):
                     DEFAULT_SERVER_DATE_FORMAT,
                     ).isocalendar()[1]),
             'record_data_lot': mrp.name.replace('MO', '').lstrip('0'),
+            'record_data_mrp_date': mrp.date_planned[:10],
             
             # -----------------------------------------------------------------
             #                               ORDER:
@@ -997,6 +1004,8 @@ class ResPartner(orm.Model):
             size=40, translate=True, help='YYMM of production'),
         'label_string_lot': fields.char('String lot', 
             size=40, translate=True, help='MRP number'),
+        'label_string_mrp_date': fields.char('String MRP date', 
+            size=40, translate=True, help='Production date'),
         
         # Order:
         'label_string_order_ref': fields.char('String order ref', 
@@ -1070,6 +1079,8 @@ class ResPartner(orm.Model):
             help='Production period YYMM  format es.: 1601'),
         'label_print_lot': fields.selection(get_tri_state, 
             'Print lot'),
+        'label_print_mrp_date': fields.selection(get_tri_state, 
+            'Print MRP date'),
         
         # Order:
         'label_print_order_ref': fields.selection(get_tri_state, 

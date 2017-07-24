@@ -65,17 +65,17 @@ class Parser(report_sxw.rml_parse):
             return ''
         if date_format == 'it': 
             return '%s%s%s%s%s' % (
-                date_iso[5:7],
-                separator,
                 date_iso[8:10],
+                separator,
+                date_iso[5:7],
                 separator,
                 date_iso[2:4],
                 )
         if date_format == 'IT': 
             return '%s%s%s%s%s' % (
-                date_iso[5:7],
-                separator,
                 date_iso[8:10],
+                separator,
+                date_iso[5:7],
                 separator,
                 date_iso[:4],
                 )

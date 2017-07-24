@@ -505,6 +505,8 @@ class LabelLabelJob(orm.Model):
             size=40, translate=True),
         'record_string_lot': fields.char('Label lot', 
             size=40, translate=True),
+        'record_string_mrp_date': fields.char('Label prod. date', 
+            size=40, translate=True),
         
         # Order:
         'record_string_order_ref': fields.char('Label order ref', 
@@ -558,6 +560,8 @@ class LabelLabelJob(orm.Model):
         'record_print_period': fields.boolean('Print period',
             help='Production period YYMM  format es.: 1601'),
         'record_print_lot': fields.boolean('Print lot'),
+        'record_print_mrp_date': fields.boolean('Print prod. date',
+            help='Production date'),
         
         # Order:
         'record_print_order_ref': fields.boolean('Print order ref'), # customer
@@ -612,6 +616,8 @@ class LabelLabelJob(orm.Model):
         'record_data_period': fields.char('Period', size=10,
             help='Production period YYMM  format es.: 1601'),
         'record_data_lot': fields.char('Lot', size=15),
+        'record_data_mrp_date': fields.char('Prod. date', size=14,
+            help='Production date'),
         
         # Order:
         'record_data_order_ref': fields.char('Order ref', size=50), # customer

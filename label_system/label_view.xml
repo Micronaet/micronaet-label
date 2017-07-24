@@ -394,6 +394,10 @@
                                         <field name="record_print_lot" string="Lot" attrs="{'readonly': [('fast','=',False)]}"/>
                                         <field name="record_string_lot" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
                                         <field name="record_data_lot" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+
+                                        <field name="record_print_mrp_date" string="MRP date" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_string_mrp_date" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_mrp_date" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
                                     </group>
                                 </page>
                                 
