@@ -58,7 +58,7 @@ class Parser(report_sxw.rml_parse):
         ''' Return ISO date in format
             date_format: 
                 'it': 'GG/MM/AA'
-                'IT': 'GG/MM/AA'
+                'IT': 'GG/MM/AAAA'
                 # TODO 
         '''
         if not date_iso:
