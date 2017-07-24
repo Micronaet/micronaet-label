@@ -223,6 +223,7 @@ class NoteNote(orm.Model):
     _columns = {
         'print_label': fields.boolean('Label note'),
         'print_not_required': fields.boolean('Label not required'),
+        'print_moltiplicator': fields.integer('Label print multiplicator'),
         'label_id': fields.many2one('label.label', 'Label'),
         }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

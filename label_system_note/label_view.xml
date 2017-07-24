@@ -11,7 +11,7 @@
                     <field name="label_category" 
                         attrs="{
                             'required': [('print_label','=',True)], 
-                            'invisible': [('print_label','=',False)]}" />   
+                            'invisible': [('print_label','=',False)]}" />
                 </field>
             </field>
         </record>
@@ -27,6 +27,7 @@
                         attrs="{
                             'required': [('print_label','=',True),('print_not_required','=',False)], 
                             'invisible': ['|',('print_label','=',False),('print_not_required','=',True)]}" />
+                    <field name="print_moltiplicator" attrs="{'invisible': [('print_label','=',False)]}"/>
                 </field>
             </field>
         </record>    
