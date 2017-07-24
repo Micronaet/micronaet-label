@@ -209,6 +209,9 @@
                                                     
                                                     <field name="label_print_lot" />
                                                     <field name="label_string_lot" nolabel="1" placeholder="String..."/>
+
+                                                    <field name="label_print_mrp_date" />
+                                                    <field name="label_string_mrp_date" nolabel="1" placeholder="String..."/>
                                                 </group>
                                             </page>
                                             <page string="Order">
