@@ -1,0 +1,664 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* label_system_extra_fields
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-27 16:28+0000\n"
+"PO-Revision-Date: 2017-08-06 10:17+0100\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: it\n"
+"X-Generator: Poedit 1.6.10\n"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "ALICE"
+msgstr "ALICE"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_frame:0
+msgid "ALUMINIUM"
+msgstr "ALLUMINIO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_frame:0
+msgid "ANTHRACITE"
+msgstr "ANTRACITE"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "ANTRACITE"
+msgstr "ANTRACITE"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "AQUA 4196"
+msgstr "AQUA 4196"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "ARANCIO"
+msgstr "ARANCIO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "ARANCIO COOP"
+msgstr "ARANCIO COOP"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "ARDESIA"
+msgstr "ARDESIA"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "AZURE-BLUE 4150"
+msgstr "AZZURRO 4150"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "AZURE-BLUE 4188"
+msgstr "AZZURRO 4188"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_frame:0
+msgid "BEECH"
+msgstr "FAGGIO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "BEIGE/DOVE-GREY"
+msgstr "BEIGE/TORTORA"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "BIANCO"
+msgstr "BIANCO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "BIANCO/BEIGE"
+msgstr "BIANCO/BEIGE"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "BIANCO/BEIGE 0271"
+msgstr "BIANCO/BEIGE 0271"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "BIANCO/GRIGIO"
+msgstr "BIANCO/GRIGIO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "BIANCO/NERO"
+msgstr "BIANCO/NERO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+#: model:product.product,label_frame:0
+msgid "BLACK"
+msgstr "NERO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "BLACK 0400"
+msgstr "NERO 0400"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "BLACK 2501"
+msgstr "NERO 2501"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "BLU"
+msgstr "BLU"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "BLUE"
+msgstr "BLU"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "BLUE 4103"
+msgstr "BLU 4103"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "BLUE 4129"
+msgstr "BLU 4129"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "BLUE 4180"
+msgstr "BLU 4180"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "BLUE 8502"
+msgstr "BLU 8502"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "BORDEAUX"
+msgstr "BORDEAUX"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "CEMENTO/2"
+msgstr "CEMENTO/2"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_frame:0
+msgid "CHARCOAL GREY"
+msgstr "ANTRACITE"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "CHARCOAL GREY 0670"
+msgstr "ANTRACITE 0670"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_frame:0
+msgid "CHROMED"
+msgstr "CROMATO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "CITRONELLA"
+msgstr "CITRONELLA"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "CONTINENTE"
+msgstr "CONTINENTE"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "CONTINENTE 0737"
+msgstr "CONTINENTE 0737"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "DA VINCI"
+msgstr "DA VINCI"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "DARK GREEN"
+msgstr "VERDE SCURO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "DARK GREEN 3187"
+msgstr "VERDE SCURO 3187"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "DARK GREEN 8503"
+msgstr "VERDE SCURO 8503"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+#: model:product.product,label_frame:0
+msgid "DOVE-GREY"
+msgstr "TORTORA"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "DOVE-GREY 0711"
+msgstr "TORTORA 0711"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "DOVE-GREY 8507"
+msgstr "TORTORA 8507"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "DREAMLINER"
+msgstr "DREAMLINER"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_frame:0
+msgid "DYED WALNUT"
+msgstr "TINTO NOCE"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "EARTH"
+msgstr "EARTH"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "ECRU"
+msgstr "ECRU'"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "ECRU 2710"
+msgstr "ECRU 2710"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "GIALLO 1101"
+msgstr "GIALLO 1101"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "GREY"
+msgstr "GRIGIO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "GREY 0600"
+msgstr "GRIGIO 0600"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "GREY 0672"
+msgstr "GRIGIO 0672"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "GRIGIO"
+msgstr "GRIGIO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "GRIGIO 2649"
+msgstr "GRIGIO 2649"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "GRIGIO/TORTORA"
+msgstr "GRIGIO/TORTORA"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_frame:0
+msgid "INTERIO BLACK"
+msgstr "NERO INTERIO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "LEGNO"
+msgstr "LEGNO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "LICHEN"
+msgstr "LICHEN"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "LICHEN GREEN"
+msgstr "LICHEN GREEN"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+#: model:product.product,label_frame:0
+msgid "LIGHT GREEN"
+msgstr "VERDE CHIARO "
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "LIGHT GREEN 3197"
+msgstr "VERDE CHIARO 3197"
+
+#. module: label_system_extra_fields
+#: field:product.product,label_frame:0
+msgid "Label Frame"
+msgstr "Telaio etichetta"
+
+#. module: label_system_extra_fields
+#: field:product.product,label_fabric_color:0
+msgid "Label fabric color"
+msgstr "Colore tessuto etichetta"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "MAGIC"
+msgstr "MAGIC"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "MAGIC 0476"
+msgstr "MAGIC 0476"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "MARRONE COOP"
+msgstr "MARRONE COOP"
+
+#. module: label_system_extra_fields
+#: model:ir.model,name:label_system_extra_fields.model_mrp_production
+msgid "Manufacturing Order"
+msgstr "Ordine di Produzione"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "NATURAL"
+msgstr "NATURAL"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "NATURAL BEECH"
+msgstr "FAGGIO NATURALE"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "NERO"
+msgstr "NERO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "NERO 0400"
+msgstr "NERO 0400"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "NEW YORK"
+msgstr "NEW YORK"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_frame:0
+msgid "OPAQUE SILVER"
+msgstr "SILVER OPACO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+#: model:product.product,label_frame:0
+msgid "ORANGE"
+msgstr "ARANCIO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "ORANGE 2116"
+msgstr "ARANCIO 2116"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "OSSIDIANA"
+msgstr "OSSIDIANA"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "OTTANIO"
+msgstr "OTTANIO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "OTTANIO 3158"
+msgstr "OTTANIO 3158"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "PISTACCHIO GREEN 3124"
+msgstr "VERDE PISTACCHIO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "PISTACHIO GREEN 8510"
+msgstr "VERDE PISTACCHIO 8510"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "PURPLE 183/176"
+msgstr "VIOLA 183/176"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "PURPLE 4164"
+msgstr "VIOLA 4164"
+
+#. module: label_system_extra_fields
+#: model:ir.model,name:label_system_extra_fields.model_product_product
+msgid "Product"
+msgstr "Prodotto"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+#: model:product.product,label_frame:0
+msgid "RED"
+msgstr "ROSSO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "RED 2109"
+msgstr "ROSSO 2109"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "RIGATO 14"
+msgstr "RIGATO 14"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "RIGATO GIALLO/ROSSO"
+msgstr "RIGATO GIALLO/ROSSO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "RIGATO VIOLA"
+msgstr "RIGATO VIOLA"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_frame:0
+msgid "ROBINIA"
+msgstr "ROBINIA"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "S4 TORTORA"
+msgstr "S4 TORTORA"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "S4 WHITE"
+msgstr "S4 TORTORA"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "S7 ANTRACITE"
+msgstr "S7 ANTRACITE"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "S7 BLACK"
+msgstr "S7 ANTRACITE"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "SAGE GREEN"
+msgstr "SAGE GREEN"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "SAGEGREEN"
+msgstr "SAGEGREEN"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "SAND"
+msgstr "SAND"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "SENAPE"
+msgstr "SENAPE"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_frame:0
+msgid "SILVER"
+msgstr "SILVER"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_frame:0
+msgid "SILVER KETTLER"
+msgstr "SILVER KETTLER"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "SPIRIT 0655"
+msgstr "SPIRIT 0655"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "STRIPED ORANGE"
+msgstr "RIGATO ARANCIO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "STRIPED PURPLE"
+msgstr "RIGATO VIOLA"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "SUPERIOR"
+msgstr "SUPERIOR"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "TAUPE"
+msgstr "TORTORA"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "TEAL BLUE"
+msgstr "TEAL BLUE"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "TORTORA"
+msgstr "TORTORA"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "TRASPARENTE"
+msgstr "TRASPARENTE"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "TURCHESE"
+msgstr "TURCHESE"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "TURCHESE 3188"
+msgstr "TURCHESE 3188"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "VERDE BRILLANTE"
+msgstr "VERDE BRILLANTE"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "VERDE PISTACCHIO"
+msgstr "VERDE PISTACCHIO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "VERDE PISTACCHIO 3124"
+msgstr "VERDE PISTACCHIO 3124"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "VERDE SCURO"
+msgstr "VERDE SCURO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "VIENNA"
+msgstr "VIENNA"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "VIENNA 0155"
+msgstr "VIENNA 0155"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "WENGE BROWN 1509"
+msgstr "WENGE BROWN 1509"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "WENGE BROWN 5109"
+msgstr "MARRONE WENGE 5109"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+#: model:product.product,label_frame:0
+msgid "WHITE"
+msgstr "BIANCO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "WHITE 0108"
+msgstr "BIANCO 0108"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "WHITE 2602"
+msgstr "BIANCO 2602"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "WHITE/BEIGE 0271"
+msgstr "BIANCO/BEIGE 0271"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "WHITE/BEIGE 8506"
+msgstr "BIANCO/BEIGE 8506"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "WHITE/BLACK 8513"
+msgstr "BIANCO/NERO 8513"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "WHITE/BLUE/PISTACHIO"
+msgstr "BIANCO/BLU/PISTACCHIO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "WHITE/GREY 0601"
+msgstr "BIANCO/GRIGIO 0601"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "WHITE/WATER 0205"
+msgstr "BIANCO/ACQUA 0205"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "WHITE/WATER/DOVE-GREY"
+msgstr "BIANCO/ACQUA/TORTORA"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "YELLOW"
+msgstr "YELLOW"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "YELLOW 1100"
+msgstr "GIALLO 1100"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_frame:0
+msgid "ZINCATO"
+msgstr "ZINCATO"

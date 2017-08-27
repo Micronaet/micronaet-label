@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-17 11:59+0000\n"
-"PO-Revision-Date: 2016-10-17 14:02+0100\n"
+"POT-Creation-Date: 2017-07-27 16:30+0000\n"
+"PO-Revision-Date: 2017-08-06 21:19+0100\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,14 +18,66 @@ msgstr ""
 "X-Generator: Poedit 1.6.10\n"
 
 #. module: partner_product_partic_label
-#: selection:res.partner.product.partic.label,name:0
-msgid "Color"
-msgstr "Colore"
+#: model:res.partner,label_string_fabric:0
+msgid " FABRIC"
+msgstr "TESSUTO"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_frame:0
+msgid "ARMATURE:"
+msgstr "ARMATURE:"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_code:0
+#: model:res.partner,label_string_code_partner:0
+msgid "ART."
+msgstr "ART."
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_code:0
+msgid "ART. "
+msgstr "ART. "
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_code_partner:0
+msgid "Artikel-Nr. / No d'article / No. Articol"
+msgstr "Artikel-Nr. / No d'article / No Articolo"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_mrp_date:0
+msgid "Batch code: "
+msgstr "Codice batch;"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_counter_pack_total:0
+msgid "CARTON / SET NO."
+msgstr "CARTON / SET NO. "
+
+#. module: partner_product_partic_label
+#: code:addons/partner_product_partic_label/label.py:266
+#, python-format
+msgid "Cannot found file: %s [%s]"
+msgstr "File non trovato: %s [%s]"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_code_partner:0
+msgid "Code"
+msgstr "Codice"
+
+#. module: partner_product_partic_label
+#: help:note.image,label_code:0
+msgid "Code used for refer image in ODT files"
+msgstr "Codice utilizzato come riferimento immagine nel file ODT"
 
 #. module: partner_product_partic_label
 #: view:res.partner:partner_product_partic_label.view_res_partner_label_form
 msgid "Company..."
 msgstr "Azienda..."
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_code_partner:0
+msgid "Coop Art.-Nr. "
+msgstr "Coop Art.-Nr. "
 
 #. module: partner_product_partic_label
 #: field:res.partner.product.partic.label,create_uid:0
@@ -38,15 +90,94 @@ msgid "Created on"
 msgstr "Creato il"
 
 #. module: partner_product_partic_label
-#: selection:res.partner,label_ean:0 field:res.partner.product.partic,ean13:0
+#: model:res.partner,label_string_order_deadline:0
+msgid "DATE OF SHIPMENT: "
+msgstr "DATA DI SPEDIZIONE:"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_description_partner:0
+msgid "DESCRIPTION"
+msgstr "DESCRIZIONE"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_description_partner:0
+msgid "Dissection / Stock no: "
+msgstr "Dissection / Stock no: "
+
+#. module: partner_product_partic_label
+#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
+msgid "EAN"
+msgstr "EAN"
+
+#. module: partner_product_partic_label
+#: field:res.partner.product.partic,ean13:0
 msgid "EAN 13"
 msgstr "EAN 13"
 
 #. module: partner_product_partic_label
-#: field:product.product,ean8:0 selection:res.partner,label_ean:0
-#: field:res.partner.product.partic,ean8:0
+#: field:res.partner.product.partic,ean13_mono:0
+msgid "EAN 13 single"
+msgstr "EAN 13 singolo"
+
+#. module: partner_product_partic_label
+#: field:product.product,ean8:0 field:res.partner.product.partic,ean8:0
 msgid "EAN 8"
 msgstr "EAN 8"
+
+#. module: partner_product_partic_label
+#: field:res.partner.product.partic,ean8_mono:0
+msgid "EAN 8 single"
+msgstr "EAN 8 singolo"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_code_partner:0
+msgid "EDV: "
+msgstr "EDV: "
+
+#. module: partner_product_partic_label
+#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
+msgid "Export XLS"
+msgstr "Esportazione XLS"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_extra_image_ids:0
+msgid "Extra image"
+msgstr "Immagine extra"
+
+#. module: partner_product_partic_label
+#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
+msgid "Extra image:"
+msgstr "Immagine extra:"
+
+#. module: partner_product_partic_label
+#: help:res.partner,label_lang_description:0
+msgid "Extra lang descrition, use format: EN|DE|FR|IT"
+msgstr "Descrizione extra in lingua, usare il formato: EN|DE|FR|IT"
+
+#. module: partner_product_partic_label
+#: help:res.partner,label_lang_fabric:0
+msgid "Extra lang fabric, use format: EN|DE|FR|IT"
+msgstr "Extra tessuto in lingua, utilizzare il formato: EN|DE|FR|IT"
+
+#. module: partner_product_partic_label
+#: help:res.partner,label_lang_frame:0
+msgid "Extra lang frame, use format: EN|DE|FR|IT"
+msgstr "Telaio extra in lingua, utilizzare il formato: EN|DE|FR|IT"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_fabric:0
+msgid "FABRIC: "
+msgstr "TESSUTO: "
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_frame:0
+msgid "FRAME"
+msgstr " TELAIO"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_frame:0
+msgid "FRAME: "
+msgstr "TELAIO: "
 
 #. module: partner_product_partic_label
 #: selection:res.partner.product.partic.label,name:0
@@ -54,19 +185,56 @@ msgid "Fabric"
 msgstr "Tessuto"
 
 #. module: partner_product_partic_label
+#: field:res.partner.product.partic,fabric_color:0
+msgid "Fabric color"
+msgstr "Colore tessuto"
+
+#. module: partner_product_partic_label
 #: field:res.partner.product.partic.label,name:0
 msgid "Field"
 msgstr "Campo"
 
 #. module: partner_product_partic_label
-#: field:res.partner,label_force_logo:0
-msgid "Force customer logo"
-msgstr "Forza logo cliente"
+#: code:addons/partner_product_partic_label/label.py:251
+#, python-format
+msgid "Filename error"
+msgstr "Errore campo"
 
 #. module: partner_product_partic_label
+#: help:res.partner,label_print_counter_pack_total:0
+msgid "For print in label: 1/25, 2/25... (reset every product)"
+msgstr "Per stampa etichette: 1/25, 2/25... (azzerato al cambio prodotto)"
+
+#. module: partner_product_partic_label
+#: field:res.partner.product.partic,frame:0
 #: selection:res.partner.product.partic.label,name:0
 msgid "Frame"
-msgstr "Cornice"
+msgstr "Telaio"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_order_ref:0
+msgid "GWM Auftrag nr.:"
+msgstr "GWM Auftrag nr.:"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_weight_lord:0
+msgid "Gross Weight:"
+msgstr "Peso lordo:"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_weight_lord:0
+msgid "Gross weight: "
+msgstr "Peso netto: "
+
+#. module: partner_product_partic_label
+#: field:res.partner,has_custom_label:0
+msgid "Has custom label"
+msgstr "Ha etichetta personalizzata"
+
+#. module: partner_product_partic_label
+#: field:res.partner,has_pallet_label:0
+msgid "Has pallet label"
+msgstr "Ha etichetta per pallet"
 
 #. module: partner_product_partic_label
 #: field:res.partner.product.partic.label,id:0
@@ -74,9 +242,24 @@ msgid "ID"
 msgstr "ID"
 
 #. module: partner_product_partic_label
-#: help:res.partner,force_label_lang_id:0
-msgid "Instead use partner lang (or label forced lang)"
-msgstr "Al posto della lingua partner (o di quella impostata nell'etichetta)"
+#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
+msgid "Image"
+msgstr "Immagine"
+
+#. module: partner_product_partic_label
+#: field:note.image,label_image:0
+msgid "Image for label"
+msgstr "Immagine per etichetta"
+
+#. module: partner_product_partic_label
+#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
+msgid "Import XLS"
+msgstr "Importa XLS"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_q_x_pack:0
+msgid "Inhalt/Cont."
+msgstr "Inhalt/Cont."
 
 #. module: partner_product_partic_label
 #: view:res.partner:partner_product_partic_label.view_res_partner_label_form
@@ -89,19 +272,50 @@ msgid "Is company?"
 msgstr "E' azienda?"
 
 #. module: partner_product_partic_label
+#: model:res.partner,label_string_destination_code:0
+msgid "J.L. DEPT."
+msgstr "J.L. DEPT. "
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_order_ref:0
+msgid "J.L. PURCHASE ORDER NO."
+msgstr "J.L. PURCHASE ORDER NO. "
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_destination_code:0
+msgid "JOHN LEWIS - DEPT. "
+msgstr "JOHN LEWIS - DEPT. "
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_order_ref:0
+msgid "Kunden-Auftrag nr.:"
+msgstr "Kunden-Auftrag nr.:"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_lot:0
+#: model:res.partner,label_string_period:0
+msgid "LOT DE FABRICATION:"
+msgstr " LOTTO DI FABBRICAZIONE:"
+
+#. module: partner_product_partic_label
+#: field:note.image,label_code:0
+msgid "Label code"
+msgstr "Codice etichetta"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_destination_code:0
+msgid "Label destination code"
+msgstr "Codice destinazione etichetta"
+
+#. module: partner_product_partic_label
 #: field:res.partner.product.partic,label_field_ids:0
 msgid "Label field"
 msgstr "Campo etichetta"
 
 #. module: partner_product_partic_label
-#: field:res.partner,force_label_lang_id:0
-msgid "Label force lang"
-msgstr "Forza lingua etichetta"
-
-#. module: partner_product_partic_label
-#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
-msgid "Label force:"
-msgstr "Forza etichetta:"
+#: field:res.partner,label_lang_fabric:0
+msgid "Label for fabric"
+msgstr "Etichetta per tessuto"
 
 #. module: partner_product_partic_label
 #: model:ir.model,name:partner_product_partic_label.model_res_partner_product_partic_label
@@ -110,13 +324,23 @@ msgstr "Partic. etichetta"
 
 #. module: partner_product_partic_label
 #: view:res.partner:partner_product_partic_label.view_res_partner_label_form
-msgid "Label partic."
-msgstr "Partic. etichetta"
+msgid "Label setup"
+msgstr "Setup Etichetta"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_lang_description:0
+msgid "Lang for description"
+msgstr "Lingua per descrizione"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_lang_frame:0
+msgid "Lang for frame"
+msgstr "Lingua per telaio"
 
 #. module: partner_product_partic_label
 #: view:res.partner:partner_product_partic_label.view_res_partner_label_form
-msgid "Label setup"
-msgstr "Setup Etichetta"
+msgid "Lang: EN|FR..."
+msgstr "Lingua: EN|FR..."
 
 #. module: partner_product_partic_label
 #: field:res.partner.product.partic.label,write_uid:0
@@ -129,9 +353,60 @@ msgid "Last Updated on"
 msgstr "Ultimo aggiornamento il"
 
 #. module: partner_product_partic_label
-#: selection:res.partner,label_ean:0
-msgid "No barcode"
-msgstr "No codice a barre"
+#: help:res.partner,label_string_line:0
+msgid "Line code in database"
+msgstr "Riga codice nel datagase"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_code_partner:0
+msgid "MP Artikelnummer"
+msgstr "MP Artikelnummer"
+
+#. module: partner_product_partic_label
+#: help:res.partner,label_string_lot:0
+msgid "MRP number"
+msgstr "Numero produzione"
+
+#. module: partner_product_partic_label
+#: code:addons/partner_product_partic_label/label.py:527
+#, python-format
+msgid "MRP ref. not present"
+msgstr "Riferimento produzione non presente"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_dimension:0
+msgid "Measurement in cm."
+msgstr "Misure in cm."
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_code:0
+msgid "Mod. Nr. "
+msgstr "Mod. Nr. "
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_weight_net:0
+msgid "Net Weight:"
+msgstr "Peso netto:"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_weight_net:0
+msgid "Net weight: "
+msgstr "Peso netto:"
+
+#. module: partner_product_partic_label
+#: code:addons/partner_product_partic_label/label.py:497
+#: code:addons/partner_product_partic_label/label.py:505
+#: code:addons/partner_product_partic_label/label.py:518
+#: code:addons/partner_product_partic_label/label.py:526
+#, python-format
+msgid "No data"
+msgstr "Nessun dato"
+
+#. module: partner_product_partic_label
+#: code:addons/partner_product_partic_label/label.py:252
+#, python-format
+msgid "No file name for import XLS partic"
+msgstr "Nessun nome file per importare le partic. in XLS"
 
 #. module: partner_product_partic_label
 #: view:res.partner:partner_product_partic_label.view_res_partner_label_form
@@ -139,14 +414,112 @@ msgid "Nome"
 msgstr "Nome"
 
 #. module: partner_product_partic_label
+#: model:ir.model,name:partner_product_partic_label.model_note_image
+msgid "Note image"
+msgstr "Immagine note"
+
+#. module: partner_product_partic_label
+#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
+msgid "Note system"
+msgstr "Sistema Note"
+
+#. module: partner_product_partic_label
+#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
+msgid "Numeric"
+msgstr "Numerico"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_order_ref:0
+msgid "N° de commande / "
+msgstr "N° di comanda / "
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_order_ref:0
+msgid "ORDER N.: "
+msgstr "ORDINE N.: "
+
+#. module: partner_product_partic_label
+#: code:addons/partner_product_partic_label/label.py:265
+#, python-format
+msgid "Open file error"
+msgstr "Errore aprendo il file"
+
+#. module: partner_product_partic_label
+#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
+msgid "Order"
+msgstr "Ordine"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_order_ref:0
+msgid "Order No.: "
+msgstr "N. Ordine: "
+
+#. module: partner_product_partic_label
+#: code:addons/partner_product_partic_label/label.py:519
+#, python-format
+msgid "Order ref. not present"
+msgstr "Rif. ordine non presente"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_q_x_pack:0
+msgid "PCB / "
+msgstr "PCB / "
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_q_x_pack:0
+msgid "PIECES FOR CARTON: "
+msgstr "PEZZI PER CARTONE: "
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_q_x_pack:0
+msgid "PIECES PAR CARTON:"
+msgstr "PEZZI PER CARTONE:"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_order_ref:0
+msgid "PO number: "
+msgstr "Numero PC: "
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_dimension:0
+msgid "PRODUCT SIZE"
+msgstr "DIMENSIONE PRODOTTO"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_q_x_pack:0
+msgid "PZ:"
+msgstr "PZ:"
+
+#. module: partner_product_partic_label
 #: field:res.partner.product.partic.label,partic_id:0
 msgid "Partic"
 msgstr "Partic."
 
 #. module: partner_product_partic_label
+#: field:res.partner,label_partic_file:0
+msgid "Partic import file"
+msgstr "Import file partic."
+
+#. module: partner_product_partic_label
 #: model:ir.model,name:partner_product_partic_label.model_res_partner
 msgid "Partner"
 msgstr "Partner"
+
+#. module: partner_product_partic_label
+#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
+msgid "Partner address note:"
+msgstr "Note indirizzo partner:"
+
+#. module: partner_product_partic_label
+#: model:ir.actions.act_window,name:partner_product_partic_label.action_res_partner_default_label
+#: model:ir.ui.menu,name:partner_product_partic_label.menu_res_partner_default_label
+msgid "Partner default label"
+msgstr "Etichetta predefinita partner"
+
+#. module: partner_product_partic_label
+#: help:res.partner,label_destination_code:0
+msgid "Partner destination code, used for print in label"
+msgstr "Codice destinazione partner, utilizzato per stampare le etichette"
 
 #. module: partner_product_partic_label
 #: model:ir.actions.act_window,name:partner_product_partic_label.action_res_partner_label
@@ -156,29 +529,125 @@ msgid "Partner label"
 msgstr "Etichetta partner"
 
 #. module: partner_product_partic_label
+#: help:res.partner,partic_partner_code_id:0
+msgid "Partner linked for get customer product code in label"
+msgstr "Partnner collegato per avere il codice prodotto cliente nell'etichetta"
+
+#. module: partner_product_partic_label
+#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
+msgid "Partner note:"
+msgstr "Nota partner:"
+
+#. module: partner_product_partic_label
+#: field:res.partner,partic_partner_code_id:0
+msgid "Partner partic code"
+msgstr "Codice partic. partner"
+
+#. module: partner_product_partic_label
+#: field:res.partner.product.partic,partner_pricelist:0
+msgid "Partner pricelist"
+msgstr "Listino partner"
+
+#. module: partner_product_partic_label
 #: model:ir.model,name:partner_product_partic_label.model_res_partner_product_partic
 msgid "Partner product partic"
 msgstr "Partic. partner-prodotto"
 
 #. module: partner_product_partic_label
-#: field:res.partner,label_print_counter_pack:0
+#: code:addons/partner_product_partic_label/label.py:506
+#, python-format
+msgid "Partner ref. not present"
+msgstr "Rif. partner non presente"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_q_x_pack:0
+msgid "Pieces for carton:"
+msgstr "Pezzi per cartone;"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_ean13:0
+msgid "Print EAN13"
+msgstr "Stampa EAN 13"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_ean8:0
+msgid "Print EAN8"
+msgstr "Stampa EAN8"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_mrp_date:0
+msgid "Print MRP date"
+msgstr "Stampa data produzione"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_q_x_pack:0
+msgid "Print Q. x pack"
+msgstr "Stampa q. x scatola"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_q_x_pallet:0
+msgid "Print Q. x pallet"
+msgstr "Stampa q. x pallet"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_code:0
+msgid "Print company code"
+msgstr "Scampa codice azienda"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_description:0
+msgid "Print company description"
+msgstr "Stampa descrizione azienda"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_company_logo:0
+msgid "Print company logo"
+msgstr "Stampa logo azienda"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_counter_pack_total:0
 msgid "Print counter pack"
-msgstr "Stampa Conteggio scatole"
+msgstr "Stampa contatore scatole"
 
 #. module: partner_product_partic_label
-#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
-msgid "Print element"
-msgstr "Stampa elemento"
+#: field:res.partner,label_print_destination_code:0
+msgid "Print destination code"
+msgstr "Stampa codice destinazione"
 
 #. module: partner_product_partic_label
-#: field:res.partner,label_print_period:0
-msgid "Print line"
-msgstr "Stampa linea prod."
+#: field:res.partner,label_print_dimension:0
+msgid "Print dimension"
+msgstr "Stampa dimensione"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_fabric:0
+msgid "Print fabric"
+msgstr "Stampa tessuto"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_frame:0
+msgid "Print frame"
+msgstr "Stampa telaio"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_linedrawing:0
+msgid "Print line drawing"
+msgstr "Stampa linedrawing"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_lot:0
+msgid "Print lot"
+msgstr "Stampa lotto"
 
 #. module: partner_product_partic_label
 #: field:res.partner,label_print_order_date:0
-msgid "Print order data"
+msgid "Print order date"
 msgstr "Stampa data ordine"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_order_deadline:0
+msgid "Print order deadline"
+msgstr "Stampa scadenza ordine"
 
 #. module: partner_product_partic_label
 #: field:res.partner,label_print_order_ref:0
@@ -186,9 +655,59 @@ msgid "Print order ref"
 msgstr "Stampa rif. ordine"
 
 #. module: partner_product_partic_label
+#: field:res.partner,label_print_parcel:0
+msgid "Print parcel"
+msgstr "Stampa colli"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_code_partner:0
+msgid "Print partner code"
+msgstr "Stampa codice cliente"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_description_partner:0
+msgid "Print partner description"
+msgstr "Stampa descrizione cliente"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_partner_logo:0
+msgid "Print partner logo"
+msgstr "Stampa logo cliente"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_period:0
+msgid "Print period"
+msgstr "Stampa periodo"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_price:0
+msgid "Print price"
+msgstr "Stampa prezzo"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_price_uom:0
+msgid "Print price uom"
+msgstr "Sttampa valuta prezzo"
+
+#. module: partner_product_partic_label
 #: field:res.partner,label_print_line:0
 msgid "Print production line"
-msgstr "Stampa periodo di produzione"
+msgstr "Stampa linea di produzione"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_volume:0
+msgid "Print volume"
+msgstr "Stampa volume"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_weight_lord:0
+msgid "Print weight lord"
+msgstr "Stampa peso lordo"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_print_weight_net:0
+msgid "Print weight net"
+msgstr "Stampa peso netto"
 
 #. module: partner_product_partic_label
 #: model:ir.model,name:partner_product_partic_label.model_product_product
@@ -211,31 +730,260 @@ msgid "Product partic.:"
 msgstr "Partic. prodotto:"
 
 #. module: partner_product_partic_label
-#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
-msgid "Tags..."
-msgstr "Etichette..."
+#: code:addons/partner_product_partic_label/label.py:498
+#, python-format
+msgid "Product ref. not present"
+msgstr "Rif. prodotto non presente"
 
 #. module: partner_product_partic_label
+#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
+msgid "Production"
+msgstr "Produzione"
+
+#. module: partner_product_partic_label
+#: help:res.partner,label_string_mrp_date:0
+msgid "Production date"
+msgstr "Data produzione"
+
+#. module: partner_product_partic_label
+#: help:res.partner,label_print_period:0
+msgid "Production period YYMM  format es.: 1601"
+msgstr "Periodo produzione YYMM  formato es.: 1601"
+
+#. module: partner_product_partic_label
+#: field:product.product,q_x_pallet:0
+msgid "Q. per pallet"
+msgstr "Q. x pallet"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_q_x_pack:0
+msgid "QUANTITY"
+msgstr "QUANTITA' "
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_code_partner:0
+msgid "SUPPLIERS STYLE"
+msgstr "J.L. STOCK NO. "
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_code:0
+msgid "SUPPLIERS STYLE "
+msgstr "SUPPLIERS STYLE "
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_order_deadline:0
+msgid "Shipment date: "
+msgstr "Data trasporto:"
+
+#. module: partner_product_partic_label
+#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
+msgid "Show hide element"
+msgstr "Mostra nascondi elemento"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_q_x_pack:0
+msgid "Stck.:"
+msgstr "Pz.:"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_mrp_date:0
+msgid "String MRP date"
+msgstr "Data stringa produzione"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_q_x_pack:0
+msgid "String Q. x pack"
+msgstr "Stringa q. x scatola"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_q_x_pallet:0
+msgid "String Q. x pallet"
+msgstr "Stringa q. x pallet"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_code:0
+msgid "String company code"
+msgstr "Stringa codice azienda"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_description:0
+msgid "String company description"
+msgstr "Stringa descrizione azienda"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_counter_pack_total:0
+msgid "String counter pack"
+msgstr "Stringa conteggio scatole"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_destination_code:0
+msgid "String destination code"
+msgstr "Stringa codice destinazione"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_dimension:0
+msgid "String dimension"
+msgstr "Stringa dimensione"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_fabric:0
+msgid "String fabric"
+msgstr "Stringa tessuto"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_frame:0
+msgid "String frame"
+msgstr "Stringa telaio"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_lot:0
+msgid "String lot"
+msgstr "Stringa lotto"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_order_date:0
+msgid "String order date"
+msgstr "Stringa data ordine"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_order_deadline:0
+msgid "String order deadline"
+msgstr "Stringa scadenza ordine"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_order_ref:0
+msgid "String order ref"
+msgstr "Stringa rif. ordine"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_parcel:0
+msgid "String parcel"
+msgstr "Stringa colli"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_code_partner:0
+msgid "String partner code"
+msgstr "Stringa codice partner"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_description_partner:0
+msgid "String partner description"
+msgstr "Stringa descrizione partner"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_period:0
+msgid "String period"
+msgstr "Stringa periodo"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_price:0
+msgid "String price"
+msgstr "Stringa prezzo"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_line:0
+msgid "String production line"
+msgstr "Stringa linea produzione"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_volume:0
+msgid "String volume"
+msgstr "Stringa volume"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_weight_lord:0
+msgid "String weight lord"
+msgstr "Stringa peso lordo"
+
+#. module: partner_product_partic_label
+#: field:res.partner,label_string_weight_net:0
+msgid "String weight net"
+msgstr "Stringa peso netto"
+
+#. module: partner_product_partic_label
+#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
+msgid "String..."
+msgstr "Stringa..."
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_q_x_pack:0
+msgid "Stuck pro Karton"
+msgstr "Pezzi per cartone"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_q_x_pallet:0
+msgid "Stuck pro Palette"
+msgstr "Pezzi per cartone"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_fabric:0
+msgid "TELA"
+msgstr "TELA:"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_frame:0
+msgid "TELAIO"
+msgstr "TELAIO:"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_fabric:0
+msgid "TOILE:"
+msgstr "TOILE:"
+
+#. module: partner_product_partic_label
+#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
+msgid "Tags..."
+msgstr "Tags..."
+
+#. module: partner_product_partic_label
+#: view:res.partner:partner_product_partic_label.view_res_partner_label_form
+msgid "Text"
+msgstr "Testo"
+
+#. module: partner_product_partic_label
+#: field:res.partner.product.partic,text1:0
 #: selection:res.partner.product.partic.label,name:0
 msgid "Text 1"
 msgstr "Testo 1"
 
 #. module: partner_product_partic_label
+#: field:res.partner.product.partic,text2:0
 #: selection:res.partner.product.partic.label,name:0
 msgid "Text 2"
 msgstr "Testo 2"
 
 #. module: partner_product_partic_label
+#: field:res.partner.product.partic,text3:0
 #: selection:res.partner.product.partic.label,name:0
 msgid "Text 3"
 msgstr "Testo 3"
 
 #. module: partner_product_partic_label
-#: field:res.partner,label_ean:0
-msgid "Use EAN"
-msgstr "Usa EAN"
+#: sql_constraint:note.image:0
+msgid "The label code must be unique!"
+msgstr "Il codice etichetta deve essere unici!"
+
+#. module: partner_product_partic_label
+#: help:res.partner,label_partic_file:0
+msgid "Used for import export data in partner form"
+msgstr "Utilizzato per importare ed esportare dati nella scheda partner"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_q_x_pack:0
+msgid "VE: "
+msgstr "VE: "
 
 #. module: partner_product_partic_label
 #: field:res.partner.product.partic.label,value:0
 msgid "Value"
 msgstr "Valore"
+
+#. module: partner_product_partic_label
+#: model:res.partner,label_string_volume:0
+msgid "Volume: "
+msgstr "Volume: "
+
+#. module: partner_product_partic_label
+#: help:res.partner,label_string_period:0
+msgid "YYMM of production"
+msgstr "YYMM di produzione"

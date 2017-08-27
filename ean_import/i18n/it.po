@@ -1,0 +1,45 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ean_import
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-27 16:25+0000\n"
+"PO-Revision-Date: 2017-08-05 22:10+0100\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: it\n"
+"X-Generator: Poedit 1.6.10\n"
+
+#. module: ean_import
+#: code:addons/ean_import/extra_ean.py:87
+#, python-format
+msgid "Cannot read XLS file: %s"
+msgstr "Impossibile leggere il file XLS: %s"
+
+#. module: ean_import
+#: field:product.product,ean13_org:0
+msgid "EAN 13 Org"
+msgstr "EAN 13 Originale"
+
+#. module: ean_import
+#: field:product.product,ean13_pack:0
+msgid "EAN 13 Pack product"
+msgstr "EAN 13 Imballo prodotto"
+
+#. module: ean_import
+#: code:addons/ean_import/extra_ean.py:86
+#, python-format
+msgid "Error XLSX"
+msgstr "Errore XLSX"
+
+#. module: ean_import
+#: model:ir.model,name:ean_import.model_product_product
+msgid "Product"
+msgstr "Prodotto"

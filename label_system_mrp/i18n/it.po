@@ -1,0 +1,148 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* label_system_mrp
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-27 16:28+0000\n"
+"PO-Revision-Date: 2017-08-06 10:20+0100\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: it\n"
+"X-Generator: Poedit 1.6.10\n"
+
+#. module: label_system_mrp
+#: view:mrp.production:label_system_mrp.default_mrp_production_label_job_form_view
+msgid ""
+"(Re)generate print job from production order? all jobs present will be "
+"regenerated, confirm?"
+msgstr ""
+"(Ri)genera job di stampa dall'ordine di produzione= Tutti i lavori presenti "
+"saranno ricaricati, confermi?"
+
+#. module: label_system_mrp
+#: code:addons/label_system_mrp/label_mrp.py:282
+#, python-format
+msgid "Check PDF convert, report must be in PDF not ODT!"
+msgstr ""
+"Controllare la conversione PDF, il report deve avere tutti file PDF non ODT!"
+
+#. module: label_system_mrp
+#: view:mrp.production:label_system_mrp.default_mrp_production_label_job_form_view
+msgid "Check label error"
+msgstr "Controlla errori etichette"
+
+#. module: label_system_mrp
+#: model:ir.actions.report.xml,name:label_system_mrp.aeroo_check_label_mrp_report_id
+msgid "Controllo etichette"
+msgstr "Controllo etichette"
+
+#. module: label_system_mrp
+#: code:addons/label_system_mrp/label_mrp.py:281
+#, python-format
+msgid "Converter not working"
+msgstr "Conversione non funzionante"
+
+#. module: label_system_mrp
+#: view:mrp.production:label_system_mrp.default_mrp_production_label_job_form_view
+msgid "Create PDF demo mode"
+msgstr "Crea PDF in modalità DEMO"
+
+#. module: label_system_mrp
+#: view:mrp.production:label_system_mrp.default_mrp_production_label_job_form_view
+msgid "Create PDF jobs"
+msgstr "Crea tutti i job PDF"
+
+#. module: label_system_mrp
+#: model:ir.actions.report.xml,name:label_system_mrp.aeroo_label_form_mrp_report_id
+msgid "Distinta etichette"
+msgstr "Distinta etichette"
+
+#. module: label_system_mrp
+#: view:mrp.production:label_system_mrp.default_mrp_production_label_job_form_view
+msgid "Generate label jobs"
+msgstr "Genera tutte le etichette"
+
+#. module: label_system_mrp
+#: view:mrp.production:label_system_mrp.default_mrp_production_label_job_form_view
+msgid "Jobs"
+msgstr "Lavori"
+
+#. module: label_system_mrp
+#: view:mrp.production:label_system_mrp.default_mrp_production_label_job_form_view
+msgid "Label"
+msgstr "Etichetta"
+
+#. module: label_system_mrp
+#: field:mrp.production,label_job_ids:0
+msgid "Label Job"
+msgstr "Job etichetta"
+
+#. module: label_system_mrp
+#: model:ir.model,name:label_system_mrp.model_label_label_job
+#: view:mrp.production:label_system_mrp.default_mrp_production_label_job_form_view
+msgid "Label job"
+msgstr "Lavoro etichetta"
+
+#. module: label_system_mrp
+#: view:mrp.production:label_system_mrp.default_mrp_production_label_job_form_view
+msgid "Label jobs"
+msgstr "Job etichette"
+
+#. module: label_system_mrp
+#: view:mrp.production:label_system_mrp.default_mrp_production_label_job_form_view
+msgid "Label list"
+msgstr "Lista etichette"
+
+#. module: label_system_mrp
+#: model:ir.model,name:label_system_mrp.model_mrp_production
+msgid "Manufacturing Order"
+msgstr "Ordine di Produzione"
+
+#. module: label_system_mrp
+#: view:mrp.production:label_system_mrp.default_mrp_production_label_job_form_view
+msgid "Open partner address label setup"
+msgstr "Apri indirizzo partner per impostazione etichetta"
+
+#. module: label_system_mrp
+#: view:mrp.production:label_system_mrp.default_mrp_production_label_job_form_view
+msgid "Open partner label setup"
+msgstr "Apri partner etichetta per impostazioni"
+
+#. module: label_system_mrp
+#: view:mrp.production:label_system_mrp.default_mrp_production_label_job_form_view
+msgid "Open product label data"
+msgstr "Apri dati prodotto etichetta"
+
+#. module: label_system_mrp
+#: code:addons/label_system_mrp/label_mrp.py:82
+#, python-format
+msgid "Partner label setup"
+msgstr "Impostazione etichetta partnner"
+
+#. module: label_system_mrp
+#: view:mrp.production:label_system_mrp.default_mrp_production_label_job_form_view
+msgid "Print"
+msgstr "Stampa"
+
+#. module: label_system_mrp
+#: code:addons/label_system_mrp/label_mrp.py:59
+#, python-format
+msgid "Product label data"
+msgstr "Dati etichetta prodotto"
+
+#. module: label_system_mrp
+#: view:mrp.production:label_system_mrp.default_mrp_production_label_job_form_view
+msgid "Q. x pack"
+msgstr "Q. x scatola"
+
+#. module: label_system_mrp
+#: view:mrp.production:label_system_mrp.default_mrp_production_label_job_form_view
+msgid "Total"
+msgstr "Totale"

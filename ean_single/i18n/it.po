@@ -1,0 +1,43 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ean_single
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-27 16:25+0000\n"
+"PO-Revision-Date: 2017-08-05 22:10+0100\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: it\n"
+"X-Generator: Poedit 1.6.10\n"
+
+#. module: ean_single
+#: field:product.product,ean13_single:0
+msgid "EAN 13 Single product"
+msgstr "EAN 13 prodotto singolo"
+
+#. module: ean_single
+#: field:product.product,ean13_mono:0
+msgid "EAN13 mono"
+msgstr "EAN13 singolo"
+
+#. module: ean_single
+#: field:product.product,ean8_mono:0
+msgid "EAN8 mono"
+msgstr "EAN8 singolo"
+
+#. module: ean_single
+#: help:product.product,ean13_mono:0 help:product.product,ean8_mono:0
+msgid "Force EAN mono instead search of element with S [13]"
+msgstr "Forza EAN singolo al posto di cercare prodotti con S al carattere [13]"
+
+#. module: ean_single
+#: model:ir.model,name:ean_single.model_product_product
+msgid "Product"
+msgstr "Prodotto"
