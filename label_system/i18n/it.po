@@ -217,7 +217,7 @@ msgstr "Dimensione"
 #. module: label_system
 #: view:label.layout:label_system.view_label_layout_form
 msgid "Dimension:"
-msgstr "Dimensione;"
+msgstr "Dimensione:"
 
 #. module: label_system
 #: view:label.label:label_system.view_label_label_form
