@@ -21,6 +21,7 @@ import os
 import sys
 import logging
 import openerp
+import math
 import openerp.addons.decimal_precision as dp
 from openerp.osv import fields, osv, expression, orm
 from datetime import datetime, timedelta
@@ -368,13 +369,23 @@ class MrpProduction(orm.Model):
                 
     def generate_label_job(self, cr, uid, ids, context=None):
         ''' Generate list of jobs label
+            context extra keys:
+                > sol_job: 
+                    key: ID
+                    value: total
         '''
         assert len(ids) == 1, 'Works only with one record a time'
         
         _logger.info('Generate job from production:')
         if context is None:
             context = {}
-            
+        
+        # ---------------------------------------------------------------------
+        # Lauch parameter:
+        # ---------------------------------------------------------------------
+        sol_job = context.get('sol_job', False) # Generate only for this job
+        sol_job_mode = context.get('sol_job_mode', 'all') # Selection job mode
+
         # Pool used:
         job_pool = self.pool.get('label.label.job')
         partner_pool = self.pool.get('res.partner')
@@ -394,6 +405,11 @@ class MrpProduction(orm.Model):
             
         sequence = 0
         labels = ['article', 'package'] #'pallet', 'placeholder'
+        if sol_job:
+            if sol_job_mode == 'internal':
+                labels = ['article']
+            elif sol_job_mode == 'external':
+                labels = ['package']
         
         # ---------------------------------------------------------------------
         # Sort sale order line:
@@ -412,6 +428,10 @@ class MrpProduction(orm.Model):
             )
 
         for line in sorted_order_line:
+            # Launch mode job:
+            if sol_job and line.id not in sol_job:
+                continue # Line not in job
+                
             for label in labels:
                 sequence += 1
                 
@@ -433,14 +453,21 @@ class MrpProduction(orm.Model):
                 # used for # label:
                 q_x_pack = record_data.get('record_data_q_x_pack', False)
                 
+                if sol_job: # Job selection:
+                    product_uom_qty = sol_job[line.id] # context Q passed
+                    # TODO check q_x_pack extra data
+                else: # Normal total production:
+                    product_uom_qty = line.product_uom_qty
+                    
                 if label == 'article':
-                    record_data_counter = line.product_uom_qty
+                    record_data_counter = product_uom_qty
                 else:
                     if q_x_pack: # TODO Manage Error:
-                        record_data_counter = line.product_uom_qty / q_x_pack
+                        record_data_counter = product_uom_qty / q_x_pack
                     else:    
-                        record_data_counter = line.product_uom_qty
+                        record_data_counter = product_uom_qty
                         # XXX Note: q_x_pack Remain false in job
+                        
                 record_data_counter *= print_moltiplicator # moltiplicator 
                 
                 # -------------------------------------------------------------
