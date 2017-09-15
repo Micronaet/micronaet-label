@@ -187,10 +187,17 @@ class MrpProduction(orm.Model):
         
     def merge_pdf_mrp_label_jobs(self, cr, uid, ids, context=None):
         ''' Merge procedure for all same label layout files:
+            Context parameters:
+                > collect_label: return dictionary of collected label created
         '''        
         if context is None:
             context = {}
             
+        # Context parameters:    
+        collect_label = context.get('collect_label', False)
+        collect_label_db = {} # return database of collected label printed
+        job_2_line_db = {} # convert job name in line ID
+                    
         mrp = self.browse(cr, uid, ids, context=context)[0]
         user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
         
@@ -237,6 +244,10 @@ class MrpProduction(orm.Model):
             label = job.label_id
             layout = job.label_id.layout_id
             
+            # Collect parameter.
+            if collect_label:
+                 job_2_line_db[job.id] = job.line_id.id
+
             # Database of same layut pdf report: 
             if layout not in report_pdf:
                 report_pdf[layout] = []
@@ -296,7 +307,8 @@ class MrpProduction(orm.Model):
                 )
                 
             report_pdf[layout].append(
-                (filename, f_pdf)) # for merge procedure
+                (filename, f_pdf, job)) # for merge procedure
+            # XXX Aggiunto job.id per context parameters
                 
             file_pdf = open(filename, 'w') # XXX binary?
             file_pdf.write(result)
@@ -325,7 +337,7 @@ class MrpProduction(orm.Model):
             
             # For all files:
             i = 0
-            for (f, f_pdf) in files:            
+            for (f, f_pdf, job) in files:            
                 # -------------------------------------------------------------
                 # Batch command:
                 # -------------------------------------------------------------
@@ -350,6 +362,12 @@ class MrpProduction(orm.Model):
                     pause_command,    
                     ))
 
+                # Context parameters:
+                if collect_label:
+                    #job_2_line_db
+                    collect_label_db[
+                        (job.type, job_2_line_db[job.id])] = (i, print_command)
+                
                 # -------------------------------------------------------------
                 # Open and append page:
                 # -------------------------------------------------------------
@@ -365,7 +383,12 @@ class MrpProduction(orm.Model):
 
             batch_f.close()
             out_pdf.write(open(pdf_filename, 'wb'))
-        return True
+
+        # Context parameter
+        if collect_label:
+            return collect_label_db
+        else:    
+            return True
                 
     def generate_label_job(self, cr, uid, ids, context=None):
         ''' Generate list of jobs label
