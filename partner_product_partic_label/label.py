@@ -812,7 +812,7 @@ class ResPartner(orm.Model):
         # Priority to force in anagraphic
         ean13_mono = product.ean13_mono or ean13_mono
         ean8_mono = product.ean8_mono or ean8_mono
-        lst_price = product.lst_price or ''
+        lst_price = ''#product.lst_price or '' XXX no price if no partic
         
         if product_partic:
             frame = product_partic.frame or frame or ''
@@ -823,8 +823,8 @@ class ResPartner(orm.Model):
             ean13_mono = product_partic.ean13_mono or ean13_mono or ''
             ean8 = product_partic.ean8 or ean8 or ''
             ean8_mono = product_partic.ean8_mono or ean8_mono or ''
-            lst_price = product_partic.partner_pricelist or \
-                product.lst_price or ''
+            lst_price = product_partic.partner_pricelist or ''
+            #    product.lst_price or ''
             text1 = product_partic.text1
             text2 = product_partic.text2
             text3 = product_partic.text3
