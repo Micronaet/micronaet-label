@@ -812,6 +812,7 @@ class ResPartner(orm.Model):
         # Priority to force in anagraphic
         ean13_mono = product.ean13_mono or ean13_mono
         ean8_mono = product.ean8_mono or ean8_mono
+        lst_price = product.lst_price or ''
         
         if product_partic:
             frame = product_partic.frame or frame or ''
@@ -822,6 +823,8 @@ class ResPartner(orm.Model):
             ean13_mono = product_partic.ean13_mono or ean13_mono or ''
             ean8 = product_partic.ean8 or ean8 or ''
             ean8_mono = product_partic.ean8_mono or ean8_mono or ''
+            lst_price = product_partic.partner_pricelist or \
+                product.lst_price or ''
             text1 = product_partic.text1
             text2 = product_partic.text2
             text3 = product_partic.text3
@@ -862,7 +865,7 @@ class ResPartner(orm.Model):
             'record_data_weight_net': product.weight_net,
             'record_data_weight_lord': product.weight,
             'record_data_parcel': 'TODO' or product.parcel,
-            'record_data_price': product.lst_price, # TODO
+            'record_data_price': lst_price, # Partic after anagraph
             'record_data_price_uom': product.uom_id.name,
 
             # EAN data:
