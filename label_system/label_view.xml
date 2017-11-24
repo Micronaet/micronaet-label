@@ -419,6 +419,10 @@
                                         <field name="record_print_destination_code" string="Destination code" attrs="{'readonly': [('fast','=',False)]}"/>
                                         <field name="record_string_destination_code" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
                                         <field name="record_data_destination_code" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+
+                                        <field name="record_print_order_code" string="Order code" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_string_order_code" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
+                                        <field name="record_data_order_code" nolabel="1" attrs="{'readonly': [('fast','=',False)]}"/>
                                     </group>
                                 </page>
                                 <page string="Image">

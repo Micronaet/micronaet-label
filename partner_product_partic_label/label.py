@@ -628,6 +628,9 @@ class ResPartner(orm.Model):
             'record_string_destination_code': get_label(
                 company, partner, address, 
                 'label_string_destination_code'), 
+            'record_string_order_code': get_label(
+                company, partner, address, 
+                'label_string_order_code'), 
             
             # Image (no label):
             
@@ -723,6 +726,9 @@ class ResPartner(orm.Model):
             'record_print_destination_code': get_state_value(
                 company, partner, address, 
                 'label_print_destination_code'),
+            'record_print_order_code': get_state_value(
+                company, partner, address, 
+                'label_print_order_code'),
                 
             # Image:
             'record_print_company_logo': get_state_value(
@@ -901,6 +907,7 @@ class ResPartner(orm.Model):
             'record_data_destination_code': 
                 order.destination_partner_id.label_destination_code\
                     if order.destination_partner_id else '', # XXX only address
+            'record_data_order_code': order.client_order_code or '', # code
                 
             # -----------------------------------------------------------------
             #                               IMAGES:
@@ -1021,6 +1028,8 @@ class ResPartner(orm.Model):
         'label_string_destination_code': fields.char(
             'String destination code', 
             size=40, translate=True),
+        'label_string_order_code': fields.char('String order code', 
+            size=40, translate=True), # customer
             
         # Image:
         #'label_string_company_logo' 'label_string_partner_logo'
@@ -1095,6 +1104,8 @@ class ResPartner(orm.Model):
             'Print order deadline'),
         'label_print_destination_code': fields.selection(get_tri_state,             
             'Print destination code'),
+        'label_print_order_code': fields.selection(get_tri_state, 
+            'Print order code'),
             
         # Image:
         'label_print_company_logo': fields.selection(get_tri_state, 

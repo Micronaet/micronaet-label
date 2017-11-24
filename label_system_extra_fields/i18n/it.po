@@ -1,21 +1,19 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* label_system_extra_fields
+#	* label_system_extra_fields
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-27 16:28+0000\n"
-"PO-Revision-Date: 2017-08-06 10:17+0100\n"
+"POT-Creation-Date: 2017-11-24 15:40+0000\n"
+"PO-Revision-Date: 2017-11-24 15:40+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"Language: it\n"
-"X-Generator: Poedit 1.6.10\n"
 
 #. module: label_system_extra_fields
 #: model:product.product,label_fabric_color:0
@@ -26,6 +24,21 @@ msgstr "ALICE"
 #: model:product.product,label_frame:0
 msgid "ALUMINIUM"
 msgstr "ALLUMINIO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "AMLAPURA AQUA"
+msgstr "AMLAPURA AQUA"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "AMLAPURA GRAPHITE"
+msgstr "AMLAPURA GRAPHITE"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "AMLAPURA MOSS"
+msgstr "AMLAPURA MOSS"
 
 #. module: label_system_extra_fields
 #: model:product.product,label_frame:0
@@ -66,6 +79,11 @@ msgstr "AZZURRO 4150"
 #: model:product.product,label_fabric_color:0
 msgid "AZURE-BLUE 4188"
 msgstr "AZZURRO 4188"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "AZZURRO VIOLA"
+msgstr "AZZURRO VIOLA"
 
 #. module: label_system_extra_fields
 #: model:product.product,label_frame:0
@@ -154,6 +172,11 @@ msgid "BORDEAUX"
 msgstr "BORDEAUX"
 
 #. module: label_system_extra_fields
+#: model:product.product,label_frame:0
+msgid "CAPPUCCINO"
+msgstr "CAPPUCCINO"
+
+#. module: label_system_extra_fields
 #: model:product.product,label_fabric_color:0
 msgid "CEMENTO/2"
 msgstr "CEMENTO/2"
@@ -205,11 +228,6 @@ msgstr "VERDE SCURO 3187"
 
 #. module: label_system_extra_fields
 #: model:product.product,label_fabric_color:0
-msgid "DARK GREEN 8503"
-msgstr "VERDE SCURO 8503"
-
-#. module: label_system_extra_fields
-#: model:product.product,label_fabric_color:0
 #: model:product.product,label_frame:0
 msgid "DOVE-GREY"
 msgstr "TORTORA"
@@ -253,6 +271,11 @@ msgstr "ECRU 2710"
 #: model:product.product,label_fabric_color:0
 msgid "GIALLO 1101"
 msgstr "GIALLO 1101"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "GOLF"
+msgstr "GOLF"
 
 #. module: label_system_extra_fields
 #: model:product.product,label_fabric_color:0
@@ -316,6 +339,11 @@ msgid "LIGHT GREEN 3197"
 msgstr "VERDE CHIARO 3197"
 
 #. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "LIGHT GREY"
+msgstr "LIGHT GREY"
+
+#. module: label_system_extra_fields
 #: field:product.product,label_frame:0
 msgid "Label Frame"
 msgstr "Telaio etichetta"
@@ -334,6 +362,11 @@ msgstr "MAGIC"
 #: model:product.product,label_fabric_color:0
 msgid "MAGIC 0476"
 msgstr "MAGIC 0476"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "MARITIM"
+msgstr "MARITIM"
 
 #. module: label_system_extra_fields
 #: model:product.product,label_fabric_color:0
@@ -371,6 +404,11 @@ msgid "NEW YORK"
 msgstr "NEW YORK"
 
 #. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
+msgid "OLIVE"
+msgstr "OLIVE"
+
+#. module: label_system_extra_fields
 #: model:product.product,label_frame:0
 msgid "OPAQUE SILVER"
 msgstr "SILVER OPACO"
@@ -400,6 +438,21 @@ msgstr "OTTANIO"
 #: model:product.product,label_fabric_color:0
 msgid "OTTANIO 3158"
 msgstr "OTTANIO 3158"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_frame:0
+msgid "Olefin"
+msgstr "Olefin"
+
+#. module: label_system_extra_fields
+#: field:sale.order,order_code:0
+msgid "Order code"
+msgstr "Codice ordine"
+
+#. module: label_system_extra_fields
+#: help:sale.order,order_code:0
+msgid "Order code used in label"
+msgstr "Codice ordine utilizzato nelle etichette"
 
 #. module: label_system_extra_fields
 #: model:product.product,label_fabric_color:0
@@ -459,6 +512,11 @@ msgstr "ROBINIA"
 
 #. module: label_system_extra_fields
 #: model:product.product,label_fabric_color:0
+msgid "ROSSO"
+msgstr "ROSSO"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
 msgid "S4 TORTORA"
 msgstr "S4 TORTORA"
 
@@ -484,6 +542,7 @@ msgstr "SAGE GREEN"
 
 #. module: label_system_extra_fields
 #: model:product.product,label_fabric_color:0
+#: model:product.product,label_frame:0
 msgid "SAGEGREEN"
 msgstr "SAGEGREEN"
 
@@ -505,7 +564,7 @@ msgstr "SILVER"
 #. module: label_system_extra_fields
 #: model:product.product,label_frame:0
 msgid "SILVER KETTLER"
-msgstr "SILVER KETTLER"
+msgstr "SILVER ARGENTO"
 
 #. module: label_system_extra_fields
 #: model:product.product,label_fabric_color:0
@@ -526,6 +585,11 @@ msgstr "RIGATO VIOLA"
 #: model:product.product,label_fabric_color:0
 msgid "SUPERIOR"
 msgstr "SUPERIOR"
+
+#. module: label_system_extra_fields
+#: model:ir.model,name:label_system_extra_fields.model_sale_order
+msgid "Sales Order"
+msgstr "Ordine di vendita"
 
 #. module: label_system_extra_fields
 #: model:product.product,label_fabric_color:0
@@ -650,8 +714,13 @@ msgstr "BIANCO/ACQUA/TORTORA"
 
 #. module: label_system_extra_fields
 #: model:product.product,label_fabric_color:0
+msgid "White/Beige 8506"
+msgstr "Bianco/Beige 8506"
+
+#. module: label_system_extra_fields
+#: model:product.product,label_fabric_color:0
 msgid "YELLOW"
-msgstr "YELLOW"
+msgstr "GIALLO"
 
 #. module: label_system_extra_fields
 #: model:product.product,label_fabric_color:0
@@ -662,3 +731,4 @@ msgstr "GIALLO 1100"
 #: model:product.product,label_frame:0
 msgid "ZINCATO"
 msgstr "ZINCATO"
+

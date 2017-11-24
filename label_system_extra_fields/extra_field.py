@@ -38,6 +38,17 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+class SaleOrder(orm.Model):
+    """ Model name: SaleOrder
+    """    
+    _inherit = 'sale.order'
+
+    _columns = {
+        'client_order_code': fields.char(
+            'Order code', size=64, help='Order code used in label'
+            ),
+        }
+
 class MrpProduction(orm.Model):   
     """ Force product only in production
     """

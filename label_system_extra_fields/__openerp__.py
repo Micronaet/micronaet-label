@@ -31,6 +31,7 @@
     'depends': [
         'base',
         'mrp',
+        'sale',
         'product_speech_code',
         ],
     'init_xml': [],

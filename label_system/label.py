@@ -519,6 +519,8 @@ class LabelLabelJob(orm.Model):
         'record_string_destination_code': fields.char(
             'Label destination code', 
             size=40, translate=True),
+        'record_string_order_code': fields.char('Label order code', 
+            size=40, translate=True),
             
         # Image:
         #'record_string_company_logo' 'record_string_partner_logo'
@@ -570,6 +572,7 @@ class LabelLabelJob(orm.Model):
         'record_print_order_deadline': fields.boolean('Print order deadline'),
         'record_print_destination_code': fields.boolean(
             'Print destination code'),
+        'record_print_order_code': fields.boolean('Print order code'),
             
         # Image:
         'record_print_company_logo': fields.boolean('Print company logo'),
@@ -626,6 +629,7 @@ class LabelLabelJob(orm.Model):
         'record_data_order_deadline': fields.char('Order deadline', size=10),
         'record_data_destination_code': fields.char(
             'Destination code', size=20),
+        'record_data_order_code': fields.char('Order code', size=50),
             
         # Image:
         # XXX Note: used related elements

@@ -227,6 +227,9 @@
                                                     
                                                     <field name="label_print_destination_code" />
                                                     <field name="label_string_destination_code" nolabel="1" placeholder="String..."/>
+
+                                                    <field name="label_print_order_code" />
+                                                    <field name="label_string_order_code" nolabel="1" placeholder="String..."/>
                                                 </group>
                                             </page>
                                             <page string="Image">
