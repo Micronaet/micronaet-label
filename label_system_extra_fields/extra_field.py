@@ -45,7 +45,7 @@ class SaleOrder(orm.Model):
 
     _columns = {
         'client_order_code': fields.char(
-            'Order code', size=64, help='Order code used in label'
+            'Codice ordine', size=64, help='Order code used in label'
             ),
         }
 
