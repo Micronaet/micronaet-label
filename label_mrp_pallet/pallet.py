@@ -38,6 +38,19 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+class ResPartner(orm.Model):
+    """ Model name: Partner parameter
+    """
+    
+    _inherit = 'res.partner'
+    
+    _columns = {
+        'partner_pallet_logo': fields.boolean('Logo partner pallet', 
+            help='Utilizza il logo del partner sulla etichetta pallet'),
+        'company_pallet_name': fields.char('Nome azienda pallet', size=80, 
+            help='Nome azienda sulla etichetta pallet'),
+        }
+
 class SaleOrderLine(orm.Model):
     """ Model name: Line in pallet
     """

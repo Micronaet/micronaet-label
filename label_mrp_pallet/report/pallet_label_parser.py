@@ -108,11 +108,22 @@ class Parser(report_sxw.rml_parse):
                     order_ref = order_ref[-1]
                 else:
                     order_ref = ''
+
+                if key[0].partner_pallet_logo: 
+                    # Use partner logo
+                    image = key[0].label_image 
+                else:
+                    # Use company logo:
+                    image = key[2].company_id.partner_id.label_image    
+                    
                 pallet.append((
                     key, 
                     0, #remain if remain > 0 and remain < q_x_pallet else \
                     #    q_x_pallet,
-                    order_ref
+                    order_ref,
+                    image,
+                    # name (could be forced)
+                    (key[0].company_pallet_name or key[0].name).strip(), 
                     ))
         return pallet
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -34,6 +34,18 @@
                 </xpath>    
             </field>
         </record>
+
+        <record model="ir.ui.view" id="view_res_partner_label_extra_pallet_params_form">
+            <field name="name">res.partner.label.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="partner_product_partic_label.view_res_partner_label_form"/>
+            <field name="arch" type="xml">
+                <field name="label_destination_code" position="after">
+                    <field name="partner_pallet_logo" />
+                    <field name="company_pallet_name" />
+                </field>
+            </field>
+        </record>    
         
         <record model="ir.ui.view" id="production_sale_order_line_tree_view">
             <field name="name">Production sol pallet</field>

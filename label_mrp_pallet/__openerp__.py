@@ -36,6 +36,7 @@
         # Custom modules:        
         'production_accounting_external',        
         'label_system_mrp',        
+        'partner_product_partic_label',
         ],
     'init_xml': [],
     'demo': [],
