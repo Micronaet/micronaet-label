@@ -226,6 +226,7 @@ class Parser(report_sxw.rml_parse):
         job_pool = self.pool.get('label.label.job')
         
         item_ids = data.get('record_ids', [])
+        import pdb; pdb.set_trace()
         if not item_ids:
             _logger.error('No data for fast print')
             #raise osv.except_osv(
