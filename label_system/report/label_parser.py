@@ -61,7 +61,8 @@ class Parser(report_sxw.rml_parse):
         if block > 1:
             res = int(total) / int(block) + (1 if total % block > 0 else 0)            
         else:
-            total    
+            res = total    
+        return int(res)
             
     def date_reformat(self, date_iso, date_format='it', separator='/'):
         ''' Return ISO date in format
