@@ -51,9 +51,18 @@ class Parser(report_sxw.rml_parse):
             #'get_report_placeholder': self.get_report_placeholder,
             'load': self.load,
             'date_reformat': self.date_reformat,
+            'line_block': self.line_block,
             # TODO load_image function for extra image        
         })
 
+    def line_block(self, total, block=1):
+        ''' Manage line multi block of label
+        '''
+        if block > 1:
+            res = int(total) / int(block) + (1 if total % block > 0 else 0)            
+        else:
+            total    
+            
     def date_reformat(self, date_iso, date_format='it', separator='/'):
         ''' Return ISO date in format
             date_format: 
@@ -226,7 +235,7 @@ class Parser(report_sxw.rml_parse):
         job_pool = self.pool.get('label.label.job')
         
         item_ids = data.get('record_ids', [])
-        import pdb; pdb.set_trace()
+
         if not item_ids:
             _logger.error('No data for fast print')
             #raise osv.except_osv(
