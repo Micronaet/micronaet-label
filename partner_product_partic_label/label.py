@@ -853,28 +853,6 @@ class ResPartner(orm.Model):
         ean8_mono = product.ean8_mono or ean8_mono
         lst_price = ''#product.lst_price or '' XXX no price if no partic
         
-        # Validate code for no error in print job:
-        ean_check_list = (
-            ((ean13_mono, ean13), 13),
-            ((ean8_mono, ean8), 8),
-            )
-        for ean_list, ean_mode in ean_check_list:
-            ean_error = check_ean_code(ean_list, ean_mode)
-            if ean_error: 
-                raise osv.except_osv(
-                    _('EAN %s errati') % ean_mode, 
-                    _('%s\nOrdine: %s, prodotto: %s') % (
-                        ean_error,
-                        order.name, 
-                        product.default_code,
-                        ),
-                    )
-        _logger.warning('Validate EAN Ordine: %s, prodotto: %s [%s]' % (
-            order.name, 
-            product.default_code,
-            ean_check_list,
-            ))
-        
         if product_partic:
             frame = product_partic.frame or frame or ''
             fabric_color = product_partic.fabric_color or fabric_color or ''
@@ -896,6 +874,28 @@ class ResPartner(orm.Model):
             text2 = ''
             text3 = ''
                     
+        # Validate code for no error in print job:
+        ean_check_list = (
+            ((ean13_mono, ean13), 13),
+            ((ean8_mono, ean8), 8),
+            )
+        for ean_list, ean_mode in ean_check_list:
+            ean_error = check_ean_code(ean_list, ean_mode)
+            if ean_error: 
+                raise osv.except_osv(
+                    _('EAN %s errati') % ean_mode, 
+                    _('%s\nOrdine: %s, prodotto: %s') % (
+                        ean_error,
+                        order.name, 
+                        product.default_code,
+                        ),
+                    )
+        #_logger.warning('Validate EAN Ordine: %s, prodotto: %s [%s]' % (
+        #    order.name, 
+        #    product.default_code,
+        #    ean_check_list,
+        #    ))
+
         # Force if not present partner_code
         if company_product_partic:
             partner_code = \
