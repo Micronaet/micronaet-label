@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+       <!--TODO rimuovere il commento, da errore mx_lord_qty: -->
        <record model="ir.ui.view" id="view_product_product_ean_1_form">
-           <field name="name">product.product.ean1.form</field>
+           <field name="name">product.product.ean13.form</field>
            <field name="model">product.product</field>
            <field name="inherit_id" ref="product.product_normal_form_view"/>
            <field name="arch" type="xml">

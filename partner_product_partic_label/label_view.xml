@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+        <!--TODO rimuovere il commento, da errore mx_lord_qty: -->
         <record model="ir.ui.view" id="view_product_extra_form">
             <field name="name">product.product.form</field>
             <field name="model">product.product</field>
@@ -9,10 +10,6 @@
                 <field name="ean13" position="after">
                     <field name="ean8" />
                 </field>
-                <!--<field name="q_x_pack" position="after">
-                    <field name="q_x_pallet" />
-                </field>-->
-                
             </field>
         </record>
         <!--note.image-->

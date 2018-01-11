@@ -34,6 +34,7 @@
         'label_system_note',
         'label_system_extra_fields', # for extra fields ean8
         'ean_single',
+        'product', # 03/01/2018: Product view
         ],
     'init_xml': [],
     'demo': [],

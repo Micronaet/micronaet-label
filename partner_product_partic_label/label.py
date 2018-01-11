@@ -445,7 +445,40 @@ class ResPartner(orm.Model):
                 return True
             else:
                 return False        
-            
+        
+        def check_ean_code(ean_ids, mode=13):
+            ''' Validate, if present list of EAN 13 and EAN 8 codes
+            '''    
+            import barcode
+
+            ean_class = 'ean%s' % mode                    
+            for ean in ean_ids:
+                _logger.warning('Validate: %s' % ean)
+                #ean = (ean or '').strip()
+                
+                if not ean:
+                    continue # if empty no error
+
+                # Length check:                    
+                if len(ean) != mode:
+                    return _('Codice non corretto '
+                        '(caratteri non numerici): %s') % ean
+                
+                # Check numeric char:
+                if not ean.isdigit():
+                    return _('Codice non corretto '
+                        '(presenti caratteri non compatibili): %s') % ean
+
+                # Checksum test        
+                EAN = barcode.get_barcode_class(ean_class)
+                ean_obj = EAN(ean[:mode-1]) # remove checksum
+                ean_correct = ean_obj.get_fullcode() # override ean code                
+                if ean != ean_correct:
+                    return _('Codice non corretto '
+                        '(checksum non corretto): %s invece di %s') % (
+                            ean, ean_correct)
+            return False                            
+                
         # ---------------------------------------------------------------------
         # Read parameters:
         # ---------------------------------------------------------------------
@@ -819,6 +852,23 @@ class ResPartner(orm.Model):
         ean13_mono = product.ean13_mono or ean13_mono
         ean8_mono = product.ean8_mono or ean8_mono
         lst_price = ''#product.lst_price or '' XXX no price if no partic
+        
+        # Validate code for no error in print job:
+        for ean_list, ean_mode in (
+                ((ean13_mono, ean13), 13),
+                ((ean8_mono, ean8), 8),
+                ): 
+            ean_error = check_ean_code(ean_list, ean_mode)
+            if ean_error: 
+                raise osv.except_osv(
+                    _('EAN %s errati') % ean_mode, 
+                    _('%s\nOrdine: %s, prodotto: %s') % (
+                        ean_error,
+                        order.name, 
+                        product.default_code,
+                        ),
+                    )
+        _logger.warning('Validate correctly all eans')
         
         if product_partic:
             frame = product_partic.frame or frame or ''
