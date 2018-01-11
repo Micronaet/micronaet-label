@@ -854,10 +854,11 @@ class ResPartner(orm.Model):
         lst_price = ''#product.lst_price or '' XXX no price if no partic
         
         # Validate code for no error in print job:
-        for ean_list, ean_mode in (
-                ((ean13_mono, ean13), 13),
-                ((ean8_mono, ean8), 8),
-                ): 
+        ean_check_list = (
+            ((ean13_mono, ean13), 13),
+            ((ean8_mono, ean8), 8),
+            )
+        for ean_list, ean_mode in ean_check_list:
             ean_error = check_ean_code(ean_list, ean_mode)
             if ean_error: 
                 raise osv.except_osv(
@@ -868,7 +869,11 @@ class ResPartner(orm.Model):
                         product.default_code,
                         ),
                     )
-        _logger.warning('Validate correctly all eans')
+        _logger.warning('Validate EAN Ordine: %s, prodotto: %s [%s]' % (
+            order.name, 
+            product.default_code,
+            ean_check_list,
+            ))
         
         if product_partic:
             frame = product_partic.frame or frame or ''
