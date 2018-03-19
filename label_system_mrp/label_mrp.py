@@ -485,8 +485,10 @@ class MrpProduction(orm.Model):
                 if label == 'article':
                     record_data_counter = product_uom_qty
                 else:
-                    if q_x_pack: # TODO Manage Error:
+                    if q_x_pack: # TODO Manage Error:                        
                         record_data_counter = product_uom_qty / q_x_pack
+                        if product_uom_qty % q_x_pack != 0:
+                            record_data_counter += 1
                     else:    
                         record_data_counter = product_uom_qty
                         # XXX Note: q_x_pack Remain false in job
