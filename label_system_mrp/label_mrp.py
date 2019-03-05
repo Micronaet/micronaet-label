@@ -453,7 +453,7 @@ class MrpProduction(orm.Model):
         for line in sorted_order_line:
             # Launch mode job:
             if sol_job and line.id not in sol_job:
-                continue # Line not in job
+                continue # Line not in job jumped
                 
             for label in labels:
                 sequence += 1
@@ -480,7 +480,8 @@ class MrpProduction(orm.Model):
                     product_uom_qty = sol_job[line.id] # context Q passed
                     # TODO check q_x_pack extra data
                 else: # Normal total production:
-                    product_uom_qty = line.product_uom_qty
+                    product_uom_qty = (
+                        line.product_uom_qty - line.mx_assigned_qty)
                     
                 if label == 'article':
                     record_data_counter = product_uom_qty
