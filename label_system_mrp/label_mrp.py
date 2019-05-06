@@ -475,6 +475,9 @@ class MrpProduction(orm.Model):
                     cr, uid, line=line, context=context)
                 # used for # label:
                 q_x_pack = record_data.get('record_data_q_x_pack', False)
+                if q_x_pack == 1 and label == 'article':
+                    # No internal label if q x pack = 1
+                    continue
                 
                 if sol_job: # Job selection:
                     product_uom_qty = sol_job[line.id] # context Q passed
