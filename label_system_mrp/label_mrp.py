@@ -389,13 +389,24 @@ class MrpProduction(orm.Model):
             return collect_label_db
         else:    
             return True
+
+    def generate_remain_label_job(self, cr, uid, ids, context=None):
+        ''' Generate remain label jobs using same procedure
+        '''
+        if context is None:
+            context = {}
+        context['only_remain'] = True
+        return self.generate_label_job(cr, uid, ids, context=context)
                 
     def generate_label_job(self, cr, uid, ids, context=None):
         ''' Generate list of jobs label
             context extra keys:
+                > only_remain: check not present label
                 > sol_job: 
                     key: ID
                     value: total
+                > sol_job_mode:
+                    all    
         '''
         assert len(ids) == 1, 'Works only with one record a time'
         
@@ -406,6 +417,7 @@ class MrpProduction(orm.Model):
         # ---------------------------------------------------------------------
         # Lauch parameter:
         # ---------------------------------------------------------------------
+        only_remain = context.get('only_remain', False)
         sol_job = context.get('sol_job', False) # Generate only for this job
         sol_job_mode = context.get('sol_job_mode', 'all') # Selection job mode
 
@@ -415,6 +427,15 @@ class MrpProduction(orm.Model):
         note_pool = self.pool.get('note.note')
         
         mrp_proxy = self.browse(cr, uid, ids, context=context)[0]
+        
+        # ---------------------------------------------------------------------
+        # Remain management:
+        # ---------------------------------------------------------------------
+        current_job_db = {}
+        if only_remain:
+            for job in mrp_proxy.label_job_ids:
+                current_job_db[(job.line_id.id, job.type)] = job.record_data_counter
+        # ---------------------------------------------------------------------
         
         # Force generation of label  name:
         _logger.info('Regenerate frame and color name')
@@ -516,6 +537,19 @@ class MrpProduction(orm.Model):
                     #'error': # TODO
                     #'comment_error' # TODO
                     })
+                    
+                # -------------------------------------------------------------
+                # Manage remain mode:    
+                # -------------------------------------------------------------
+                if only_remain:
+                    remain_qty = record_data_counter - current_job_db.get(
+                        (line.id, label), 0)                        
+                    if remain_qty > 0:
+                        record_data['record_data_counter'] = remain_qty
+                    else:
+                        continue # no more printing
+                # -------------------------------------------------------------
+
                 job_pool.create(cr, uid, record_data, context=context)
         _logger.info('End job creation')
         return True
