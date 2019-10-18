@@ -686,9 +686,9 @@ class ResPartnerLabel(orm.Model):
         'label_image': fields.binary('Label image', 
             help='Image logo used for label print'),
 
-        'label_no_internal':fields.boolean('Internal label not needed'),    
-        'label_no_external':fields.boolean('External label not needed'),    
-        'label_no_pallet':fields.boolean('Pallet label not needed'),    
+        'label_no_internal':fields.boolean('Interna non richiesta'),    
+        'label_no_external':fields.boolean('Esterna non richiesta'),    
+        'label_no_pallet':fields.boolean('Pallet non richiesta'),    
         }
 
 class LabelLayoutUser(orm.Model):
