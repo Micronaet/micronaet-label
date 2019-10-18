@@ -477,6 +477,16 @@ class MrpProduction(orm.Model):
                 continue # Line not in job jumped
                 
             for label in labels:
+                # -------------------------------------------------------------
+                # Check if label is needed:
+                # -------------------------------------------------------------
+                if label == 'article' and line.partner_id.label_no_internal:
+                    _logger.info('Internal label not generated')
+                    continue
+                if label == 'package' and line.partner_id.label_no_external:
+                    _logger.info('External label not generated')
+                    continue
+                    
                 sequence += 1
                 
                 # -------------------------------------------------------------

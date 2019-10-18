@@ -685,6 +685,10 @@ class ResPartnerLabel(orm.Model):
             help='Partner label code, used for auto import partner'),
         'label_image': fields.binary('Label image', 
             help='Image logo used for label print'),
+
+        'label_no_internal':fields.boolean('Internal label not needed'),    
+        'label_no_external':fields.boolean('External label not needed'),    
+        'label_no_pallet':fields.boolean('Pallet label not needed'),    
         }
 
 class LabelLayoutUser(orm.Model):

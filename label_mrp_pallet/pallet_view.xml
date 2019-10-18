@@ -43,6 +43,11 @@
                 <field name="label_destination_code" position="after">
                     <field name="partner_pallet_logo" />
                     <field name="company_pallet_name" />
+                    <newline/>
+
+                    <field name="label_no_internal" />
+                    <field name="label_no_external" />
+                    <field name="label_no_pallet" />
                 </field>
             </field>
         </record>    
