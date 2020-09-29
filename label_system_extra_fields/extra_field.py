@@ -30,17 +30,18 @@ from openerp import SUPERUSER_ID, api
 from openerp import tools
 from openerp.tools.translate import _
 from openerp.tools.float_utils import float_round as round
-from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT, 
-    DEFAULT_SERVER_DATETIME_FORMAT, 
-    DATETIME_FORMATS_MAP, 
+from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
+    DEFAULT_SERVER_DATETIME_FORMAT,
+    DATETIME_FORMATS_MAP,
     float_compare)
 
 
 _logger = logging.getLogger(__name__)
 
+
 class SaleOrder(orm.Model):
     """ Model name: SaleOrder
-    """    
+    """
     _inherit = 'sale.order'
 
     _columns = {
@@ -49,24 +50,25 @@ class SaleOrder(orm.Model):
             ),
         }
 
-class MrpProduction(orm.Model):   
+
+class MrpProduction(orm.Model):
     """ Force product only in production
     """
     _inherit = 'mrp.production'
-    
-    # -------------------------------------------------------------------------    
+
+    # -------------------------------------------------------------------------
     # Utility:
     # -------------------------------------------------------------------------
     def force_product_extra_label_field(self, cr, uid, ids, context=None):
-        ''' Update extra fields product
-        '''
+        """ Update extra fields product
+        """
         if context is None:
             context = {}
-            
+
         # Pool used:
         product_pool = self.pool.get('product.product')
-        
-        product_ids =  []
+
+        product_ids = []
         for line in self.browse(cr, uid, ids, context=context)[
                 0].order_line_ids:
             product_id = line.product_id.id
@@ -76,7 +78,7 @@ class MrpProduction(orm.Model):
             else:
                 _logger.error(
                     'Product no structure/code %s' % line.product_id.name)
-        
+
         ctx = context.copy()
         ctx['update_only_field'] = ('label_frame', 'label_fabric_color')
         ctx['log_file'] = '/home/administrator/photo/Label/log/speech.csv'
@@ -87,44 +89,44 @@ class MrpProduction(orm.Model):
                 cr, uid, [product.id], context=ctx)
             _logger.info('Update label field: %s' % product.default_code)
         return True
-    
+
 class ProductProduct(orm.Model):
     """ Model name: Add extra fields to product
-    """    
+    """
     _inherit = 'product.product'
-    
+
     # -------------------------------------------------------------------------
-    # Override:    
+    # Override:
     # -------------------------------------------------------------------------
     def get_all_fields_to_update(self, all_db=None):
-        ''' Override function for update other fields:
-        '''    
+        """ Override function for update other fields:
+        """
         res = {}
 
         if all_db is None:
             _logger.warning('No all_db for generate extra fields')
             return res
-            
-        #_logger.warning('All DB database: %s' % (all_db, )) 
+
+        #_logger.warning('All DB database: %s' % (all_db, ))
         if 'C' in all_db:
             res['label_frame'] = all_db['C']
         else:
             _logger.error('Cannot set frame field')
             res['label_frame'] = ''
-        
+
         if 'D' in all_db:
             res['label_fabric_color'] = all_db['D']
         else:
             res['label_fabric_color'] = ''
             _logger.error('Cannot set color field')
         return res
-        
+
     _columns = {
         'label_frame': fields.char('Label Frame', size=64, translate=True),
-        'label_fabric_color': fields.char('Label fabric color', size=64, 
+        'label_fabric_color': fields.char('Label fabric color', size=64,
             translate=True),
         'ean8': fields.char('EAN 8', size=8),
         'q_x_pallet': fields.integer('Q. per pallet'),
         }
-        
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

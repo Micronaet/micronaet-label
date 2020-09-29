@@ -688,7 +688,7 @@ class ResPartnerLabel(orm.Model):
 
         'label_no_internal':fields.boolean('Interna non richiesta'),    
         'label_no_external':fields.boolean('Esterna non richiesta'),    
-        'label_no_pallet':fields.boolean('Pallet non richiesta'),    
+        'label_no_pallet':fields.boolean('Pallet non richiesta'),
         }
 
 class LabelLayoutUser(orm.Model):
