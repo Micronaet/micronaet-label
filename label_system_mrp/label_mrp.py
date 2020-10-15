@@ -309,7 +309,7 @@ class MrpProduction(orm.Model):
             report_pdf[layout].append(
                 (filename, f_pdf, job)) # for merge procedure
             # XXX Aggiunto job.id per context parameters
-                
+            import pdb; pdb.set_trace()    
             file_pdf = open(filename, 'w') # XXX binary?
             file_pdf.write(result)
             file_pdf.close()
