@@ -90,6 +90,7 @@ class MrpProduction(orm.Model):
             _logger.info('Update label field: %s' % product.default_code)
         return True
 
+
 class ProductProduct(orm.Model):
     """ Model name: Add extra fields to product
     """
