@@ -475,10 +475,9 @@ class MrpProduction(orm.Model):
         for line in sorted_order_line:
             # Launch mode job:
             if sol_job and line.id not in sol_job:
-                continue # Line not in job jumped
+                continue  # Line not in job jumped
 
             for label in labels:
-                pdb.set_trace()
                 # -------------------------------------------------------------
                 # Check if label is needed:
                 # -------------------------------------------------------------
