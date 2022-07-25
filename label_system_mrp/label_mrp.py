@@ -415,7 +415,7 @@ class MrpProduction(orm.Model):
             context = {}
 
         # ---------------------------------------------------------------------
-        # Lauch parameter:
+        # Launch parameter:
         # ---------------------------------------------------------------------
         only_remain = context.get('only_remain', False)
         sol_job = context.get('sol_job', False)  # Generate only for this job
@@ -464,14 +464,14 @@ class MrpProduction(orm.Model):
             mrp_proxy.order_line_ids,
             key=lambda x: (
                 x.order_id.partner_id.has_custom_label or
-                    x.order_id.destination_partner_id.has_custom_label,
+                x.order_id.destination_partner_id.has_custom_label,
                 x.product_id.default_code,
                 x.order_id.partner_id.name,
                 x.order_id.destination_partner_id.name or False,
                 x.mrp_sequence,
                 ),
             )
-
+        pdb.set_trace()
         for line in sorted_order_line:
             # Launch mode job:
             if sol_job and line.id not in sol_job:
@@ -498,7 +498,7 @@ class MrpProduction(orm.Model):
                     note_pool.get_label_from_order_line(
                         cr, uid, line, label, context=context)
 
-                report_id = False # TODO
+                report_id = False  # TODO
 
                 # -------------------------------------------------------------
                 # Generate extra data from order, product, partner, address
@@ -521,7 +521,7 @@ class MrpProduction(orm.Model):
                 if label == 'article':
                     record_data_counter = product_uom_qty
                 else:
-                    if q_x_pack: # TODO Manage Error:
+                    if q_x_pack:  # TODO Manage Error:
                         record_data_counter = product_uom_qty / q_x_pack
                         if product_uom_qty % q_x_pack != 0:
                             record_data_counter += 1
@@ -529,7 +529,7 @@ class MrpProduction(orm.Model):
                         record_data_counter = product_uom_qty
                         # XXX Note: q_x_pack Remain false in job
 
-                record_data_counter *= print_moltiplicator # moltiplicator
+                record_data_counter *= print_moltiplicator  # moltiplicator
 
                 # -------------------------------------------------------------
                 # Create Job:
@@ -537,16 +537,16 @@ class MrpProduction(orm.Model):
                 # Integrate with line information:
                 record_data.update({
                     'sequence': sequence,
-                    'label_id': label_id, # label.label
-                    'report_id': report_id, #label.label.report
-                    #'lang_id':,
+                    'label_id': label_id,  # label.label
+                    'report_id': report_id,  # label.label.report
+                    # 'lang_id':,
                     'demo': False,
                     'fast': False,
 
                     'record_data_counter': record_data_counter,
                     'print_moltiplicator': print_moltiplicator or 1,
-                    #'error': # TODO
-                    #'comment_error' # TODO
+                    # 'error':  # TODO
+                    # 'comment_error'  # TODO
                     })
 
                 # -------------------------------------------------------------
@@ -558,7 +558,7 @@ class MrpProduction(orm.Model):
                     if remain_qty > 0:
                         record_data['record_data_counter'] = remain_qty
                     else:
-                        continue # no more printing
+                        continue  # no more printing
                 # -------------------------------------------------------------
 
                 job_pool.create(cr, uid, record_data, context=context)
