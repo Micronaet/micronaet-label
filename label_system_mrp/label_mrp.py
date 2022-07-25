@@ -471,7 +471,6 @@ class MrpProduction(orm.Model):
                 x.mrp_sequence,
                 ),
             )
-        pdb.set_trace()
         for line in sorted_order_line:
             # Launch mode job:
             if sol_job and line.id not in sol_job:
@@ -481,13 +480,25 @@ class MrpProduction(orm.Model):
                 # -------------------------------------------------------------
                 # Check if label is needed:
                 # -------------------------------------------------------------
+                # Destination no label check:
+                destination_partner_id = line.order_id.destination_partner_id
+                if destination_partner_id:
+                    if label == 'article' and \
+                            destination_partner_id.label_no_internal:
+                        _logger.info('Internal label not generated (dest.)')
+                        continue
+                    if label == 'package' and \
+                            destination_partner_id.label_no_external:
+                        _logger.info('External label not generated (dest.)')
+                        continue
+
+                # Partner no label check:
                 if label == 'article' and line.partner_id.label_no_internal:
                     _logger.info('Internal label not generated')
                     continue
                 if label == 'package' and line.partner_id.label_no_external:
                     _logger.info('External label not generated')
                     continue
-
                 sequence += 1
 
                 # -------------------------------------------------------------
