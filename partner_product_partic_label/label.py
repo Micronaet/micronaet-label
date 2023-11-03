@@ -233,16 +233,16 @@ class ResPartner(orm.Model):
         def format_float(value):
             """ Format fload from xls file
             """
-           if not value:
-               return 0.0
-           return float(value)
+            if not value:
+                return 0.0
+            return float(value)
 
         # Pool used
         partic_pool = self.pool.get('res.partner.product.partic')
         product_pool = self.pool.get('product.product')
 
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
-        path = '/home/administrator/photo/xls/partic' # TODO custom value!
+        path = '/home/administrator/photo/xls/partic'  # todo custom value!
         max_line = 100000
 
         # Get filename:
@@ -423,7 +423,7 @@ class ResPartner(orm.Model):
                 res = partner.__getattribute__(field) or ''
             if not res: # company
                 res = company.partner_id.__getattribute__(field) or ''
-            if not res: # not res (Not an error TODO raise?):
+            if not res: # not res (Not an error todo raise?):
                 _logger.warning('Warning %s not found string value!' % field)
             return res
 
@@ -454,7 +454,7 @@ class ResPartner(orm.Model):
             ean_class = 'ean%s' % mode
             for ean in ean_ids:
                 _logger.warning('Validate: %s' % ean)
-                #ean = (ean or '').strip()
+                # ean = (ean or '').strip()
 
                 if not ean:
                     continue # if empty no error
@@ -496,7 +496,7 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         if line:
             # Create browse obj for readability:
-            product = line.product_id # TODO lang?
+            product = line.product_id  # todo lang?
             partner = line.order_id.partner_id
             address = line.order_id.destination_partner_id
             order = line.order_id
@@ -606,7 +606,7 @@ class ResPartner(orm.Model):
                 company, partner, address,
                 'label_string_fabric'),
 
-            # Anagrafic numeric:
+            # Anagraph numeric:
             'record_string_q_x_pack': get_label(
                 company, partner, address,
                 'label_string_q_x_pack'),
