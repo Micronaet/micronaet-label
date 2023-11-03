@@ -514,23 +514,24 @@ class MrpProduction(orm.Model):
                     note_pool.get_label_from_order_line(
                         cr, uid, line, label, context=context)
 
-                report_id = False  # TODO
+                report_id = False  # todo
 
                 # -------------------------------------------------------------
                 # Generate extra data from order, product, partner, address
                 # -------------------------------------------------------------
                 record_data = partner_pool.generate_job_data_from_line_partner(
                     cr, uid, line=line, context=context)
+
                 # used for # label:
                 q_x_pack = record_data.get('record_data_q_x_pack', False)
                 if q_x_pack == 1 and label == 'article':
                     # No internal label if q x pack = 1
                     continue
 
-                if sol_job: # Job selection:
-                    product_uom_qty = sol_job[line.id] # context Q passed
-                    # TODO check q_x_pack extra data
-                else: # Normal total production:
+                if sol_job:  # Job selection:
+                    product_uom_qty = sol_job[line.id]  # context Q passed
+                    # todo check q_x_pack extra data
+                else:  # Normal total production:
                     product_uom_qty = (
                         line.product_uom_qty - line.mx_assigned_qty)
 
@@ -561,8 +562,8 @@ class MrpProduction(orm.Model):
 
                     'record_data_counter': record_data_counter,
                     'print_moltiplicator': print_moltiplicator or 1,
-                    # 'error':  # TODO
-                    # 'comment_error'  # TODO
+                    # 'error':  # todo
+                    # 'comment_error'  # todo
                     })
 
                 # -------------------------------------------------------------
@@ -612,4 +613,3 @@ class MrpProduction(orm.Model):
             'label.label.job', 'mrp_id',
             'Label Job'),
         }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
