@@ -87,6 +87,7 @@ class ResPartnerProductPartic(orm.Model):
             'Label field'),
         }
 
+
 class NoteImage(orm.Model):
     """ Add product partic obj
     """
@@ -102,6 +103,7 @@ class NoteImage(orm.Model):
         'label_code_uniq', 'unique(label_code)',
         'The label code must be unique!'),
         ]
+
 
 class ResPartner(orm.Model):
     """ Add product partic obj
@@ -140,7 +142,7 @@ class ResPartner(orm.Model):
         """ Export in XLS for content partic for partner
         """
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
-        path = '/home/administrator/photo/xls/partic' # TODO custom value!
+        path = '/home/administrator/photo/xls/partic'  # TODO custom value!
 
         # Get filename:
         if current_proxy.label_partic_file:
@@ -165,7 +167,7 @@ class ResPartner(orm.Model):
         extra_pool = self.pool.get('res.partner.product.partic.label')
         # Partic field:
         header = [
-            #'ID',
+            # 'ID',
             'default_code',
             'partner_pricelist',
             'partner_code',
@@ -178,14 +180,14 @@ class ResPartner(orm.Model):
 
         # Extra data:
         extra_fields = [f[0] for f in extra_pool._columns['name'].selection]
-        header.extend(extra_fields) # selection elements
+        header.extend(extra_fields)  # selection elements
         self.write_xls_file(header)
 
         # Write data row:
         for partic in current_proxy.partic_ids:
             # Partic field:
             partic_row = [
-                #partic.id,
+                # partic.id,
                 partic.product_id.default_code or '',
                 partic.partner_pricelist or 0.0,
                 partic.partner_code or '',
@@ -267,7 +269,7 @@ class ResPartner(orm.Model):
                 )
 
         # Read partic yet present:
-        partic_present = {} # DB for code yet present
+        partic_present = {}  # DB for code yet present
         for partic in current_proxy.partic_ids:
             partic_present[partic.product_id.default_code] = partic.id
 
@@ -336,7 +338,8 @@ class ResPartner(orm.Model):
             # ('not', 'Not selected'), # NOT PRESENT
             ]
 
-    def get_partic_partner_product_label(self, cr, uid, product_id, partner_id,
+    def get_partic_partner_product_label(
+            self, cr, uid, product_id, partner_id,
             address_id=False, context=None):
         """ Get partner product partic information
         """
@@ -349,14 +352,14 @@ class ResPartner(orm.Model):
                 ('product_id', '=', product_id),
                 ], context=context)
 
-        if not res: # no address or no partic for address
+        if not res:  # no address or no partic for address
             res = partic_pool.search(cr, uid, [
                 ('partner_id.has_custom_label', '=', True),
                 ('partner_id', '=', partner_id),
                 ('product_id', '=', product_id),
                 ], context=context)
 
-        # TODO check double
+        # todo check double
         if res:
             return partic_pool.browse(cr, uid, res, context=context)[0]
         else:
@@ -418,13 +421,13 @@ class ResPartner(orm.Model):
             """ Check field from address, partner, company return first found
             """
             res = ''
-            if address and address.has_custom_label: # address
+            if address and address.has_custom_label:  # address
                 res = address.__getattribute__(field) or ''
-            if not res and partner.has_custom_label: # partner
+            if not res and partner.has_custom_label:  # partner
                 res = partner.__getattribute__(field) or ''
-            if not res: # company
+            if not res:  # company
                 res = company.partner_id.__getattribute__(field) or ''
-            if not res: # not res (Not an error todo raise?):
+            if not res:  # not res (Not an error todo raise?):
                 _logger.warning('Warning %s not found string value!' % field)
             return res
 
@@ -433,11 +436,11 @@ class ResPartner(orm.Model):
                 as True or False
             """
             res = ''
-            if address and address.has_custom_label: # address
+            if address and address.has_custom_label:  # address
                 res = address.__getattribute__(field) or ''
-            if not res and partner.has_custom_label: # partner
+            if not res and partner.has_custom_label:  # partner
                 res = partner.__getattribute__(field) or ''
-            if not res: # company
+            if not res:  # company
                 res = company.partner_id.__getattribute__(field) or ''
             if warning and not res:
                 _logger.warning('Field %s not set up as show or hide!' % field)
@@ -462,12 +465,14 @@ class ResPartner(orm.Model):
 
                 # Length check:
                 if len(ean) != mode:
-                    return _('Codice non corretto '
+                    return _(
+                        'Codice non corretto '
                         '(caratteri non numerici): %s') % ean
 
                 # Check numeric char:
                 if not ean.isdigit():
-                    return _('Codice non corretto '
+                    return _(
+                        'Codice non corretto '
                         '(presenti caratteri non compatibili): %s') % ean
 
                 # Checksum test
@@ -475,7 +480,8 @@ class ResPartner(orm.Model):
                 ean_obj = EAN(ean[:mode-1]) # remove checksum
                 ean_correct = ean_obj.get_fullcode() # override ean code
                 if ean != ean_correct:
-                    return _('Codice non corretto '
+                    return _(
+                        'Codice non corretto '
                         '(checksum non corretto): %s invece di %s') % (
                             ean, ean_correct)
             return False
@@ -774,7 +780,7 @@ class ResPartner(orm.Model):
             'record_print_linedrawing': get_state_value(
                 company, partner, address,
                 'label_print_linedrawing'),
-            #'label_print_product_image':
+            # 'label_print_product_image':
 
             # Counter:
             'record_print_counter_pack_total': get_state_value(
@@ -807,7 +813,7 @@ class ResPartner(orm.Model):
         # ---------------------------------------------------------------------
         # Partic update:
         # ---------------------------------------------------------------------
-        separator = '-' #'\n' # for pack TODO - for article?
+        separator = '-'  # '\n' # for pack TODO - for article?
         # Update record with data:
 
         if partner.has_custom_label or address.has_custom_label:
