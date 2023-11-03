@@ -30,74 +30,76 @@ from openerp import SUPERUSER_ID, api
 from openerp import tools
 from openerp.tools.translate import _
 from openerp.tools.float_utils import float_round as round
-from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT, 
-    DEFAULT_SERVER_DATETIME_FORMAT, 
-    DATETIME_FORMATS_MAP, 
+from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
+    DEFAULT_SERVER_DATETIME_FORMAT,
+    DATETIME_FORMATS_MAP,
     float_compare)
 
 
 _logger = logging.getLogger(__name__)
 
+
 class ResPartner(orm.Model):
     """ Model name: Partner parameter
     """
-    
+
     _inherit = 'res.partner'
-    
+
     _columns = {
-        'partner_pallet_logo': fields.boolean('Logo partner pallet', 
+        'partner_pallet_logo': fields.boolean('Logo partner pallet',
             help='Utilizza il logo del partner sulla etichetta pallet'),
-        'company_pallet_name': fields.char('Nome azienda pallet', size=80, 
+        'company_pallet_name': fields.char('Nome azienda pallet', size=80,
             help='Nome azienda sulla etichetta pallet'),
         }
+
 
 class SaleOrderLine(orm.Model):
     """ Model name: Line in pallet
     """
-    
+
     _inherit = 'sale.order.line'
-    
+
     # -------------------------------------------------------------------------
     # Button event:
     # -------------------------------------------------------------------------
     def pallet_unlink_line(self, cr, uid, ids, context=None):
-        ''' Unlink pallet
-        ''' 
+        """ Unlink pallet
+        """
         return self.write(cr, uid, ids, {
             'pallet_id': False,
             }, context=context)
-            
+
     _columns = {
         'pallet_id': fields.many2one('label.pallet', 'Pallet'),
         }
 
+
 class LabelPallet(orm.Model):
     """ Model name: LabelPallet
     """
-    
+
     _name = 'label.pallet'
     _description = 'Label pallet'
     _rec_name = 'code'
     _order = 'code'
-    
+
     _columns = {
         'code': fields.integer('Code', required=True),
         'mrp_id': fields.many2one(
-            'mrp.production', 'Production', 
+            'mrp.production', 'Production',
             required=False),
         'line_ids': fields.one2many(
             'sale.order.line', 'pallet_id', 'Order line'),
         }
 
+
 class MrpProduction(orm.Model):
     """ Model name: MRP production
     """
-    
+
     _inherit = 'mrp.production'
-    
+
     _columns = {
         'default_q_x_pallet': fields.integer('Default q x pallet'),
         'pallet_ids': fields.one2many('label.pallet', 'mrp_id', 'Pallet'),
         }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -40,6 +40,7 @@ from pyPdf import PdfFileWriter, PdfFileReader
 
 _logger = logging.getLogger(__name__)
 
+
 class LabelLabelJob(orm.Model):
     """ Model name: Label job
     """
@@ -53,7 +54,8 @@ class LabelLabelJob(orm.Model):
 
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         model_pool = self.pool.get('ir.model.data')
-        view_id = model_pool.get_object_reference(cr, uid,
+        view_id = model_pool.get_object_reference(
+            cr, uid,
             'label_system', 'view_product_product_label_data_form')[1]
 
         return {
@@ -63,11 +65,11 @@ class LabelLabelJob(orm.Model):
             'view_mode': 'form,tree',
             'res_id': current_proxy.product_id.id,
             'res_model': 'product.product',
-            'view_id': view_id, # False
+            'view_id': view_id,  # False
             'views': [(view_id, 'form'), (False, 'tree')],
             'domain': [],
             'context': context,
-            'target': 'current', # 'new'
+            'target': 'current',  # 'new'
             'nodestroy': False,
             }
 
@@ -76,7 +78,8 @@ class LabelLabelJob(orm.Model):
     # -------------------------------------------------------------------------
     def open_partner_view(self, cr, uid, partner_id, context=None):
         model_pool = self.pool.get('ir.model.data')
-        view_id = model_pool.get_object_reference(cr, uid,
+        view_id = model_pool.get_object_reference(
+            cr, uid,
             'partner_product_partic_label', 'view_res_partner_label_form')[1]
 
         return {
@@ -111,6 +114,7 @@ class LabelLabelJob(orm.Model):
         address_id = current_proxy.address_id.id
         return self.open_partner_view(cr, uid, address_id, context=context)
 
+
 class MrpProduction(orm.Model):
     """ Model name: MrpProduction
     """
@@ -135,7 +139,7 @@ class MrpProduction(orm.Model):
 
             if job_type not in break_level:
                 _logger.error('No correct type of label')
-                continue # end?
+                continue  # end?
 
             # Break level type (3 cases):
             current_code = job.product_id.default_code
@@ -145,7 +149,7 @@ class MrpProduction(orm.Model):
             elif job.has_partner_custom:
                 level = (
                     current_code, 'partner', job.partner_id, False)
-            else: # normal stock label
+            else:  # normal stock label
                 level = (current_code, 'code', False, False)
 
             # -----------------------------------------------------------------
@@ -154,14 +158,14 @@ class MrpProduction(orm.Model):
             # No break level:
             if break_level[job_type] and break_level[job_type] == level:
                 label_total[job_type] += job.record_data_counter
-                old_id[job_type] = job.id # update for keep last
+                old_id[job_type] = job.id  # update for keep last
 
             else:
                 # Break level:
                 if break_level[job_type]: # only for break not first loop
                     placeholder[old_id[job_type]] = (
                         label_total[job_type],
-                        last_level[job_type], # save also break level
+                        last_level[job_type],  # save also break level
                         )
 
                 # Common part fist loop and break level:
@@ -247,7 +251,7 @@ class MrpProduction(orm.Model):
 
             # Collect parameter.
             if collect_label:
-                 job_2_line_db[job.id] = job.line_id.id
+                job_2_line_db[job.id] = job.line_id.id
 
             # Database of same layut pdf report:
             if layout not in report_pdf:
