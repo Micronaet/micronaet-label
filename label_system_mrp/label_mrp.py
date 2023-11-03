@@ -509,7 +509,7 @@ class MrpProduction(orm.Model):
                 # -------------------------------------------------------------
                 # Search 3 label depend on note system management:
                 # -------------------------------------------------------------
-                # TODO generate label_id with system note management!
+                # todo generate label_id with system note management!
                 label_id, print_moltiplicator = \
                     note_pool.get_label_from_order_line(
                         cr, uid, line, label, context=context)
