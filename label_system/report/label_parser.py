@@ -21,12 +21,15 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import os
-import sys
 import logging
 from openerp.osv import osv
 from openerp.report import report_sxw
-from openerp.report.report_sxw import rml_parse
+
+from openerp.tools.translate import _
+
+# import os
+# import sys
+# from openerp.report.report_sxw import rml_parse
 
 # XXX problem during import procedure:
 # import openerp
@@ -37,7 +40,6 @@ from openerp.report.report_sxw import rml_parse
 # from openerp import SUPERUSER_ID#, api
 # from openerp import tools
 # from datetime import datetime, timedelta
-from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
@@ -53,7 +55,7 @@ class Parser(report_sxw.rml_parse):
             'load': self.load,
             'date_reformat': self.date_reformat,
             'line_block': self.line_block,
-            # TODO load_image function for extra image
+            # todo load_image function for extra image
         })
 
     def line_block(self, total, block=1):
@@ -144,7 +146,6 @@ class Parser(report_sxw.rml_parse):
 
         # Check mode passed:
         if mode not in ('data', 'print', 'string'):
-            # _logger.error('Check mode in label, no value: print,string,data')
             raise osv.except_osv(
                 _('Program error'),
                 _('Check mode in label, no value: print, string, data'),
@@ -159,7 +160,7 @@ class Parser(report_sxw.rml_parse):
             else:
                 _logger.error(
                     'Show field not found: %s (assume yes)' % show_field)
-                show = True # for not present fields
+                show = True  # for not present fields
         else:
             show = True
         if not show:
