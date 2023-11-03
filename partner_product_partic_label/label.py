@@ -95,7 +95,8 @@ class NoteImage(orm.Model):
 
     _columns = {
         'label_image': fields.boolean('Image for label'),
-        'label_code': fields.char('Label code', size=15,
+        'label_code': fields.char(
+            'Label code', size=15,
             help='Code used for refer image in ODT files'),
         }
 
