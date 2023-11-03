@@ -75,7 +75,7 @@ class ResPartnerProductPartic(orm.Model):
         'partner_pricelist': fields.float('Partner pricelist', digits=(16, 3)),
 
         'frame': fields.char('Frame', size=30),  # translate=True),
-        'fabric_color': fields.char('Fabric color', size=30),#, translate=True),
+        'fabric_color': fields.char('Fabric color', size=30),  # translate=True
         'text1': fields.text('Text 1'),  # translate=True),
         'text2': fields.text('Text 2'),  # , translate=True),
         'text3': fields.text('Text 3'),  # , translate=True),
