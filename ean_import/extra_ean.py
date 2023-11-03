@@ -40,6 +40,7 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+
 class ProductProduct(orm.Model):
     """ Model name: ProductProduct
     """
@@ -131,7 +132,6 @@ class ProductProduct(orm.Model):
                 WS_log.write(counter, 1, 'Codice doppio')
                 _logger.warning('Code double: %s' % default_code)
 
-
             product_proxy = self.browse(
                 cr, uid, product_ids, context=context)[0]
 
@@ -156,11 +156,8 @@ class ProductProduct(orm.Model):
 
         return True
 
-
     _columns = {
         'ean13_single': fields.char('EAN 13 Single product', size=13),
         'ean13_pack': fields.char('EAN 13 Pack product', size=13),
         'ean13_org': fields.char('EAN 13 Org', size=13),
         }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
