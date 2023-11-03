@@ -175,7 +175,6 @@ class Parser(report_sxw.rml_parse):
         if field_name == 'record_data_counter_pack_total':
             # Manage counter here:
             if counter < 0:
-                # _logger.error('Report error: counter passed without current')
                 raise osv.except_osv(
                     _('Report error'),
                     _('Report error: counter passed without current'),
@@ -205,7 +204,7 @@ class Parser(report_sxw.rml_parse):
         # Field not present:
         elif field_name not in record._columns:
             _logger.error('Field not present: %s' % field_name)
-            # TODO for partner_code raise error but not present!
+            # todo for partner_code raise error but not present!
             # raise osv.except_osv(
             #    ('Program error'),
             #    ('Field not present: %s' % field_name),
