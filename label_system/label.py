@@ -621,7 +621,7 @@ class LabelLabelJob(orm.Model):
         'record_data_code': fields.char('Company code', size=30),
         'record_data_code_partner': fields.char('Partner code', size=30),
         'record_data_description': fields.char(
-            'company description', size=100),
+            'company description', size=110),
         'record_data_description_partner': fields.char(
             'Partner description', size=50),
         'record_data_frame': fields.char('Frame', size=80),  # todo add

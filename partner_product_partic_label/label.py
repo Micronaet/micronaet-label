@@ -61,6 +61,7 @@ class ResPartnerProductParticLabel(orm.Model):
         'partic_id': fields.many2one('res.partner.product.partic', 'Partic'),
         }
 
+
 class ResPartnerProductPartic(orm.Model):
     """ Add product partic obj
     """
