@@ -292,7 +292,7 @@ class ResPartner(orm.Model):
 
             data = {
                 'partner_id': current_proxy.id,
-                #'product_id': product_id
+                # 'product_id': product_id
 
                 # Field to import:
                 'partner_pricelist': format_float(row[1].value),
@@ -331,9 +331,9 @@ class ResPartner(orm.Model):
 
     def get_tri_state(self, cr, uid, context=None):
         return [
-            ('show', 'Show'), # ON
-            ('hide', 'Hide'), # OFF
-            #('not', 'Not selected'), # NOT PRESENT
+            ('show', 'Show'),  # ON
+            ('hide', 'Hide'),  # OFF
+            # ('not', 'Not selected'), # NOT PRESENT
             ]
 
     def get_partic_partner_product_label(self, cr, uid, product_id, partner_id,
@@ -362,9 +362,10 @@ class ResPartner(orm.Model):
         else:
             return False
 
-    def get_translate_description_data(self, cr, uid, product, field, langs,
+    def get_translate_description_data(
+            self, cr, uid, product, field, langs,
             separator='\n', context=None):
-        """ Load description for product translateble field
+        """ Load description for product translatable field
             product: proxy obj
             field: field name
             langs: text database for extra lang
@@ -374,13 +375,13 @@ class ResPartner(orm.Model):
         check_lang = {
             'en': 'en_US',
             'fr': 'fr_FR',
-            } # TODO better!
+            }  # todo better!
 
         if context is None:
             context = {}
         product_pool = self.pool.get('product.product')
 
-        res = product.__getattribute__(field) or '' # default language
+        res = product.__getattribute__(field) or ''  # default language
         if not langs:
             return res
 
