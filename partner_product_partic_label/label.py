@@ -219,12 +219,12 @@ class ResPartner(orm.Model):
             mask = '%%0%dd' % mode
 
             str_value = str(value)
-            if len(str_value) == mode - 1: # no last char
+            if len(str_value) == mode - 1:  # no last char
                 import barcode
                 ean_class = 'ean%s' % mode
                 EAN = barcode.get_barcode_class(ean_class)
                 ean = EAN(str_value)
-                value = ean.get_fullcode() # override ean code
+                value = ean.get_fullcode()  # override ean code
             try:
                 return mask % int(value)
             except:
