@@ -29,17 +29,18 @@ from openerp.report import report_sxw
 from openerp.report.report_sxw import rml_parse
 
 # XXX problem during import procedure:
-#import openerp
-#import openerp.netsvc as netsvc
-#import openerp.addons.decimal_precision as dp
-#from openerp.osv import fields, osv, expression, orm
-#from datetime import datetime, timedelta
-#from openerp import SUPERUSER_ID#, api
-#from openerp import tools
-#from datetime import datetime, timedelta
-#from openerp.tools.translate import _
+# import openerp
+# import openerp.netsvc as netsvc
+# import openerp.addons.decimal_precision as dp
+# from openerp.osv import fields, osv, expression, orm
+# from datetime import datetime, timedelta
+# from openerp import SUPERUSER_ID#, api
+# from openerp import tools
+# from datetime import datetime, timedelta
+from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
+
 
 class Parser(report_sxw.rml_parse):
     # Constructor
@@ -48,32 +49,32 @@ class Parser(report_sxw.rml_parse):
         self.localcontext.update({
             'get_report_label': self.get_report_label,
             'get_placeholder': self.get_placeholder,
-            #'get_report_placeholder': self.get_report_placeholder,
+            # 'get_report_placeholder': self.get_report_placeholder,
             'load': self.load,
             'date_reformat': self.date_reformat,
             'line_block': self.line_block,
-            # TODO load_image function for extra image        
+            # TODO load_image function for extra image
         })
 
     def line_block(self, total, block=1):
-        ''' Manage line multi block of label
-        '''
+        """ Manage line multi block of label
+        """
         if block > 1:
-            res = int(total) / int(block) + (1 if total % block > 0 else 0)            
+            res = int(total) / int(block) + (1 if total % block > 0 else 0)
         else:
-            res = total    
+            res = total
         return int(res)
-            
+
     def date_reformat(self, date_iso, date_format='it', separator='/'):
-        ''' Return ISO date in format
-            date_format: 
+        """ Return ISO date in format
+            date_format:
                 'it': 'GG/MM/AA'
                 'IT': 'GG/MM/AAAA'
-                # TODO 
-        '''
+                # TODO
+        """
         if not date_iso:
             return ''
-        if date_format == 'it': 
+        if date_format == 'it':
             return '%s%s%s%s%s' % (
                 date_iso[8:10],
                 separator,
@@ -81,7 +82,7 @@ class Parser(report_sxw.rml_parse):
                 separator,
                 date_iso[2:4],
                 )
-        if date_format == 'IT': 
+        if date_format == 'IT':
             return '%s%s%s%s%s' % (
                 date_iso[8:10],
                 separator,
@@ -92,122 +93,124 @@ class Parser(report_sxw.rml_parse):
         else:
             _logger.error('No format passed or managed %s!' % date_format)
             return date_iso
-                
+
     def get_placeholder(self, data, field=False):
-        ''' Get placeholder if present
-        '''
+        """ Get placeholder if present
+        """
         ph = data.get('placeholder_data', False)
         if not ph:
             return False
         if not field:
-            return True # ph present
+            return True  # ph present
         return data['placeholder_data'].get(field, '')
-        
+
     # Method for local context
-    def load(self, record, field, mode='data', check_show=True, lang=False, 
+    def load(
+            self, record, field, mode='data', check_show=True, lang=False,
             counter=-1, position=0):
-        ''' Abstract function for load data in report
-        
+        """ Abstract function for load data in report
+
             record: browse pointer to job element with all record data in it
                 The job will created from MRP process, in this case are read
                 only but the operator could change the data put in "fast" mode
                 the label for modify some field in it o re-print the less label
-            
-            field: name of the key field to get (end part of record_mode 
+
+            field: name of the key field to get (end part of record_mode
                 syntax in database): record + mode + field
-            
-            mode: 3 value are possible: 
+
+            mode: 3 value are possible:
                 data: return the data for the field passed
                 string: return the label string text for the field passed
-                print: return boolead for show or not show check
+                print: return boolean for show or not show check
                 All the field must be passed as the simple name, procedure
                 append record + mode + field name for create field name present
                 in record job
-                NOTE: counter_pack_total is an ecception (field not in DB)
-                
+                NOTE: counter_pack_total is an exception (field not in DB)
+
             check_show: means that if not present record_print_* when
-                record_data or record_string fill be leaved empty
-                (so write nothing), 
+                record_data or record_string fill be left empty
+                (so write nothing),
                 sometimes will be tested in record_print mode directly in the
                 report
-                
+
             lang: if present return field in data translation for language
-            
+
             counter: used for counter_pack_total data if present
-            
-            position: if setted in sting mode split vaue with | and take
+
+            position: if set in sting mode split vaule with | and take
                 position element
-        '''
+        """
         empty = ''
 
         # Check mode passed:
         if mode not in ('data', 'print', 'string'):
-            #_logger.error('Check mode in label, no value: print,string,data')
+            # _logger.error('Check mode in label, no value: print,string,data')
             raise osv.except_osv(
-                _('Program error'), 
+                _('Program error'),
                 _('Check mode in label, no value: print, string, data'),
                 )
-        
-        # Test show depend on paramenter and other controls:
-        if check_show and mode in ('data', 'string'): #TODO don't check counter
+
+        # Test show depend on parameter and other controls:
+        # todo don't check counter
+        if check_show and mode in ('data', 'string'):
             show_field = 'record_print_%s' % field
             if show_field in record._columns:
                 show = record.__getattribute__(show_field)
             else:
                 _logger.error(
                     'Show field not found: %s (assume yes)' % show_field)
-                show = True # for not present fields           
+                show = True # for not present fields
         else:
             show = True
-        if not show: 
+        if not show:
             return empty
-        
-        # ---------------------------------------------------------------------    
+
+        # ---------------------------------------------------------------------
         # Generate field name:
-        # ---------------------------------------------------------------------    
+        # ---------------------------------------------------------------------
         field_name = 'record_%s_%s' % (mode, field)
-        
+
         # Counters
-        if field_name == 'record_data_counter_pack_total':                    
+        if field_name == 'record_data_counter_pack_total':
             # Manage counter here:
             if counter < 0:
-                #_logger.error('Report error: counter passed without current')
+                # _logger.error('Report error: counter passed without current')
                 raise osv.except_osv(
-                    _('Report error'), 
+                    _('Report error'),
                     _('Report error: counter passed without current'),
                     )
             return '%s / %s' % (
-                counter + 1, 
-                record.record_data_counter, # Total record
+                counter + 1,
+                record.record_data_counter,  # Total record
                 )
-        
-        # Logo and images:        
+
+        # Logo and images:
         elif field in ('company_logo', 'partner_logo', 'linedrawing'):
-            # TODO manage better
+            # todo manage better
             # Return image:
             if field == 'company_logo':
                 return record.partner_id.company_id.partner_id.label_image
             elif field == 'partner_logo':
-                try: # First address logo:
+                try:  # First address logo:
                     image_logo = record.address_id.label_image
-                except:     
-                    image_logo = False               
+                except:
+                    image_logo = False
                 return image_logo or record.partner_id.label_image
             elif field == 'linedrawing':
                 return record.product_id.wireframe
             else:
                 return ''
-        
-        # Field not present:        
+
+        # Field not present:
         elif field_name not in record._columns:
             _logger.error('Field not present: %s' % field_name)
             # TODO for partner_code raise error but not present!
-            #raise osv.except_osv(
-            #    ('Program error'), 
+            # raise osv.except_osv(
+            #    ('Program error'),
             #    ('Field not present: %s' % field_name),
-            #    )      
-                  
-        # Field (normale data)          
+            #    )
+
+        # Field (normal data)
         else:
             # String use | separator for split article|pack|pallet
             if mode == 'string':
@@ -216,14 +219,14 @@ class Parser(report_sxw.rml_parse):
                     _logger.info('Position > len split string')
                     position = 0
                 return string[position] or ''
-            else:   
+            else:
                 return record.__getattribute__(field_name)
 
     def get_report_label(self, data=None):
-        ''' Master function for generate label elements
+        """ Master function for generate label elements
             data:
                 report_data: test, fast, production are the current value
-        '''
+        """
         if data is None:
             data = {}
 
@@ -231,21 +234,21 @@ class Parser(report_sxw.rml_parse):
         cr = self.cr
         uid = self.uid
         context = {}
-        
+
         # Pool used:
         job_pool = self.pool.get('label.label.job')
-        
+
         item_ids = data.get('record_ids', [])
 
         if not item_ids:
             _logger.error('No data for fast print')
-            #raise osv.except_osv(
+            # raise osv.except_osv(
             #    _('Fast print'),
             #    _('No data for fast print'),
             #    )
-        
+
         return job_pool.browse(cr, uid, item_ids, context=context)
-            
+
     """def get_report_placeholder(self, data=None):
         ''' Master function for generate label elements
             data:
@@ -283,5 +286,3 @@ class Parser(report_sxw.rml_parse):
         else:
             res = (('', '', '', '', '', '', ''), )
         return res"""
-            
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

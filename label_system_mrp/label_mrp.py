@@ -196,21 +196,21 @@ class MrpProduction(orm.Model):
 
         # Context parameters:
         collect_label = context.get('collect_label', False)
-        collect_label_db = {} # return database of collected label printed
-        job_2_line_db = {} # convert job name in line ID
+        collect_label_db = {}  # return database of collected label printed
+        job_2_line_db = {}  # convert job name in line ID
 
         mrp = self.browse(cr, uid, ids, context=context)[0]
         user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
 
         out_path = '/home/administrator/photo/Label/pdf'
-        temp_path = os.path.join(out_path, mrp.name) # '/tmp'
-        os.system('mkdir -p %s' % temp_path) # Create temp folder
+        temp_path = os.path.join(out_path, mrp.name)  # '/tmp'
+        os.system('mkdir -p %s' % temp_path)  # Create temp folder
 
         # Batch parameter:
         pause_command = '@pause\r\n' if user.print_with_pause else ''
 
         # Default command:
-        print_command_mask = '%s "%s" "%s"' #% user.print_label_command
+        print_command_mask = '%s "%s" "%s"'  # % user.print_label_command
         print_label_command = user.print_label_command
 
         # Custom command depend on layout:
@@ -228,14 +228,14 @@ class MrpProduction(orm.Model):
             _logger.info('Normal mode for PDF generation')
 
         label_pool = self.pool.get('label.label.job')
-        report_pdf = {} # database of file keep format as the same
+        report_pdf = {}  # database of file keep format as the same
         pdf_id = 0
 
         # ---------------------------------------------------------------------
-        # Get placeholder informations:
+        # Get placeholder information:
         # ---------------------------------------------------------------------
         jobs = mrp.label_job_ids
-        #self.browse(cr, uid, ids, context=context).label_job_ids
+        # self.browse(cr, uid, ids, context=context).label_job_ids
         # TODO sort by sequence?
         placeholder = self.get_placeholder_label(
             cr, uid, jobs, context=context)
@@ -259,7 +259,7 @@ class MrpProduction(orm.Model):
                 'model': 'label.label.job',
                 'active_id': job.id,
                 'active_ids': [job.id],
-                'demo_mode': demo_mode, # XXX set as demo mode (1x)
+                'demo_mode': demo_mode,  # XXX set as demo mode (1x)
                 }
             if job.id in placeholder:
                 (quantity, level) = placeholder[job.id]
@@ -270,7 +270,7 @@ class MrpProduction(orm.Model):
                     'period': job.record_data_period,
                     }
                 # Extend for address partner break level
-                if level[1] != 'code': # partner / address break level
+                if level[1] != 'code':  # partner / address break level
                     datas['placeholder_data'].update({
                         'partner': level[2].name or '',
                         'address': level[3].name if level[3] else '',
@@ -289,7 +289,7 @@ class MrpProduction(orm.Model):
                 continue
 
             if extension.upper() != 'PDF':
-                #_logger.error('ODT is not PDF for report!')
+                # _logger.error('ODT is not PDF for report!')
                 raise osv.except_osv(
                     _('Converter not working'),
                     _('Check PDF convert, report must be in PDF not ODT!'),
@@ -308,9 +308,9 @@ class MrpProduction(orm.Model):
                 )
 
             report_pdf[layout].append(
-                (filename, f_pdf, job)) # for merge procedure
-            # XXX Aggiunto job.id per context parameters
-            file_pdf = open(filename, 'w') # XXX binary?
+                (filename, f_pdf, job))  # for merge procedure
+            # XXX Add job.id per context parameters
+            file_pdf = open(filename, 'w')  # XXX binary?
             file_pdf.write(result)
             file_pdf.close()
 
@@ -323,7 +323,8 @@ class MrpProduction(orm.Model):
             batch_f = open(batch_name, 'w')
             os.chmod(batch_name, 0o777)
             batch_f.write(
-                '@echo Stampa etichette stampante: %s\r\n@pause\r\n' % layout.code)
+                '@echo Stampa etichette stampante: %s\r\n@pause\r\n' %
+                layout.code)
 
             pdf_filename = os.path.join(
                 out_path,
@@ -344,7 +345,7 @@ class MrpProduction(orm.Model):
                 # Generate command:
                 i += 1
                 echo_command = 'echo %s. Print job: %s' % (i, f_pdf)
-                if layout.id in layout_ids: # custom layout command
+                if layout.id in layout_ids:  # custom layout command
                     exe_command = layout_ids[layout.id]
                 else:
                     exe_command = print_label_command
@@ -364,7 +365,7 @@ class MrpProduction(orm.Model):
 
                 # Context parameters:
                 if collect_label:
-                    #job_2_line_db
+                    # job_2_line_db
                     collect_label_db[
                         (job.type, job_2_line_db[job.id])] = (i, print_command)
 
