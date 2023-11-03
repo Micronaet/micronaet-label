@@ -51,7 +51,7 @@ class ResPartnerProductParticLabel(orm.Model):
         'name': fields.selection([
             ('frame', 'Frame'),
             ('fabric', 'Fabric'),
-            #('color', 'Color'), # TODO ???
+            # ('color', 'Color'), # TODO ???
             ('static_text1', 'Text 1'),
             ('static_text2', 'Text 2'),
             ('static_text3', 'Text 3'),
@@ -928,7 +928,7 @@ class ResPartner(orm.Model):
             'record_data_weight_net': product.weight_net,
             'record_data_weight_lord': product.weight,
             'record_data_parcel': 'TODO' or product.parcel,
-            'record_data_price': lst_price, # Partic after anagraph
+            'record_data_price': lst_price,  # Partic after anagraph
             'record_data_price_uom': product.uom_id.name,
 
             # EAN data:
@@ -942,7 +942,7 @@ class ResPartner(orm.Model):
             #                                MRP:
             # -----------------------------------------------------------------
             'record_data_line': line_code,
-            #'record_data_period': '%s%s' % (
+            # 'record_data_period': '%s%s' % (
             #    mrp.date_planned[2:4], mrp.date_planned[5:7]),
             # TODO format YY WW
             'record_data_period': '%s%02d' % (
@@ -970,13 +970,13 @@ class ResPartner(orm.Model):
             # -----------------------------------------------------------------
             # Image:
             # XXX Note: used related elements
-            #record_data_company_logo
-            #'record_data_partner_logo': order.company_id.partner_id.label_logo,
-            #record_data_linedrawing label_print_product_image
+            # record_data_company_logo
+            # 'record_data_partner_logo': order.company_id.partner_id.label_logo,
+            # record_data_linedrawing label_print_product_image
 
             # Extra images:
             # XXX Note: used related elements
-            #record_data_extra_image_ids
+            # record_data_extra_image_ids
 
             # -----------------------------------------------------------------
             #                            STATIC TEXT:
