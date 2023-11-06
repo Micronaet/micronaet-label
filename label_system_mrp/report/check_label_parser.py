@@ -25,39 +25,40 @@ import logging
 from openerp.report import report_sxw
 from openerp.report.report_sxw import rml_parse
 from datetime import datetime, timedelta
-from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT, 
-    DEFAULT_SERVER_DATETIME_FORMAT, 
-    DATETIME_FORMATS_MAP, 
+from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
+    DEFAULT_SERVER_DATETIME_FORMAT,
+    DATETIME_FORMATS_MAP,
     float_compare)
 
 _logger = logging.getLogger(__name__)
 
-class Parser(report_sxw.rml_parse):    
+
+class Parser(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
-        ''' Init parser script
-        '''
+        """ Init parser script
+        """
         super(Parser, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'get_label_list': self.get_label_list,
             'get_field_lang': self.get_field_lang,
             })
-    
+
     def get_field_lang(self, item_id, field, lang='en_US'):
-        ''' return field in italian and job in english
-        '''        
+        """ return field in italian and job in english
+        """
         # Readability:
         cr = self.cr
         uid = self.uid
         context = {'lang': lang, }
-       
+
         # Pool used:
-        product_pool = self.pool.get('product.product')        
+        product_pool = self.pool.get('product.product')
         item_proxy = product_pool.browse(cr, uid, item_id, context=context)
         return item_proxy.__getattribute__(field)
 
     def get_label_list(self, o, data=None):
-        ''' List of all labels for reporting
-        '''
+        """ List of all labels for reporting
+        """
         # Readabiliy
         cr = self.cr
         uid = self.uid
@@ -68,23 +69,23 @@ class Parser(report_sxw.rml_parse):
         label_pool = self.pool.get('label.label.job')
 
         res = []
-        
+
         jobs = o.label_job_ids
         placeholder = mrp_pool.get_placeholder_label(
             cr, uid, jobs, context=context)
-            
+
         for job in jobs:
-            if job.id in placeholder:            
+            if job.id in placeholder:
                 (quantity, level) = placeholder[job.id]
 
-                # Extend for address partner break level                
-                if level[1] == 'code': 
+                # Extend for address partner break level
+                if level[1] == 'code':
                     partner = ''
                     address = ''
                 else: # partner / address break level
                     partner = level[2].name or ''
                     address = level[3].name if level[3] else ''
-                    
+
                 res.append((
                     job, # job data
                     partner, # customization
@@ -92,6 +93,6 @@ class Parser(report_sxw.rml_parse):
                     #level, # label level
                     quantity, # q.
                     ))
-        return res 
+        return res
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

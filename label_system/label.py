@@ -58,7 +58,7 @@ class LabelPrinters(orm.Model):
         'spooler_name': fields.char('Spooler name', size=80, required=True),
         }
 
-class LabelLabel(orm.Model):
+class LabelLayout(orm.Model):
     """ Model name: Label master object
     """
 
@@ -87,6 +87,7 @@ class LabelLabel(orm.Model):
         'printer_id': fields.many2one(
             'label.printer', 'Printer', required=True),
         }
+
 
 class LabelLabel(orm.Model):
     """ Model name: LabelLabel
@@ -697,7 +698,7 @@ class LabelLabelReportJob(orm.Model):
         }
 
 
-class LabelLabel(orm.Model):
+class LabelLabelInherit(orm.Model):
     """ Model name: Label relations
     """
 
@@ -720,7 +721,8 @@ class ResPartnerLabel(orm.Model):
         'label_code': fields.char(
             'Label code', size=30,
             help='Partner label code, used for auto import partner'),
-        'label_image': fields.binary('Label image',
+        'label_image': fields.binary(
+            'Label image',
             help='Image logo used for label print'),
 
         'label_no_internal': fields.boolean('Interna non richiesta'),
