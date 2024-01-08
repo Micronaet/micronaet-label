@@ -108,8 +108,8 @@ class Parser(report_sxw.rml_parse):
                 if len(order_ref) == 2:
                     order_ref = order_ref[-1]
                 else:
-                    order_ref = ''
-                    _logger.warning('No order ref: %s' % o.name)
+                    order_ref = ''                    
+                    _logger.warning('No order ref: %s' % item.order_id.name)
 
                 if key[0].partner_pallet_logo: 
                     # Use partner logo
