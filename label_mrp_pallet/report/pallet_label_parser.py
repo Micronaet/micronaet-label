@@ -104,10 +104,12 @@ class Parser(report_sxw.rml_parse):
             for i in range(0, loop):
                 #remain -= q_x_pallet
                 order_ref = (key[3].client_order_ref or '').split('|')
+                
                 if len(order_ref) == 2:
                     order_ref = order_ref[-1]
                 else:
                     order_ref = ''
+                    _logger.warning('No order ref: %s' % o.name)
 
                 if key[0].partner_pallet_logo: 
                     # Use partner logo
