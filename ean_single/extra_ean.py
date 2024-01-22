@@ -30,9 +30,9 @@ from openerp import SUPERUSER_ID, api
 from openerp import tools
 from openerp.tools.translate import _
 from openerp.tools.float_utils import float_round as round
-from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT, 
-    DEFAULT_SERVER_DATETIME_FORMAT, 
-    DATETIME_FORMATS_MAP, 
+from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
+    DEFAULT_SERVER_DATETIME_FORMAT,
+    DATETIME_FORMATS_MAP,
     float_compare)
 
 
@@ -40,30 +40,30 @@ _logger = logging.getLogger(__name__)
 
 class ProductProduct(orm.Model):
     """ Model name: ProductProduct
-    """    
+    """
     _inherit = 'product.product'
 
     def get_ean_mono(self, cr, uid, default_code, context=None):
-        ''' Search ean mono for product passed
+        """ Search ean mono for product passed
             return (ean13 mono, ean8 mono)
-        '''
+        """
         nothing = ('', '')
-        
+
         if not default_code or len(default_code) > 12:
             return nothing
-            
+
         product_ids = self.search(cr, uid, [
             ('default_code', '=', default_code)], context=context)
 
         if not product_ids:
             return nothing
-            
+
         product = self.browse(cr, uid, product_ids, context=context)[0]
         # -----------------------------------------------------------------
         # Q x pack is yet single:
         # -----------------------------------------------------------------
         if product.q_x_pack == 1:
-            return (product.ean13, product.ean8) # same ean
+            return product.ean13, product.ean8  # same ean
 
         # -----------------------------------------------------------------
         # Q x pack is package:
@@ -71,25 +71,25 @@ class ProductProduct(orm.Model):
         mono_ids = self.search(cr, uid, [
             ('default_code', '=', '%-12sS' % default_code),
             ], context=context)
-        if mono_ids: # XXX more than one?
+        if mono_ids:  # XXX more than one?
             if len(mono_ids) > 1:
                 _logger.warning(
                     'More single EAN code %s' % default_code)
             mono_proxy = self.browse(
                 cr, uid, mono_ids, context=context)[0]
-            return (mono_proxy.ean13, mono_proxy.ean8)
+            return mono_proxy.ean13, mono_proxy.ean8
 
         _logger.warning(
             'Single product not found %s' % default_code)
-        return (False, False)
-                
+        return False, False
+
     _columns = {
-        'ean13_mono': fields.char('EAN13 mono', size=13, 
+        'ean13_mono': fields.char('EAN13 mono', size=13,
             help='Force EAN mono instead search of element with S [13]'
             ),
         'ean8_mono': fields.char('EAN8 mono', size=8,
             help='Force EAN mono instead search of element with S [13]'
             ),
         }
-    
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

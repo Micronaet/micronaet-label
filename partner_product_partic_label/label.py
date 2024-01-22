@@ -854,13 +854,15 @@ class ResPartner(orm.Model):
         # Depend on check q_x_pack:
         ean13 = product.ean13 or ''
         ean8 = product.ean8 or ''
+
         # Check mono label:
-        (ean13_mono, ean8_mono) = product_pool.get_ean_mono(
-            cr, uid, product.default_code, context=context)
+        # Mono EAN is only forced, no research for S(ingle) product!
+        # (ean13_mono, ean8_mono) = product_pool.get_ean_mono(
+        #     cr, uid, product.default_code, context=context)
         # Priority to force in anagraphic
-        ean13_mono = product.ean13_mono or ean13_mono
-        ean8_mono = product.ean8_mono or ean8_mono
-        lst_price = ''#product.lst_price or '' XXX no price if no partic
+        ean13_mono = product.ean13_mono  # or ean13_mono
+        ean8_mono = product.ean8_mono  # or ean8_mono
+        lst_price = ''  # product.lst_price or '' XXX no price if no partic
 
         if product_partic:
             frame = product_partic.frame or frame or ''
@@ -899,7 +901,7 @@ class ResPartner(orm.Model):
                         product.default_code,
                         ),
                     )
-        #_logger.warning('Validate EAN Ordine: %s, prodotto: %s [%s]' % (
+        # _logger.warning('Validate EAN Ordine: %s, prodotto: %s [%s]' % (
         #    order.name,
         #    product.default_code,
         #    ean_check_list,
