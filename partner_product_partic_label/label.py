@@ -860,8 +860,12 @@ class ResPartner(orm.Model):
         # (ean13_mono, ean8_mono) = product_pool.get_ean_mono(
         #     cr, uid, product.default_code, context=context)
         # Priority to force in anagraphic
-        ean13_mono = product.ean13_mono  # or ean13_mono
-        ean8_mono = product.ean8_mono  # or ean8_mono
+        if product.q_x_pack == 1:
+            ean13_mono = product.ean13
+            ean8_mono = product.ean8
+        else:
+            ean13_mono = product.ean13_mono  # or ean13_mono
+            ean8_mono = product.ean8_mono  # or ean8_mono
         lst_price = ''  # product.lst_price or '' XXX no price if no partic
 
         if product_partic:
