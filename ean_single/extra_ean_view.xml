@@ -8,6 +8,7 @@
            <field name="inherit_id" ref="product.product_normal_form_view"/>
            <field name="arch" type="xml">
                <field name="ean13" position="after">
+                   <button name="generate_barcode_ean13_mono" string="Genera EAN Mono" type="object" attrs="{'invisible':[('ean13_mono','=',True)]}" colspan="2" />
                    <field name="ean13_mono" />
                    <field name="ean8_mono" />
                </field>

@@ -38,6 +38,7 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+
 class ProductProduct(orm.Model):
     """ Model name: ProductProduct
     """
@@ -83,13 +84,23 @@ class ProductProduct(orm.Model):
             'Single product not found %s' % default_code)
         return False, False
 
+    def generate_barcode_ean13_mono(self, cr, uid, ids, context=None):
+        """ Call original function with force
+        """
+        if context is None:
+            context = {}
+        ctx = context.copy()
+        ctx['force_field'] = 'ean13_mono'
+
+        return self.generate_barcode_ean13(cr, uid, ids, context=ctx)
+
     _columns = {
-        'ean13_mono': fields.char('EAN13 mono', size=13,
+        'ean13_mono': fields.char(
+            'EAN13 mono', size=13,
             help='Force EAN mono instead search of element with S [13]'
             ),
-        'ean8_mono': fields.char('EAN8 mono', size=8,
+        'ean8_mono': fields.char(
+            'EAN8 mono', size=8,
             help='Force EAN mono instead search of element with S [13]'
             ),
         }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
