@@ -88,12 +88,10 @@ class ProductProduct(orm.Model):
     def generate_barcode_ean13_mono(self, cr, uid, ids, context=None):
         """ Call original function with force
         """
-        pdb.set_trace()
         if context is None:
             context = {}
         ctx = context.copy()
         ctx['force_field'] = 'ean13_mono'
-        pdb.set_trace()
         return self.generate_barcode_ean13(cr, uid, ids, context=ctx)
 
     _columns = {
