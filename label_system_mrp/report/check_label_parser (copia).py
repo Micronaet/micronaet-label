@@ -175,8 +175,8 @@ class Parser(report_sxw.rml_parse):
         return res
 
     def get_partic(self, line):
-        ''' Return return if present partner-product partic code
-        '''
+        """ Return if present partner-product partic code
+        """
         partic_pool = self.pool.get('res.partner.product.partic')
         partic_ids = partic_pool.search(self.cr, self.uid, [
             ('partner_id', '=', line.order_id.partner_id.id),
@@ -188,8 +188,8 @@ class Parser(report_sxw.rml_parse):
         return ''#'???'
 
     def get_datetime(self):
-        ''' Return datetime obj
-        '''
+        """ Return datetime obj
+        """
         return datetime
 
     def get_datetime_now(self):

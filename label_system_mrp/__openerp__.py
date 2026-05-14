@@ -29,7 +29,7 @@
                 order line
         ''',
     'author': 'Micronaet S.r.l. - Nicola Riolini',
-    'website': 'http://www.micronaet.it',
+    'website': 'https://micronaet.it',
     'license': 'AGPL-3',
     'depends': [
         'base',
